@@ -1,0 +1,3 @@
+@mixin trans($time: 800ms){
+    transition: all $time cubic-bezier(0.19,1,.22,1);
+}

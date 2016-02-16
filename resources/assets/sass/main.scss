@@ -1,0 +1,43 @@
+/*!
+ *  Author:     Jaume Sala
+ *  Website:    jaumesala.net
+ *
+ */
+
+//@bower_path:        "../../../vendor/bower_components/";
+//@vendor_path:       "../vendor/";
+
+/* ==========================================================================
+    Includes imports
+========================================================================== */
+
+@import "includes/fonts";
+@import "includes/mixins";
+@import "includes/bootstrap/_variables";
+
+
+/* ==========================================================================
+    Bower imports
+========================================================================== */
+
+@import "vendor/bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+/* ==========================================================================
+    Components styles
+========================================================================== */
+
+@import "components/header";
+// @import "components/footer";
+
+
+/* ==========================================================================
+    Pages views
+========================================================================== */
+
+@import "pages/home/index";
+@import "pages/neighborhoods/index";
+
+
+
+

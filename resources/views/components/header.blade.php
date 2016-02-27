@@ -14,6 +14,7 @@
                 <ul class="nav navbar-nav">
                     <li @if($routeName == "home") class="active" @endif><a href="{{ route('home.index') }}">Home</a></li>
                     <li @if($routeName == "neighborhoods") class="active" @endif><a href="{{ route('neighborhoods.index') }}">Neighborhoods</a></li>
+                    <li @if($routeName == "complains") class="active" @endif><a href="{{ route('complains.index') }}">Complains</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

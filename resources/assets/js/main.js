@@ -25,6 +25,11 @@ SITE = {
         init: function() {
             console.log('neighborhoods');
         }
+    complains: {
+        init: function() {
+            console.log('complains');
+        }
+    },
     }
 
 }

@@ -38,4 +38,20 @@ class PagesController extends Controller
         $data = compact('routeName', 'routeMethod');
         return response()->view('pages.neighborhoods.index', $data);
     }
+
+    /**
+     * Display Complains page.
+     *
+     * @return Response
+     */
+    public function getComplains()
+    {
+        $routeName = "complains";
+        $routeMethod = "index";
+
+
+        $data = compact('routeName', 'routeMethod');
+        return response()->view('pages.complains.index', $data);
+    }
+
 }

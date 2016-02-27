@@ -43,6 +43,8 @@ elixir.config.css.autoprefix.options.browsers   = ['last 2 versions', 'ie 8', 'i
 var bowerComponents = [
 
     bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
+    bowerRelative + 'underscore/underscore.js',
+    bowerRelative + 'chroma-js/chroma.js',
     // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
     // bowerRelative + 'jquery-form/jquery.form.js',
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',

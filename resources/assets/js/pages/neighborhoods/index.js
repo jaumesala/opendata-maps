@@ -15,76 +15,77 @@ SITE.neighborhoods.index = function(){
     map.on('style.load', function () {
         console.log("Styles loaded!");
 
-        map.addSource('neighborhoods', {
+        map.addSource('neighbourhoods', {
             'type': 'geojson',
-            'data': 'http://schiedam-map.app/datasets/neighborhoods.geojson'
+            'data': 'http://schiedam-map.app/datasets/neighbourhoods.geojson'
         });
 
-        
+        map.addSource('districts', {
+            'type': 'geojson',
+            'data': 'http://schiedam-map.app/datasets/districts.geojson'
+        });
 
         map.addControl(new mapboxgl.Navigation());
 
         // neighbourhoods fill
         map.addLayer({
-            'id': 'nbhFill',
+            'id': 'nFill',
             'type': 'fill',
-            'source': 'neighborhoods',
+            'source': 'neighbourhoods',
             'layout': {},
             'interactive': true,
             'paint': {
                 'fill-color': '#088',
-                'fill-opacity': 0.5,
-            },
-            'filter': [ 'all', 
-                ['==', 'TYPE', 'Buurt' ]
-            ]
+                'fill-opacity': 0,
+            }
         });
         // neighbourhoods hover
         map.addLayer({
-            'id': 'nbhFill-hover',
+            'id': 'nFill-hover',
             'type': 'fill',
-            'source': 'neighborhoods',
+            'source': 'neighbourhoods',
             'layout': {},
             'paint': {
                 'fill-color': '#930',
-                'fill-opacity': 0.5,
+                'fill-opacity': 0.2
             },
-            'filter': [ 'all', 
+            'filter': [ 'all',
                 ['==', 'ID', 'NONE' ]
             ]
         });
 
         // zones line
         map.addLayer({
-            'id': 'nbhLine',
+            'id': 'distLine',
             'type': 'line',
-            'source': 'neighborhoods',
+            'source': 'districts',
             'layout': {},
             'paint': {
-                'line-color': '#000'
+                'line-color': '#926ecc',
+                'line-width': 2
             }
         });
 
-        // A simple test to add a filter to a already added layer 
+        // A simple test to add a filter to a already added layer
         // to show line only in "zones"
         // Buurt = neighbourhood
         // Wijk = zones
-        map.setFilter('nbhLine', ["==", "TYPE", "Wijk"]);
+        // map.setFilter('nbhLine', ["==", "TYPE", "Wijk"]);
 
         // paint current hover position using "the hover layer"
         map.on('mousemove', function (e) {
             // query the map for the under the mouse
-            map.featuresAt(e.point, { radius: 5, layer: 'nbhFill', includeGeometry: true }, function (err, features) {
+            map.featuresAt(e.point, { radius: 5, layer: 'nFill', includeGeometry: true }, function (err, features) {
                 if (err) throw err
                 // console.log(e.point, features)
-                
-                var ids = features.map(function (feat) { return feat.properties.ID })
+
+                var ids = features.map(function (feat) { return feat.properties.SLEUTEL })
                 // console.log(ids)
-                
+
                 // set the filter on the hover style layer to only select the features
                 // currently under the mouse
-                map.setFilter('nbhFill-hover', [ 'all',
-                    [ 'in', 'ID' ].concat(ids)
+                map.setFilter('nFill-hover', [ 'all',
+                    [ 'in', 'SLEUTEL' ].concat(ids)
                 ])
             });
         });

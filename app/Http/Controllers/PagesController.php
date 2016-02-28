@@ -19,7 +19,7 @@ class PagesController extends Controller
         $routeName = "home";
         $routeMethod = "index";
 
-        
+
         $data = compact('routeName', 'routeMethod');
         return response()->view('pages.home.index', $data);
     }
@@ -34,7 +34,7 @@ class PagesController extends Controller
         $routeName = "neighborhoods";
         $routeMethod = "index";
 
-        
+
         $data = compact('routeName', 'routeMethod');
         return response()->view('pages.neighborhoods.index', $data);
     }

@@ -1,4 +1,4 @@
-/* @preserve 
+/* @preserve
  *
  * Author:  Jaume Sala
  * Website: jaumesala.net
@@ -11,7 +11,7 @@
 SITE = {
     common: {
         init: function() {
-            
+
         }
     },
 
@@ -25,11 +25,14 @@ SITE = {
         init: function() {
             console.log('neighborhoods');
         }
+    },
+
     complains: {
         init: function() {
             console.log('complains');
         }
     },
+
     choropleth: {
         init: function() {
             console.log('choropleth');

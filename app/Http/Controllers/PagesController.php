@@ -69,4 +69,18 @@ class PagesController extends Controller
         return response()->view('pages.choropleth.index', $data);
     }
 
+    /**
+     * Display heatmap page.
+     *
+     * @return Response
+     */
+    public function getHeatmap()
+    {
+        $routeName = "heatmap";
+        $routeMethod = "index";
+
+
+        $data = compact('routeName', 'routeMethod');
+        return response()->view('pages.heatmap.index', $data);
+    }
 }

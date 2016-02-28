@@ -16,6 +16,7 @@
                     <li @if($routeName == "neighborhoods") class="active" @endif><a href="{{ route('neighborhoods.index') }}">Neighborhoods</a></li>
                     <li @if($routeName == "complains") class="active" @endif><a href="{{ route('complains.index') }}">Complains</a></li>
                     <li @if($routeName == "choropleth") class="active" @endif><a href="{{ route('choropleth.index') }}">Choropleth</a></li>
+                    <li @if($routeName == "heatmap") class="active" @endif><a href="{{ route('heatmap.index') }}">Heatmap</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

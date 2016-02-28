@@ -35,6 +35,11 @@ SITE = {
             console.log('choropleth');
         }
     },
+
+    heatmap: {
+        init: function() {
+            console.log('heatmap');
+        }
     }
 
 }

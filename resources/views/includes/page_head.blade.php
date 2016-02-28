@@ -34,11 +34,12 @@
     <meta property="og:title" content="{{ trans('includes/page_head.title_'.Route::currentRouteName()) }}" />
     <meta property="og:description" content="{{ trans('includes/page_head.description_'.Route::currentRouteName()) }}" />
     <meta property="og:image" content="{{ asset('img/apple-touch-icon.png') }}" />
-    <meta property="og:site_name" content="<SUKI-BASE>"/>
+    <meta property="og:site_name" content="Schiedam"/>
     <meta property="og:url" content="{{ $urlLocale[$locale] or Request::url() }}"/>
 
 
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.2/mapbox-gl.css' rel='stylesheet' />
+    <!-- <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' /> -->
 
     @if (App::environment() != 'production')
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">

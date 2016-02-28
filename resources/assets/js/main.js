@@ -30,6 +30,11 @@ SITE = {
             console.log('complains');
         }
     },
+    choropleth: {
+        init: function() {
+            console.log('choropleth');
+        }
+    },
     }
 
 }

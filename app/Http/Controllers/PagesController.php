@@ -54,4 +54,19 @@ class PagesController extends Controller
         return response()->view('pages.complains.index', $data);
     }
 
+    /**
+     * Display choropleth page.
+     *
+     * @return Response
+     */
+    public function getChoropleth()
+    {
+        $routeName = "choropleth";
+        $routeMethod = "index";
+
+
+        $data = compact('routeName', 'routeMethod');
+        return response()->view('pages.choropleth.index', $data);
+    }
+
 }

@@ -14,6 +14,7 @@
 Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
 Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
 Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
+Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

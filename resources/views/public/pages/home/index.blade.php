@@ -1,4 +1,4 @@
-@extends('layouts.baseLayout')
+@extends('public.layouts.baseLayout')
 
 
 @section('content')

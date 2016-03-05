@@ -1,6 +1,9 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ asset("js/vendor/jquery.js") }}"><\/script>')</script>
 
+        <!-- iCheck -->
+        <!-- <script src="../../plugins/iCheck/icheck.min.js"></script> -->
+
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.js'></script>
 
         <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
@@ -15,7 +18,15 @@
             <script src="{{ asset('js/plugins.min.js') }}"></script>
             <script src="{{ asset('js/main.min.js') }}"></script>
         @endif
-
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
         @if (App::environment() == 'production')
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

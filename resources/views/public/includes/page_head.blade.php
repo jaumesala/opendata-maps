@@ -13,13 +13,10 @@
         @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or '' }}  {{ trans('includes/page_head.title_'.Route::currentRouteName()) }}
     </title>
     <meta name="description" content="{{ trans('includes/page_head.description_'.Route::currentRouteName()) }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <meta name="author" content="Jaume Sala">
     <link type="text/plain" rel="author" href="{{ url('humans.txt') }}" />
-
-    <link rel="dns-prefetch" href="//ajax.googleapis.com" />
-    <meta name="google-site-verification" content="" />
 
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon-precomposed.png') }}">
@@ -37,7 +34,12 @@
     <meta property="og:site_name" content="Schiedam"/>
     <meta property="og:url" content="{{ $urlLocale[$locale] or Request::url() }}"/>
 
+    <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+    <!-- Ionicons -->
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
 
+    <!-- Mapbox styles -->
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.2/mapbox-gl.css' rel='stylesheet' />
     <!-- <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' /> -->
 
@@ -50,7 +52,10 @@
     <script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
 </head>
-<body id="{{ $routeName or Route::currentRouteName() }}" class="{{ $routeMethod or 'index' }}" data-controller="{{ $routeName or Route::currentRouteName() }}" data-action="{{ $routeMethod or 'index' }}">
+<body   id="@yield('customBodyId', ''){{ $routeName or Route::currentRouteName() }}"
+        class="@yield('customBodyClass', '') {{ $routeMethod or '' }}"
+        data-controller="@yield('customBodyController', ''){{ $routeName or Route::currentRouteName() }}"
+        data-action="@yield('customBodyMethod', '') {{ $routeMethod or '' }}">
     <!--[if lt IE 7]>
     <p class="browsehappy">{{ trans('includes/page_head.chrome_frame') }}</p>
     <![endif]-->

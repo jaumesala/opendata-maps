@@ -16,6 +16,7 @@ Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as'
 Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
 Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
 Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -28,5 +29,34 @@ Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
+    Route::auth();
+
+    Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){
+
+        /* Dashboard */
+        Route::get('/', [
+            'uses' => 'Admin\DashboardController@index',
+            'as' => 'admin.dashboard.index'
+            ]);
+
+        /* Settings */
+        Route::get('settings', [
+            'uses' => 'Admin\SettingsController@index',
+            'as' => 'admin.settings.index'
+            ]);
+        Route::put('settings', [
+            'uses' => 'Admin\SettingsController@updateGroup',
+            'as' => 'admin.settings.update'
+            ]);
+        Route::resource('setting', 'Admin\SettingsController');
+
+        /* Users */
+        Route::resource('user', 'Admin\UsersController');
+
+        /* Maps */
+        Route::resource('map', 'Admin\MapsController');
+
+    });
+
 });

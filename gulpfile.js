@@ -45,6 +45,11 @@ var bowerComponents = [
     bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
     bowerRelative + 'underscore/underscore.js',
     bowerRelative + 'chroma-js/chroma.js',
+    bowerRelative + 'AdminLTE/plugins/iCheck/icheck.js',
+    bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
+    bowerRelative + 'AdminLTE/plugins/select2/select2.full.js',
+    bowerRelative + 'AdminLTE/dist/js/app.js',
+
     // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
     // bowerRelative + 'jquery-form/jquery.form.js',
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
@@ -73,11 +78,21 @@ var copyToPublic = [
 
     // Bootstrap fonts
     [   bowerPath + 'bootstrap-sass/assets/fonts/bootstrap',
-        elixir.config.publicPath + '/fonts'],
+        elixir.config.publicPath + '/fonts/bootstrap'],
+
+    // Font-awesome fonts
+    [   bowerPath + 'font-awesome/fonts',
+        elixir.config.publicPath + '/fonts/font-awesome'],
 
     // Project fonts
     [   elixir.config.assetsPath + '/fonts',
-        elixir.config.publicPath + '/fonts']
+        elixir.config.publicPath + '/fonts'],
+
+    // Plugin iCheck images
+    [   bowerPath + 'AdminLTE/plugins/iCheck/square/blue.png',
+        elixir.config.publicPath + '/img/admin/plugins/iCheck/blue.png'],
+    [   bowerPath + 'AdminLTE/plugins/iCheck/square/blue@2x.png',
+        elixir.config.publicPath + '/img/admin/plugins/iCheck/blue@2x.png']
 
 ];
 
@@ -89,19 +104,19 @@ var copyToPublic = [
 elixir(function(mix) {
     mix
 
-        // main.less
-        .sass('main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/main' + min + '.css')
+        // admin/app.scss
+        .sass('admin/app.scss', publicPath + '/' + elixir.config.css.outputFolder + '/admin/app' + min + '.css')
 
-        // main.js
+        // admin/app.js
         .scriptsIn(
-            elixir.config.assetsPath + '/js',
-            publicPath + '/' + elixir.config.js.outputFolder + '/main' + min + '.js'
+            elixir.config.assetsPath + '/js/admin',
+            publicPath + '/' + elixir.config.js.outputFolder + '/admin/app' + min + '.js'
         )
 
         //plugins.js
         .scripts(
             bowerComponents,
-            publicPath + '/' + elixir.config.js.outputFolder + '/plugins' + min + '.js',
+            publicPath + '/' + elixir.config.js.outputFolder + '/admin/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         );
 

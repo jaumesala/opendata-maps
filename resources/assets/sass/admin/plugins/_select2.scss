@@ -1,0 +1,18 @@
+
+select[multiple].select2,
+select[size].select2{
+    height: 34px;
+}
+
+.select2-dropdown
+.select2-search__field:focus,
+.select2-search--inline .select2-search__field:focus{
+    border: none;
+}
+
+
+.select2-container--default
+.select2-selection--multiple
+.select2-selection__choice{
+    padding: 0px 10px;
+}

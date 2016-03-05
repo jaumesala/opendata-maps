@@ -19,3 +19,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
+    return [
+        'group' => $faker->randomElement(['general','mapbox','preferences']),
+        'key' => $faker->word,
+        'value' => $faker->sentence
+    ];
+});

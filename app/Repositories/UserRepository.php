@@ -76,7 +76,7 @@ class UserRepository
     public function destroyUser($id)
     {
         $authUser = Auth::user();
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         if($user->id == $authUser->id)
         {

@@ -152,7 +152,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, DestroyUserRequest $request)
+    public function destroy(DestroyUserRequest $request, $id)
     {
         $result = $this->user->destroyUser($id);
 

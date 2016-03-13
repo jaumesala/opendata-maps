@@ -28,7 +28,7 @@ class UpdateUserRequest extends Request
         return [
             'name'          => 'required|max:255',
             'email'         => 'required|email|max:255|unique:users,email,'.$id,
-            'password'      => 'sometimes|confirmed|min:6',
+            'password'      => 'sometimes|min:6|confirmed',
             'roles.*.id'    => 'integer|exists:roles,id'
         ];
     }

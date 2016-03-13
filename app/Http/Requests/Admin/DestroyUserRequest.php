@@ -23,9 +23,8 @@ class DestroyUserRequest extends Request
      */
     public function rules()
     {
-
         return [
-            'id'            =>'required|integer|exists:settings,id',
+            'id'            =>'required|integer|exists:user,id',
             'confirmation'  => 'required|accepted',
         ];
     }

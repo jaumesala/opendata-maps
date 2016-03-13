@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
-Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
-Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
-Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
-Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
+// Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
+// Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
+// Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
+// Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
+// Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
 
 /*
 |--------------------------------------------------------------------------
@@ -34,13 +34,13 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){
 
-        /* Dashboard */
+    /* Dashboard */
         Route::get('/', [
             'uses' => 'Admin\DashboardController@index',
             'as' => 'admin.dashboard.index'
             ]);
 
-        /* Settings */
+    /* Settings */
         Route::get('settings', [
             'uses' => 'Admin\SettingsController@index',
             'as' => 'admin.settings.index'
@@ -51,12 +51,34 @@ Route::group(['middleware' => ['web']], function () {
             ]);
         Route::resource('setting', 'Admin\SettingsController');
 
-        /* Users */
+    /* Users */
         Route::resource('user', 'Admin\UsersController');
 
-        /* Maps */
+    /* Sources */
+        /* URL methods */
+        Route::get('source/url/check', [
+            'uses' => 'Admin\SourcesController@checkUrl',
+            'as' => 'admin.source.url.check'
+            ]);
+        /* File methods */
+
+        /* Common methods */
+        Route::get('source/{source}/sync', [
+            'uses' => 'Admin\SourcesController@sync',
+            'as' => 'admin.source.sync'
+            ]);
+
+        Route::resource('source', 'Admin\SourcesController');
+
+    /* Maps */
         Route::resource('map', 'Admin\MapsController');
 
     });
 
 });
+
+
+Route::group(['middleware' => ['api']], function () {
+    //
+});
+

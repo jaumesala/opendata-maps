@@ -43,6 +43,12 @@ SITE = {
         init: function() {
             console.log('map');
         }
+    },
+
+    source: {
+        init: function() {
+            console.log('source');
+        }
     }
 
 }

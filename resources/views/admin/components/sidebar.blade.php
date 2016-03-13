@@ -64,8 +64,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="">
-                <a href="#">
+            <li @if(Request::is('admin/source*')) class="active" @endif>
+                <a href="{{ route('admin.source.index') }}">
                     <i class="fa fa-database"></i> <span>Sources</span>
                 </a>
             </li>

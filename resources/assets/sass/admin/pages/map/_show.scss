@@ -1,0 +1,29 @@
+#map.show{
+    .widget-user-2{
+        .widget-user-username,
+        .widget-user-desc{
+            margin-left: 0;
+        }
+
+        .widget-user-username{
+            // font-weight: 500;
+            font-size: 22px;
+        }
+
+        .box-body{
+            padding: 20px;
+        }
+    }
+
+    .box-map{
+        margin-bottom: 0;
+        .box-body{
+        }
+    }
+
+    #map-view{
+        min-height: 600px;
+        height: 100%;
+        background-color: lighten($gray-lighter, 5%);
+    }
+}

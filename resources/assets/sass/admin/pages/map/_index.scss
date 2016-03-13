@@ -1,0 +1,39 @@
+#map.index{
+    .widget-user{
+        .widget-user-header{
+            position: relative;
+            overflow: hidden;
+
+            &:before{
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: $gray-light;
+                opacity: 0.5;
+
+            }
+
+            .widget-user-username{
+                position: relative;
+                font-weight: 500;
+                font-size: 22px;
+
+            }
+            .widget-user-desc{
+                position: relative;
+
+                .fa{
+                    font-size: 10px;
+                }
+            }
+
+        }
+
+        .box-footer{
+            padding-top: 10px;
+        }
+    }
+}

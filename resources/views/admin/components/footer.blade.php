@@ -2,8 +2,8 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        SchiedamMaps
+        Copyright &copy; 2015-{{ Carbon::now()->year }}
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2015-2016 <a href="#">Schiedam</a>.</strong> All rights reserved.
+    Made with <i class="fa fa-heart-o"></i> by <a target="_blank" href="http://jaumesala.net">Jaume Sala</a>.
 </footer>

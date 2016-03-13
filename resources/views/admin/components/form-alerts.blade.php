@@ -61,3 +61,27 @@
         <p>You are not allowed to perform this operation.</p>
     </div>
 @endif
+
+@if(Session::get('status') == "sync-success")
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Looks very nice</h4>
+        <p>The data has been synced successfully!</p>
+    </div>
+@endif
+
+@if(Session::get('status') == "sync-error")
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-warning"></i> Whoops! Something went wrong!</h4>
+        <p>We couldn't sync the data. Please try again.</p>
+    </div>
+@endif
+
+@if(Session::get('status') == "sync-triggered")
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Ready, set, go!</h4>
+        <p>The data has been sent to the sync queue!</p>
+    </div>
+@endif

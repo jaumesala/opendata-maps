@@ -43,7 +43,7 @@
 
                     @foreach($settingsGroup as $setting)
                         @if($errors->has("settings.$setting->id.value")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="{{ $setting->key }}" class="col-sm-2 control-label">{{ Str::title($setting->key ) }}</label>
+                            <label for="{{ $setting->key }}" class="col-sm-2 control-label">{{ $setting->key }}</label>
 
                             <div class="col-sm-10">
                                 <input type="hidden" name="{{ "settings[$setting->id][key]" }}" value="{{ $setting->key }}">

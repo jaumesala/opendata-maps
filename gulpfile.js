@@ -28,6 +28,8 @@ var publicPath      = "public";
 var vendorPath      = 'vendor/';
 var bowerPath       = vendorPath + 'bower_components/';
 var bowerRelative   = '../../../' + bowerPath;
+var nodePath        = 'node_modules/';
+var nodeRelative   = '../../../' + nodePath;
 var min             = elixir.config.production ? '.min' : '';
 
 
@@ -40,7 +42,7 @@ elixir.config.css.autoprefix.options.browsers   = ['last 2 versions', 'ie 8', 'i
  |--------------------------------------------------------------------------
  */
 
-var bowerComponents = [
+var components = [
 
     bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
     bowerRelative + 'underscore/underscore.js',
@@ -49,7 +51,7 @@ var bowerComponents = [
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/plugins/select2/select2.full.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
-
+    nodeRelative + 'vue/dist/vue.js'
     // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
     // bowerRelative + 'jquery-form/jquery.form.js',
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
@@ -115,7 +117,7 @@ elixir(function(mix) {
 
         //plugins.js
         .scripts(
-            bowerComponents,
+            components,
             publicPath + '/' + elixir.config.js.outputFolder + '/admin/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         );

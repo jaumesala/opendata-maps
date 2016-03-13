@@ -38,7 +38,7 @@
                                 {{ Auth::user()->name }} - Admin
                                 <?php
                                     $createdAt  = Auth::user()->created_at;
-                                    $date       = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $createdAt);
+                                    $date       = Carbon::createFromFormat('Y-m-d H:i:s', $createdAt);
                                 ?>
                                 <small>Member since {{ $date->year }}</small>
                             </p>

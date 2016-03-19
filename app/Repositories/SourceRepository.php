@@ -7,6 +7,9 @@ use App\Models\Source;
 // use GuzzleHttp\Promise as GuzzlePromise;
 // use Psr\Http\Message\ResponseInterface;
 use Log;
+use Symfony\Component\Process\Process;
+use Storage;
+
 
 class SourceRepository
 {
@@ -68,12 +71,14 @@ class SourceRepository
     public function guessResponseType($response)
     {
         $mimes = [
+            'csv'       => 'text/csv',
             'txt'       => 'text/plain',
             'json'      => 'application/json',
-            'xml'       => 'application/xml',
+            // 'xml'       => 'application/xml',
             'geojson'   => 'application/vnd.geo+json',
             'kml'       => 'application/vnd.google-earth.kml+xml',
-            'kmz'       => 'application/vnd.google-earth.kmz'
+            // 'kmz'       => 'application/vnd.google-earth.kmz',
+            'gpx'       => 'application/gpx+xml'
         ];
 
         if(!$response->hasHeader('content-type')){
@@ -192,6 +197,195 @@ class SourceRepository
             Log::error($e);
             return false;
         }
+    }
+
+    public function convertToGeoJSON($source = null, $rawPath = null, $procPath = null)
+    {
+        if(!$source) return false;
+        if(!$rawPath) return false;
+        if(!$procPath) return false;
+
+        $originMimeType = $source->origin_format;
+        $process = $this->getProcess();
+        $result = null;
+
+        switch($originMimeType){
+            case 'csv':
+
+                $this->addRecord($source, "Converting CSV to GeoJSON");
+                if(Storage::exists($procPath))
+                {
+                    Storage::delete($procPath);
+                }
+                $process->setCommandLine(trim("csv2geojson $rawPath > $procPath"));
+
+                try
+                {
+                    $process->mustRun();
+                    $output = $process->getOutput();
+
+                    if($process->isSuccessful() && $output == "")
+                    {
+                        $this->addRecord($source, "CSV to GeoJSON convertion succeed", "success");
+                        $result = true;
+                    }
+                    else
+                    {
+                        $result = false;
+
+                        // Log::info("CSV to GeoJSON convertion failed with output: $output");
+                        $this->addRecord($source, "CSV to GeoJSON convertion failed with output: $output", "error");
+
+                    }
+
+                }
+                catch (ProcessFailedException $e)
+                {
+                    $error = $e->getMessage();
+
+                    $result = false;
+
+                    // Log::info("CSV to GeoJSON failed with error: $error");
+                    $this->addRecord($source, "CSV to GeoJSON convertion failed with error: $error", "error");
+                }
+
+                break;
+
+            case 'kml':
+
+                // Log::info("Converting KML to GeoJSON");
+                $this->addRecord($source, "Converting KML to GeoJSON");
+                if(Storage::exists($procPath))
+                {
+                    Storage::delete($procPath);
+                }
+                $process->setCommandLine(trim("togeojson -f kml $rawPath > $procPath"));
+
+                try
+                {
+                    $process->mustRun();
+                    $output = $process->getOutput();
+
+                    if($process->isSuccessful() && $output == "")
+                    {
+                        $this->addRecord($source, "XML to GeoJSON convertion succeed", "success");
+                        $result = true;
+                    }
+                    else
+                    {
+                        $result = false;
+
+                        // Log::info("KML to GeoJSON convertion failed with output: $output");
+                        $this->addRecord($source, "KML to GeoJSON convertion failed with output: $output", "error");
+                    }
+
+                }
+                catch (ProcessFailedException $e)
+                {
+                    $error = $e->getMessage();
+
+                    $result = false;
+
+                    // Log::info("KML to GeoJSON failed with error: $error");
+                    $this->addRecord($source, "KML to GeoJSON convertion failed with error: $error", "error");
+                }
+
+                break;
+
+            case 'gpx':
+
+                // Log::info("Converting GPX to GeoJSON");
+                $this->addRecord($source, "Converting GPX to GeoJSON");
+                if(Storage::exists($procPath))
+                {
+                    Storage::delete($procPath);
+                }
+                $process->setCommandLine(trim("togeojson -f gpx $rawPath > $procPath"));
+
+                try
+                {
+                    $process->mustRun();
+                    $output = $process->getOutput();
+
+                    if($process->isSuccessful() && $output == "")
+                    {
+                        $this->addRecord($source, "GPX to GeoJSON convertion succeed", "success");
+                        $result = true;
+                    }
+                    else
+                    {
+                        $result = false;
+
+                        // Log::info("GPX to GeoJSON convertion failed with output: $output");
+                        $this->addRecord($source, "GPX to GeoJSON convertion failed with output: $output", "error");
+                    }
+
+                }
+                catch (ProcessFailedException $e)
+                {
+                    $error = $e->getMessage();
+
+                    $result = false;
+
+                    // Log::info("GPX to GeoJSON failed with error: $error");
+                    $this->addRecord($source, "GPX to GeoJSON failed with error: $error", "error");
+                }
+
+                break;
+
+            case 'json':
+            case 'geojson':
+
+                // Log::info("Verifying GeoJSON file format");
+                $this->addRecord($source, "Verifying GeoJSON file format");
+
+                $process->setCommandLine(trim("geojsonhint < $rawPath"));
+
+                try
+                {
+                    $process->mustRun();
+                    $output = $process->getOutput();
+
+                    if($process->isSuccessful() && $output == "")
+                    {
+                        $result = true;
+                        $this->addRecord($source, "GeoJSON verification succeed", "success");
+                        if(Storage::exists($procPath))
+                        {
+                            Storage::delete($procPath);
+                        }
+                        Storage::copy($rawPath, $procPath);
+                        $this->addRecord($source, "Copied raw file to processed path", "info");
+
+                    }
+                    else
+                    {
+                        $result = false;
+
+                        // Log::info("GeoJSON verification failed with output: $output");
+                        $this->addRecord($source, "GeoJSON verification failed with output: $output", "error");
+                    }
+
+                }
+                catch (ProcessFailedException $e)
+                {
+                    $error = $e->getMessage();
+
+                    $result = false;
+
+                    // Log::info("GeoJSON failed verification with error: $error");
+                    $this->addRecord($source, "GeoJSON verification failed with error: $error", "error");
+
+                }
+
+                break;
+
+            case 'txt':
+            default:
+                // Log::info("Mime type $originMimeType of source $name ($id) not suported!");
+                $this->addRecord($source, "Mime type $originMimeType not suported!", "warning");
+        }
+        return $result;
     }
 
     public function destroySource($id)

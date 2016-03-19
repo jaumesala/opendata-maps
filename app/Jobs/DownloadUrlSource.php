@@ -6,14 +6,16 @@ use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Repositories\SourceRepository;
 use App\Models\Source;
 use Carbon\Carbon;
 use Log;
+use App\Jobs\ConvertSource;
 
 class DownloadUrlSource extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+    use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     /**
      * The Source model.
@@ -43,14 +45,19 @@ class DownloadUrlSource extends Job implements ShouldQueue
         $this->source->save();
 
         $id = $this->source->id;
+        $name = $this->source->name;
         $url = $this->source->origin_url;
 
-        $response = $sourceRepo->copyRemoteFile($url, storage_path('app/sources/'.$id.'/o/raw'));
+        $sourceRepo->addRecord($this->source, "Starting download");
+
+        $response = $sourceRepo->copyRemoteFile($url, storage_path('app/sources/'.$id.'/o/file.raw'));
 
         if(!$response)
         {
             // update sync_status
             $this->source->sync_status = "error";
+
+            $sourceRepo->addRecord($this->source, "No response received from server origin", "error");
         }
         elseif($response->getStatusCode() == 200)
         {
@@ -66,17 +73,21 @@ class DownloadUrlSource extends Job implements ShouldQueue
             // update sync_status
             $this->source->sync_status = "downloaded";
 
-            // Queue the source to be procesed
+            // Queue the source to be converted
+            $this->dispatch(new ConvertSource($this->source));
+
+            $sourceRepo->addRecord($this->source, "Download success!", "success");
         }
         else
         {
             // update sync_status
             $this->source->sync_status = "error";
+
+            $statusCode = $response->getStatusCode();
+
+            $sourceRepo->addRecord($this->source, "Server origin respondend with status code $statusCode while downloading". "error");
         }
 
         $this->source->save();
-
-        Log::info("downlaoded -> trigger process?");
-        // Log::info('Job triggered!!!');
     }
 }

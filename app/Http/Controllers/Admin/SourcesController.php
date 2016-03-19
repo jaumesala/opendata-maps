@@ -113,14 +113,17 @@ class SourcesController extends Controller
      */
     public function show($id)
     {
-        // $source = \App\Models\Source::find($id);
+        $routeName = 'source';
+        $routeMethod = 'show';
 
-        // Storage::makeDirectory('sources/'.$source->id.'/o');
-        // Storage::makeDirectory('sources/'.$source->id.'/p');
+        $source = $this->source->getById($id);
+        $records = $this->source->getAllRecords($source);
 
-        // $this->dispatch(new DownloadUrlSource($source));
+        $data = compact('routeName', 'routeMethod', 'source', 'records');
 
-        // dd("aaaaa");
+        \Clockwork::info($source);
+
+        return view('admin.sections.source.show', $data);
     }
 
     /**

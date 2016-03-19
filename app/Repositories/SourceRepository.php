@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Source;
+use App\Models\Record;
 // use GuzzleHttp\Client as GuzzleClient;
 // use GuzzleHttp\Promise as GuzzlePromise;
 // use Psr\Http\Message\ResponseInterface;
@@ -398,4 +399,51 @@ class SourceRepository
 
         return $result;
     }
+
+    public function getAllRecords($source = null, $column = 'created_at', $order = 'desc')
+    {
+
+        if(is_object($source))
+        {
+            $source = $source->id;
+        }
+
+        $records =  Record::where('source_id', $source)->orderBy($column, $order)->orderBy('id', $order)->get();
+
+        return $records;
+    }
+
+    public function addRecord($source = null, $message="", $level = "muted")
+    {
+        $record = new Record;
+        $record->source_id = $source->id;
+        $record->message = $message;
+        $record->level = $level;
+
+        return $record->save();
+    }
+
+    /**
+     * Get a new Symfony process instance.
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    public function getProcess()
+    {
+        return (new Process('', storage_path('app')))->setTimeout(null);
+    }
+
+    public function publish($source = null, $procPath = null, $pubPath = null)
+    {
+        if(!$source) return false;
+        if(!$procPath) return false;
+        if(!$pubPath) return false;
+
+        $result = null;
+
+        $result = Storage::copy($procPath, $pubPath);
+
+        return $result;
+    }
+
 }

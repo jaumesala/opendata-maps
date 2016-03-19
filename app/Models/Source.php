@@ -23,4 +23,9 @@ class Source extends Model
         'sync_interval',
         'synced_at'
     ];
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
 }

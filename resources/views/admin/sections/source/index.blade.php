@@ -79,6 +79,10 @@
                                         <span class="label label-info">Downloaded</span>
                                     @elseif($source->sync_status == 'processing')
                                         <span class="label label-warning">Processing</span>
+                                    @elseif($source->sync_status == 'processed')
+                                        <span class="label label-info">Processed</span>
+                                    @elseif($source->sync_status == 'publishing')
+                                        <span class="label label-warning">Publishing</span>
                                     @elseif($source->sync_status == 'error')
                                         <span class="label label-danger">Error</span>
                                     @elseif($source->sync_status == 'ready')
@@ -125,8 +129,10 @@
                                 <td class="text-right">
                                     <!-- <div class="btn-group"> -->
                                         <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-xs btn-info"><i class="fa fa-refresh"></i> Sync</a>
+                                        <a href="{{ route('admin.source.show', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Show</a>
+                                        {{--
                                         <a href="{{ route('admin.source.edit', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $source->id }}" data-action="{{ route('admin.source.destroy', $source->id) }}"><i class="fa fa-trash"></i> Delete</button>
+                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $source->id }}" data-action="{{ route('admin.source.destroy', $source->id) }}"><i class="fa fa-trash"></i> Delete</button>--}}
                                     <!-- </div> -->
                                 </td>
                             </tr>

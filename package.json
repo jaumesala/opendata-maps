@@ -4,7 +4,10 @@
     "gulp": "^3.8.8"
   },
   "dependencies": {
+    "csv2geojson": "^5.0.0",
+    "geojsonhint": "^1.2.0",
     "laravel-elixir": "^4.0.0",
+    "togeojson": "^0.13.0",
     "vue": "^1.0.17"
   }
 }

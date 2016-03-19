@@ -26,6 +26,19 @@ class SourcesTableSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
+            [   'origin_type' => 'url',
+                'origin_url' => 'http://civity.ckan.nl/dataset/a7bc454e-4551-4b11-a329-a58aeb79a583/resource/1bad33c0-1b8e-4bec-8b19-58b8c7e9b6dc/download/woningkartotheek.csv',
+                'origin_format' => null,
+                'origin_size' => null,
+                'name' => 'Cataster',
+                'description' => 'Schiedam cataster',
+                'web' => '',
+                'sync_status' => 'queued',
+                'sync_interval' => 'never',
+                'synced_at' => null,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
         );
 
         // Uncomment the below to run the seeder

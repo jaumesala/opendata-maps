@@ -49,7 +49,7 @@
                         </div>
                     </form>
 
-                    <a href="#" class="btn btn-success pull-right">New Map</a>
+                    <a href="{{ route('admin.map.create') }}" class="btn btn-success pull-right">New Map</a>
                 </div>
             </div>
         </div>

@@ -15,13 +15,14 @@ class CreateSourcesTable extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->increments('id');
             $table->string('origin_type', 20);
-            $table->text('origin_url');
+            $table->text('origin_url')->nullable();
+            $table->string('origin_file')->nullable();
             $table->string('origin_format')->nullable();
             $table->integer('origin_size')->nullable();
 
             $table->string('name');
-            $table->text('description');
-            $table->text('web');
+            $table->text('description')->nullable();
+            $table->text('web')->nullable();
 
             $table->string('sync_status', 20);
             $table->string('sync_interval', 20);

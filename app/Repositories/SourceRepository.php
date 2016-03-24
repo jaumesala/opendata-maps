@@ -125,13 +125,14 @@ class SourceRepository
         $source = Source::firstOrNew([
             'origin_type' => $request->origin_type,
             'origin_url' => $request->origin_url,
+            'origin_file' => null,
             'origin_format' => null,
             'origin_size' => null,
             'name' => $request->name,
-            'description' => $request->description,
-            'web' => $request->web,
+            'description' => $request->description ? $request->description : '',
+            'web' => $request->web ? $request->web : '',
             'sync_status' => 'queued',
-            'sync_interval' => $request->sync_interval,
+            'sync_interval' => $request->sync_interval ? $request->sync_interval : 'never',
             'synced_at' => null
         ]);
 
@@ -149,8 +150,8 @@ class SourceRepository
         $model->fill([
             'name' => $request->name,
             'description' => $request->description,
-            'web' => $request->web,
-            'sync_interval' => $request->sync_interval,
+            'web' => $request->web ? $request->web : '',
+            'sync_interval' => $request->sync_interval ? $request->sync_interval : $model->sync_interval,
             ]);
 
         return $model->save();

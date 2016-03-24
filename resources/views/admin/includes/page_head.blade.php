@@ -15,6 +15,8 @@
     <meta name="description" content="{{ trans('includes/page_head.description_'.Route::currentRouteName()) }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    <meta id="token" name="token" value="{{ csrf_token() }}">
+
     <meta name="author" content="Jaume Sala">
     <link type="text/plain" rel="author" href="{{ url('humans.txt') }}" />
 

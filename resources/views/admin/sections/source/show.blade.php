@@ -29,17 +29,31 @@
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Edit source information</h3>
+                    <div class="box-tools">
+                        <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-sm btn-info"><i class="fa fa-refresh"></i> Sync</a>
+                    </div>
                 </div>
                 <!-- /.box-header -->
 
                 <div class="box-body form-horizontal">
 
+                    @if($source->origin_url)
                     <div class="form-group">
                         <label for="origin_url" class="col-sm-3 control-label">Url</label>
                         <div class="col-sm-9">
                             <p class="form-control-static"><a target="_blank" href="{{ $source->origin_url }}">{{ str_limit($source->origin_url, 50) }} <i class="fa fa-fw fa-external-link"></i></a></p>
                         </div>
                     </div>
+                    @endif
+                    @if($source->origin_file)
+                    <div class="form-group">
+                        <label for="origin_file" class="col-sm-3 control-label">File</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static">{{ str_limit($source->origin_file, 50) }}</p>
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="form-group">
                         <label for="origin_format" class="col-sm-3 control-label">File type</label>
                         <div class="col-sm-9">
@@ -58,25 +72,28 @@
                             </p>
                         </div>
                     </div>
-                    @if($errors->has("name")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                    <div class="form-group">
                         <label for="name" class="col-sm-3 control-label">Name</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">{{ $source->name }}</p>
                         </div>
                     </div>
-                    @if($errors->has("description")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                    <div class="form-group">
                         <label for="description" class="col-sm-3 control-label">Description</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">{{ $source->description }}</p>
                         </div>
                     </div>
-                    @if($errors->has("web")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                    @if($source->web)
+                    <div class="form-group">
                         <label for="web" class="col-sm-3 control-label">Website</label>
                         <div class="col-sm-9">
-                            <p class="form-control-static"><a target="_blank" href="{{ $source->web}}">{{ str_limit($source->web, 50) }} <i class="fa fa-fw fa-external-link"></i></a></p>
+                            <p class="form-control-static"><a target="_blank" href="{{ $source->web }}">{{ str_limit($source->web, 50) }} <i class="fa fa-fw fa-external-link"></i></a></p>
                         </div>
                     </div>
-                    @if($errors->has("sync_interval")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                    @endif
+                    @if($source->origin_type != 'file')
+                    <div class="form-group">
                         <label for="sync_interval" class="col-sm-3 control-label">Update it</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
@@ -94,6 +111,7 @@
                             </p>
                         </div>
                     </div>
+                    @endif
 
                 </div>
                 <!-- /.box-body -->

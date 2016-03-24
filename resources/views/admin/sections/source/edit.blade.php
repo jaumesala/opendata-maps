@@ -36,6 +36,7 @@
 
                     <div class="box-body">
 
+                        @if($source->origin_url)
                         <div class="form-group">
                             <label for="origin_url" class="col-sm-3 control-label">Url</label>
                             <div class="col-sm-9">
@@ -44,8 +45,20 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+                        @if($source->origin_file)
                         <div class="form-group">
-                            <label for="origin_format" class="col-sm-3 control-label">File type</label>
+                            <label for="origin_file" class="col-sm-3 control-label">File</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <p class="form-control-static">{{ str_limit($source->origin_file, 60) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="origin_format" class="col-sm-3 control-label">Type</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static" id="origin_format_static">
                                     {{ $source->origin_format }}
@@ -87,6 +100,7 @@
                                 @endif
                             </div>
                         </div>
+                        @if($source->origin_type != 'file')
                         @if($errors->has("web")) <div class="form-group has-error"> @else <div class="form-group"> @endif
                             <label for="web" class="col-sm-3 control-label">Website</label>
                             <div class="col-sm-9">
@@ -101,6 +115,8 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
+                        @if($source->origin_type != 'file')
                         @if($errors->has("sync_interval")) <div class="form-group has-error"> @else <div class="form-group"> @endif
                             <label for="sync_interval" class="col-sm-3 control-label">Update it</label>
                             <div class="col-sm-9">
@@ -122,6 +138,7 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
 
                     </div>
                     <!-- /.box-body -->

@@ -26,7 +26,7 @@
         <div class="col-md-12">
 
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs" id="create-options">
                     <li class="active">
                         <a href="#tab-url" data-toggle="tab" aria-expanded="true"><i class="fa fa-fw fa-link"></i> Url link</a>
                     </li>
@@ -181,10 +181,74 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab-file">
                         <div class="row">
-                            <div class="col-md-12">
-                                <br>
-                                <p class="lead text-center">Work in progress...</p>
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="text-center">
+                                    <h4>Upload data from a local file</h4>
+                                    <p>Select the file to upload. CSV, KML, GPX or GeoJSON</p>
+                                    <br>
+                                </div>
                             </div>
+
+                            <div class="row">
+                            <div class="col-md-5 col-md-offset-3">
+                                <form method="POST" action="{{ route('admin.source.store', '#tab-file') }}" class="form-horizontal" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                    <input type="hidden" name="origin_type" value="file">
+
+                                    @if($errors->has("origin_file")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                                        <label for="origin_file" class="col-sm-3 control-label">File</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" class="form-control" id="origin_file" name="origin_file" placeholder="Url" value="{{ old('origin_file') }}">
+                                            @if ($errors->has("origin_file"))
+                                                <p class="help-block">
+                                                    {{ $errors->first("origin_file") }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @if($errors->has("name")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                                        <label for="name" class="col-sm-3 control-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
+                                                <div class="input-group-addon"><i class="fa fa-fw fa-info-circle" data-toggle="tooltip" data-placement="top" title="A descriptive name to understand what this source is"></i></div>
+                                            </div>
+                                            @if ($errors->has("name"))
+                                                <p class="help-block">
+                                                    {{ $errors->first("name") }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @if($errors->has("description")) <div class="form-group has-error"> @else <div class="form-group"> @endif
+                                        <label for="description" class="col-sm-3 control-label">Description</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="description" id="description" rows="4" placeholder="Give a short description of what we can find in this dataset">{{ old('description') }}</textarea>
+                                            @if ($errors->has("description"))
+                                                <p class="help-block">
+                                                    {{ $errors->first("description") }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- <button type="submit" class="btn btn-default">Cancel</button> -->
+                                    <button type="submit" class="btn btn-success pull-right">upload source</button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                     <!-- /.tab-pane -->

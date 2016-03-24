@@ -30,11 +30,22 @@
                     <form method="GET" action="{{ route('admin.source.index') }}">
                         <div class="btn-toolbar pull-left" role="toolbar">
                             <div class="btn-group">
+
                                 <?php
-                                    $orderDate      = Request::has('order') ? '' : 'active';
-                                    $orderName      = ''; //Request::has('order') ? 'active' : '';
-                                    $orderStatus    = Request::has('order') ? 'active' : '';
+                                    $orderDate = 'active';
+                                    $orderName = '';
+                                    $orderStatus = '';
+
+                                    if(Request::has('order'))
+                                    {
+                                        $order = Request::input('order');
+
+                                        $orderDate      = ($order == 'created_at') ? 'active' : '';
+                                        $orderName      = ($order == 'name') ? 'active' : '';
+                                        $orderStatus    = ($order == 'sync_status') ? 'active' : '';
+                                    }
                                 ?>
+
                                 <a href="{{ route('admin.source.index') }}" class="btn btn-primary {{ $orderDate }}"><i class="fa fa-fw fa-clock-o"></i></a>
                                 <a href="{{ route('admin.source.index', [ 'order' => 'name']) }}" class="btn btn-primary {{ $orderName }}"><i class="fa fa-fw fa-sort-alpha-asc"></i></a>
                                 <a href="{{ route('admin.source.index', [ 'order' => 'sync_status']) }}" class="btn btn-primary {{ $orderStatus }}"><i class="fa fa-fw fa-line-chart"></i></a>
@@ -128,7 +139,9 @@
 
                                 <td class="text-right">
                                     <!-- <div class="btn-group"> -->
+                                        @if($source->origin_type != 'file')
                                         <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-xs btn-info"><i class="fa fa-refresh"></i> Sync</a>
+                                        @endif
                                         <a href="{{ route('admin.source.show', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Show</a>
                                         {{--
                                         <a href="{{ route('admin.source.edit', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>

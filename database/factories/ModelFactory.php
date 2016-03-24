@@ -51,8 +51,9 @@ $factory->define(App\Models\Map::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
 
     return [
-        'origin_type' => $faker->randomElement(['url', 'url', 'url', 'url', 'upload', 'dropbox', 'gdrive']),
-        'origin_url' => $faker->url,
+        'origin_type' => $faker->randomElement(['url', 'url', 'url', 'url', 'file', 'dropbox', 'gdrive']),
+        'origin_url' => $faker->randomElement([null, $faker->url]),
+        'origin_file' => $faker->randomElement([null, 'whatever.csv']),
         'origin_format' => $faker->randomElement(['csv', 'geojson']),
         'origin_size' => $faker->numberBetween(100000, 15000000),
 

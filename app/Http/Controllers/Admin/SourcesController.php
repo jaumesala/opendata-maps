@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\CreateSourceRequest;
 use App\Http\Requests\Admin\DestroySourceRequest;
 use App\Http\Requests\Admin\UpdateSourceRequest;
 use App\Jobs\DownloadUrlSource;
+use App\Jobs\ConvertSource;
 use Storage;
 
 class SourcesController extends Controller
@@ -98,8 +99,35 @@ class SourcesController extends Controller
             Storage::makeDirectory('sources/'.$source->id.'/o');
             Storage::makeDirectory('sources/'.$source->id.'/p');
 
-            // Queue remote file download
-            $this->dispatch(new DownloadUrlSource($source));
+            $type = $request->origin_type;
+
+             switch($type)
+            {
+                case 'url':
+                    // Queue remote file download
+                    $this->dispatch(new DownloadUrlSource($source));
+                    break;
+
+                case 'file':
+                    //move temp file to raw path
+                    if ($request->hasFile('origin_file'))
+                    {
+                        $source->origin_format = $request->file('origin_file')->getClientOriginalExtension();
+                        $source->origin_size = $request->file('origin_file')->getClientSize();
+                        $source->origin_file = $request->file('origin_file')->getClientOriginalName();
+                        $source->save();
+
+                        $request->file('origin_file')->move(storage_path('app/sources/'.$source->id.'/o'), 'file.raw');
+
+                        // Queue the source to be converted
+                        $this->dispatch(new ConvertSource($source));
+                    }
+                    break;
+
+                default:
+            }
+
+
         }
 
         return redirect()->route('admin.source.index')->with('status', 'create-success');

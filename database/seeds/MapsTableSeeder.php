@@ -11,8 +11,10 @@ class MapsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Map::class, 20)->create();
-
-
+        factory(App\Models\Map::class, 20)->create()->each(function($map) {
+            $map->tags()->sync(
+                App\Models\Tag::all()->random(3)
+            );
+        });
     }
 }

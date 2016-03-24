@@ -67,3 +67,12 @@ $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
         'updated_at' => $faker->dateTimeBetween('-5 months','now')
     ];
 });
+
+$factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->word,
+    ];
+});
+
+

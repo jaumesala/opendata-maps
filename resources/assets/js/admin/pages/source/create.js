@@ -2,18 +2,11 @@ SITE.source.create = function(){
 
     console.log('create');
 
-    // $('#confirmDelete').on('show.bs.modal', function (event) {
-    //     var button  = $(event.relatedTarget) // Button that triggered the modal
-    //     var action  = button.data('action') // Extract info from data-* attributes
-    //     var id      = button.data('id') // Extract info from data-* attributes
-
-    //     var modal = $(this)
-    //     modal.find('form').attr('action', action);
-    //     modal.find('input[name=id]').attr('value', id);
-    // });
+    var hash = window.location.hash;
+    console.log("aa "+hash);
+    $('#create-options a[href="' + hash + '"]').tab('show');
 
     var $select = $('.select2');
-    // var $oldValues = $select.data('old').toString().split(",");
     $('.select2').css('width', '100%').select2({ minimumResultsForSearch: -1 });
 
     var oui = $('#origin_url');

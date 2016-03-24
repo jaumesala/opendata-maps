@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\MapRepository;
-// use App\Http\Requests\Admin\CreateSourceRequest;
+use App\Repositories\TagRepository;
+use App\Http\Requests\Admin\CreateMapRequest;
 // use App\Http\Requests\Admin\DestroySourceRequest;
 // use App\Http\Requests\Admin\UpdateSourceRequest;
 
@@ -66,18 +67,19 @@ class MapsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(TagRepository $tag)
     {
-        // $routeName = 'users';
-        // $routeMethod = 'create';
+        $routeName = 'map';
+        $routeMethod = 'create';
 
-        // $roles = $this->role->getAllOrderedBy('name');
+        $tags = $tag->getAllOrderedBy('name');
 
-        // $data = compact('routeName', 'routeMethod', 'roles');
 
-        // \Clockwork::info($roles);
+        $data = compact('routeName', 'routeMethod', 'tags');
 
-        // return view('admin.sections.user.create', $data);
+        \Clockwork::info($data);
+
+        return view('admin.sections.map.create', $data);
     }
 
     /**
@@ -88,13 +90,19 @@ class MapsController extends Controller
      */
     public function store(CreateMapRequest $request)
     {
-        // $result = $this->user->storeUser($request);
+        // dd($request->input());
+        if($request->has('id') && intval($request->id) != 0)
+        {
+            return $this->update($request);
+        }
 
-        // if(!$result){
-        //     return redirect()->back()->with('status', 'create-error');
-        // }
+        $result = $this->map->storeMap($request);
 
-        // return redirect()->route('admin.user.index')->with('status', 'create-success');
+        if(!$result){
+            return redirect()->back()->with('status', 'create-error');
+        }
+
+        return redirect()->back()->with('status', 'create-success');
     }
 
     /**

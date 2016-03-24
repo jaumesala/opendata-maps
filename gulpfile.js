@@ -51,7 +51,9 @@ var components = [
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/plugins/select2/select2.full.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
-    nodeRelative + 'vue/dist/vue.js'
+    nodeRelative + 'vue/dist/vue.js',
+    nodeRelative + 'vue-resource/dist/vue-resource.js',
+
     // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
     // bowerRelative + 'jquery-form/jquery.form.js',
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',

@@ -23,13 +23,34 @@ class CreateSourceRequest extends Request
      */
     public function rules()
     {
-        return [
+        $type = $this->input('origin_type');
+
+        $rules = [
             'origin_type'   => 'required|in:url,file,dropbox,gdrive',
-            'origin_url'    => 'required|url|max:2048',
             'name'          => 'required|max:255',
             'description'   => 'sometimes|string',
-            'web'           => 'sometimes|url',
-            'sync_interval' => 'required|in:never,yearly,monthly,weekly,daily,onchange',
         ];
+
+        switch($type)
+        {
+            case 'url':
+                $typeRules = [
+                    'origin_url'    => 'required|url|max:2048',
+                    'web'           => 'sometimes|url',
+                    'sync_interval' => 'required|in:never,yearly,monthly,weekly,daily,onchange',
+                ];
+                break;
+
+            case 'file':
+                $typeRules = [
+                    'origin_file'    => 'required|mimes:csv,txt,json,geojson,kml,gpx'
+                ];
+                break;
+
+            default:
+                $typeRules = [];
+        }
+
+        return array_merge($rules, $typeRules);
     }
 }

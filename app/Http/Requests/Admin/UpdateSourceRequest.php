@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
+use App\Models\Source;
 
 class UpdateSourceRequest extends Request
 {
@@ -23,11 +24,31 @@ class UpdateSourceRequest extends Request
      */
     public function rules()
     {
-        return [
+        $id = $this->route('source');
+        $source = Source::findOrFail($id);
+
+        $rules = [
             'name'          => 'required|max:255',
             'description'   => 'sometimes|string',
             'web'           => 'sometimes|url',
-            'sync_interval' => 'required|in:never,yearly,monthly,weekly,daily,onchange',
         ];
+
+        switch($source->origin_type)
+        {
+            case 'url':
+                $typeRules = [
+                    'sync_interval' => 'required|in:never,yearly,monthly,weekly,daily,onchange',
+                ];
+                break;
+
+            case 'file':
+                $typeRules = [];
+                break;
+
+            default:
+                $typeRules = [];
+        }
+
+        return array_merge($rules, $typeRules);
     }
 }

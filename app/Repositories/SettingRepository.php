@@ -16,6 +16,24 @@ class SettingRepository
         return $settings;
     }
 
+    /**
+     * @return array
+     */
+    public function getCacheMap()
+    {
+        $settings = Setting::orderBy('group')->orderBy('key')->select('group', 'key', 'value')->get();
+        $settings = $settings->groupBy('group');
+
+        $map = [];
+
+        foreach ($settings as $groupName => $groupSettings) {
+            foreach ($groupSettings as $setting) {
+                $map[$groupName][$setting->key] = $setting->value;
+            }
+        }
+
+        return collect($map);
+    }
 
     /**
      * @param  string $group

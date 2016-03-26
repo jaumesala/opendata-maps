@@ -17,7 +17,6 @@ class CreateSettingsTable extends Migration
             $table->string('group')->default('general');
             $table->string('key');
             $table->string('value');
-            $table->timestamps();
 
             $table->index(['group', 'key']);
         });

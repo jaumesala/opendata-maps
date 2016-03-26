@@ -10,6 +10,8 @@ use App\Repositories\SettingRepository;
 use App\Http\Requests\Admin\UpdateSettingsRequest;
 use App\Http\Requests\Admin\CreateSettingRequest;
 use App\Http\Requests\Admin\DestroySettingRequest;
+use App\Events\SettingsWereModified;
+use Event;
 
 class SettingsController extends Controller
 {
@@ -74,6 +76,7 @@ class SettingsController extends Controller
             return redirect()->back()->with('status', 'create-error');
         }
 
+        Event::fire(new SettingsWereModified());
         return redirect()->back()->with('status', 'create-success');
     }
 
@@ -129,9 +132,8 @@ class SettingsController extends Controller
             return redirect()->back()->with('status', 'update-error');
         }
 
+        Event::fire(new SettingsWereModified());
         return redirect()->back()->with('status', 'update-success');
-
-
     }
 
     /**
@@ -148,7 +150,7 @@ class SettingsController extends Controller
             return redirect()->back()->with('status', 'destroy-error');
         }
 
+        Event::fire(new SettingsWereModified());
         return redirect()->back()->with('status', 'destroy-success');
-
     }
 }

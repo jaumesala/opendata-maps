@@ -43,9 +43,9 @@
 
                     @foreach($settingsGroup as $setting)
                         @if($errors->has("settings.$setting->id.value")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="{{ $setting->key }}" class="col-sm-2 control-label">{{ $setting->key }}</label>
+                            <label for="{{ $setting->key }}" class="col-sm-3 control-label">{{ $setting->key }}</label>
 
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input type="hidden" name="{{ "settings[$setting->id][key]" }}" value="{{ $setting->key }}">
                                 <input  type="text"
                                         class="form-control"
@@ -92,8 +92,8 @@
                     <div class="box-body">
 
                         @if($errors->has("group")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="group" class="col-sm-2 control-label">Group</label>
-                            <div class="col-sm-10">
+                            <label for="group" class="col-sm-3 control-label">Group</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="group" name="group" placeholder="group" value="{{ old('group') }}">
                                 @if ($errors->has("group"))
                                     <p class="help-block">
@@ -103,8 +103,8 @@
                             </div>
                         </div>
                         @if($errors->has("key")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="key" class="col-sm-2 control-label">Key</label>
-                            <div class="col-sm-10">
+                            <label for="key" class="col-sm-3 control-label">Key</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="key" name="key" placeholder="Key" value="{{ old('key') }}">
                                 @if ($errors->has("key"))
                                     <p class="help-block">
@@ -114,8 +114,8 @@
                             </div>
                         </div>
                         @if($errors->has("value")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="value" class="col-sm-2 control-label">Value</label>
-                            <div class="col-sm-10">
+                            <label for="value" class="col-sm-3 control-label">Value</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="value" name="value" placeholder="Value" value="{{ old('value') }}">
                                 @if ($errors->has("value"))
                                     <p class="help-block">
@@ -150,8 +150,8 @@
                     <div class="box-body">
 
                         @if($errors->has("id")) <div class="form-group has-error"> @else <div class="form-group"> @endif
-                            <label for="id" class="col-sm-2 control-label">Setting</label>
-                            <div class="col-sm-10">
+                            <label for="id" class="col-sm-3 control-label">Setting</label>
+                            <div class="col-sm-9">
                                 <select name="id" id="id" class="form-control">
                                     <option disabled selected>Select a setting</option>
                                     @foreach($settings as $group => $settingsGroup)
@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
+                            <div class="col-sm-offset-3 col-sm-9">
                                 @if($errors->has("confirmation")) <div class="has-error"> @else <div> @endif
                                     <div class="checkbox">
                                         <label>

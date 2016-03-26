@@ -39,14 +39,14 @@ class SourceRepository
 
     public function getPageOrderedBy($column = 'id', $order = 'asc')
     {
-        $sources = Source::orderBy($column, $order)->paginate(20);
+        $sources = Source::orderBy($column, $order)->paginate(setting_value('sources', 'pageResults'));
 
         return $sources;
     }
 
     public function getQueryPageOrderedBy($query = '', $column = 'id', $order = 'asc')
     {
-        $sources = Source::where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(20);
+        $sources = Source::where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(setting_value('sources', 'pageResults'));
 
         return $sources;
     }

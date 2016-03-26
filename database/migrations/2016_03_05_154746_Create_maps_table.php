@@ -15,9 +15,18 @@ class CreateMapsTable extends Migration
         Schema::create('maps', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+
             $table->string('status', 20);
             $table->string('name');
             $table->text('description');
+
+            $table->string('style');
+            $table->decimal('longitude',11,8);
+            $table->decimal('latitude',10,8);
+            $table->integer('zoom');
+            $table->integer('pitch');
+            $table->integer('bearing');
+
             $table->integer('views');
             $table->timestamps();
 

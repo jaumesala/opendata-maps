@@ -38,10 +38,19 @@ $factory->define(App\Models\Map::class, function (Faker\Generator $faker) {
 
     return [
         'user_id' => $faker->randomElement($users),
+
         'status' => $faker->randomElement(['public','public','public','private','private','disabled']),
         'name' => $faker->sentence(6),
-        'views' => $faker->numberBetween(1,1000),
         'description' => $faker->paragraph(2),
+
+        'style' => $faker->randomElement(['cilv7wj9m00uxbim8zml4zdz3', 'cikedqlyp00bbkqlxe7kzopov']),
+        'longitude' => 4.390819,
+        'latitude' => 51.92696,
+        'zoom' => $faker->numberBetween(8, 10),
+        'pitch' => $faker->numberBetween(10, 50),
+        'bearing' => $faker->numberBetween(20, 180),
+
+        'views' => $faker->numberBetween(1,1000),
         'created_at' => $faker->dateTimeBetween('-2 year','-6 months'),
         'updated_at' => $faker->dateTimeBetween('-5 months','now')
     ];

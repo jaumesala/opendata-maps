@@ -1,0 +1,14 @@
+#map.edit{
+    .box-map,
+    .nav-tabs-custom{
+        margin-bottom: 0;
+    }
+
+
+    #map-view{
+        min-height: 600px;
+        height: 100%;
+        background-color: lighten($gray-lighter, 5%);
+    }
+
+}

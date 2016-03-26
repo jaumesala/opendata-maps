@@ -74,8 +74,14 @@ class MapsController extends Controller
 
         $tags = $tag->getAllOrderedBy('name');
 
+        $environment = collect([
+                'settings' => \Cache::get('settings')
+            ]);
 
-        $data = compact('routeName', 'routeMethod', 'tags');
+        $environment = $environment->toJSON();
+
+
+        $data = compact('routeName', 'routeMethod', 'tags', 'environment');
 
         \Clockwork::info($data);
 
@@ -91,18 +97,13 @@ class MapsController extends Controller
     public function store(CreateMapRequest $request)
     {
         // dd($request->input());
-        if($request->has('id') && intval($request->id) != 0)
-        {
-            return $this->update($request);
-        }
-
         $result = $this->map->storeMap($request);
 
         if(!$result){
             return redirect()->back()->with('status', 'create-error');
         }
 
-        return redirect()->back()->with('status', 'create-success');
+        return redirect()->route('admin.map.edit', $result->id)->with('status', 'create-success');
     }
 
     /**

@@ -10,4 +10,28 @@
         height: 100%;
         background-color: lighten($gray-lighter, 5%);
     }
+
+    .slider {
+        &.slider-horizontal{
+            height: 34px;
+            .slider-handle{
+                margin-left: -8px;
+                margin-top: -4px;
+                width: 16px;
+                height: 16px;
+                background-color: #3c8dbc;
+            }
+        }
+    }
+
+    .slider-track{
+        border-radius: 0;
+    }
+
+    .tooltip{
+        &.top{
+            margin-top: -28px;
+            margin-left: -12px !important;
+        }
+    }
 }

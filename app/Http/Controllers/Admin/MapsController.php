@@ -45,7 +45,7 @@ class MapsController extends Controller
         if(in_array($request->input('order', ''), ['status', 'name', 'views', 'created_at', 'updated_at'])){
             $order = $request->input('order');
         } else {
-            $order = 'created_at';
+            $order = setting_value('maps', 'defaultOrder');
         }
 
         if($request->has('query')){

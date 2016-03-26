@@ -32,3 +32,21 @@ if (! function_exists('number_sizeFormat')) {
 }
 
 
+if (! function_exists('setting_value')) {
+    /**
+     * Returns the value for a given group name and key.
+     *
+     * @param  string  $group
+     * @param  string  $key
+     * @return string
+     */
+    function setting_value($group, $key)
+    {
+        if( ! \Cache::has('settings') ) return null;
+        $cache = \Cache::get('settings');
+        if( ! $cache->has($group) ) return null;
+        $groupCache = $cache[$group];
+        if( ! array_key_exists($key, $groupCache) ) return null;
+        return $groupCache[$key];
+    }
+}

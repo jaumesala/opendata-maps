@@ -48,7 +48,7 @@ class SourcesController extends Controller
             $order = $request->input('order');
             $direction = 'asc';
         } else {
-            $order = 'created_at';
+            $order = setting_value('sources', 'defaultOrder');
             $direction = 'desc';
         }
 

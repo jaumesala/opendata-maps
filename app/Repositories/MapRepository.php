@@ -33,14 +33,14 @@ class MapRepository
 
     public function getPageOrderedBy($column = 'id', $order = 'asc')
     {
-        $maps = Map::with('user')->orderBy($column, $order)->paginate(12);
+        $maps = Map::with('user')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
 
         return $maps;
     }
 
     public function getQueryPageOrderedBy($query = '', $column = 'id', $order = 'asc')
     {
-        $maps = Map::with('user')->where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(12);
+        $maps = Map::with('user')->where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
 
         return $maps;
     }

@@ -6,6 +6,9 @@
         <!-- Turf -->
         <script src='{!! setting_value('mapbox', 'turfScript') !!}'></script>
 
+        <script>
+            var env = {!! $environment or '{}' !!}
+        </script>
 
         @if (App::environment() != 'production')
             <script src="{{ asset('js/admin/plugins.js') }}"></script>

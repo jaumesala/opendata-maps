@@ -24,9 +24,16 @@ class CreateMapRequest extends Request
     public function rules()
     {
         return [
-            'status'        => 'required|in:public,private,disabled',
             'name'          => 'required|max:255',
+            'status'        => 'required|in:public,private,disabled',
             'description'   => 'sometimes|string',
+            'tags'          => 'required',
+            'style'         => 'required|string',
+            'zoom'          => 'required|numeric',
+            'longitude'     => 'required|numeric',
+            'latitude'      => 'required|numeric',
+            'pitch'         => 'required|numeric',
+            'bearing'       => 'required|numeric',
         ];
     }
 }

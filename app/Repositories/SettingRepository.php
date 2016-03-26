@@ -12,7 +12,7 @@ class SettingRepository
     public function getAllByGroupOrdered()
     {
         $settings = Setting::orderBy('group')->orderBy('key')->get();
-        $settings = $settings->groupBY('group');
+        $settings = $settings->groupBy('group');
         return $settings;
     }
 

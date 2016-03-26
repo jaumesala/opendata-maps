@@ -47,11 +47,17 @@ class MapRepository
 
     public function storeMap($request)
     {
-        $map = new Map([
-            'name' => $request->name,
-            'status' => $request->status,
-            'description' => $request->description,
-        ]);
+        $map = new Map();
+
+        $map->name = $request->name;
+        $map->status = $request->status;
+        $map->description = $request->description;
+        $map->style = $request->style;
+        $map->longitude = $request->longitude;
+        $map->latitude = $request->latitude;
+        $map->zoom = $request->zoom;
+        $map->pitch = $request->pitch;
+        $map->bearing = $request->bearing;
 
         $map->user()->associate(Auth::user());
 

@@ -67,7 +67,7 @@
 
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="5" v-model="map.description"></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="5" v-model="map.description">{{ old('description', null) }}</textarea>
                             </div>
 
                             @if($errors->has("tags")) <div class="form-group has-error"> @else <div class="form-group"> @endif

@@ -60,7 +60,6 @@ var components = [
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
     // bowerRelative + 'jquery.easing/js/jquery.easing.js',
     // bowerRelative + 'slick.js/slick/slick.js',
-    // '../vendor/royalslider/jquery.royalslider.min.js',
 ];
 
 

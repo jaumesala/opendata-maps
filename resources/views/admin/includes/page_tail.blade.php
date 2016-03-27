@@ -10,6 +10,8 @@
             var env = {!! $environment or '{}' !!}
         </script>
 
+        @stack('preAppScripts')
+
         @if (App::environment() != 'production')
             <script src="{{ asset('js/admin/plugins.js') }}"></script>
             <script src="{{ asset('js/admin/app.js') }}"></script>
@@ -17,6 +19,8 @@
             <script src="{{ asset('js/admin/plugins.min.js') }}"></script>
             <script src="{{ asset('js/admin/app.min.js') }}"></script>
         @endif
+
+        @stack('postAppScripts')
 
     </body>
 </html>

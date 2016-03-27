@@ -112,9 +112,9 @@ elixir(function(mix) {
         // admin/app.scss
         .sass('admin/app.scss', publicPath + '/' + elixir.config.css.outputFolder + '/admin/app' + min + '.css')
 
-        // admin/app.js
+        // admin/app/app.js
         .scriptsIn(
-            elixir.config.assetsPath + '/js/admin',
+            elixir.config.assetsPath + '/js/admin/app',
             publicPath + '/' + elixir.config.js.outputFolder + '/admin/app' + min + '.js'
         )
 

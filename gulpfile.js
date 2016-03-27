@@ -6,6 +6,7 @@
  */
 
 var elixir = require('laravel-elixir');
+require('laravel-elixir-vueify');
 
 /*
  |--------------------------------------------------------------------------
@@ -122,7 +123,12 @@ elixir(function(mix) {
             components,
             publicPath + '/' + elixir.config.js.outputFolder + '/admin/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
-        );
+        )
+
+        .browserify(
+            'admin/editor/editor.js',
+            publicPath + '/' + elixir.config.js.outputFolder + '/admin/editor' + min + '.js'
+        )
 
         // copy files
         for (var i = 0, len = copyToPublic.length; i < len; i++) {

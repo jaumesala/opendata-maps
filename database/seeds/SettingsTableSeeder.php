@@ -29,7 +29,7 @@ class SettingsTableSeeder extends Seeder
                 'value'  => 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.15.0/mapbox-gl.js',
                 ],
             [   'group'  => 'mapbox',
-                'key' => 'turfApiScript',
+                'key' => 'turfScript',
                 'value'  => 'https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js',
                 ],
             [   'group'  => 'mapbox',

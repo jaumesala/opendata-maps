@@ -133,19 +133,25 @@ class MapsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TagRepository $tag, $id)
     {
-        // $routeName = 'users';
-        // $routeMethod = 'edit';
+        $routeName = 'map';
+        $routeMethod = 'edit';
 
-        // $user = $this->user->getById($id);
-        // $roles = $this->role->getAllOrderedBy('name');
+        $map = $this->map->getById($id);
+        $tags = $tag->getAllOrderedBy('name');
 
-        // $data = compact('routeName', 'routeMethod', 'user', 'roles');
+        $environment = collect([
+                'settings' => \Cache::get('settings')
+            ]);
 
-        // \Clockwork::info($user);
+        $environment = $environment->toJSON();
 
-        // return view('admin.sections.user.edit', $data);
+        $data = compact('routeName', 'routeMethod', 'map', 'tags', 'environment');
+
+        \Clockwork::info($map);
+
+        return view('admin.sections.map.edit', $data);
     }
 
     /**

@@ -18,7 +18,7 @@ class MapRepository
 
     public function getById($id)
     {
-        $map = Map::with('user')->findOrFail($id);
+        $map = Map::with('user', 'tags')->findOrFail($id);
 
         return $map;
     }

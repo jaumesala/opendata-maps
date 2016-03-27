@@ -2,10 +2,10 @@ SITE.map.edit = function(){
 
     console.log('edit');
 
-    var $select = $('.select2');
-    $select.each(function(){
-        $(this).css('width', '100%').select2( $(this).data('options') );
-    });
+    // var $select = $('.select2');
+    // $select.each(function(){
+    //     $(this).css('width', '100%').select2( $(this).data('options') );
+    // });
     // var $oldValues = $select.data('old').toString().split(",");
     // $('.select2').css('width', '100%').select2().val($oldValues).trigger("change");
 

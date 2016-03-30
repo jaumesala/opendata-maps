@@ -9,6 +9,16 @@ class Role extends Model
 
     use Traits\RoleTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'label'
+    ];
+
+
     public function users()
     {
         return $this->belongsToMany(User::class);

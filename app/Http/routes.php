@@ -30,6 +30,13 @@
 
 Route::group(['middleware' => ['web']], function () {
 
+    Route::get('/', [
+            'uses' => function(){
+                return "hello!";
+            },
+            'as' => 'admin.dashboard.index'
+            ]);
+
     Route::auth();
 
     Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){

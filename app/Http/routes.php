@@ -54,6 +54,13 @@ Route::group(['middleware' => ['web']], function () {
     /* Users */
         Route::resource('user', 'Admin\UsersController');
 
+    /* Roles */
+        Route::resource('role', 'Admin\RolesController');
+
+    /* Permissions */
+        Route::resource('permission', 'Admin\PermissionsController');
+
+
     /* Sources */
         /* URL methods */
         Route::get('source/url/check', [

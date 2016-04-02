@@ -39,7 +39,7 @@
                 </a>
             </li>
             <?php
-                if( Request::is('admin/settings*') || Request::is('admin/user*') || Request::is('admin/roles*') || Request::is('admin/permissions*')){
+                if( Request::is('admin/settings*') || Request::is('admin/user*') || Request::is('admin/role*') || Request::is('admin/permission*')){
                     $adminActive = "active";
                 } else {
                     $adminActive = "";

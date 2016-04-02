@@ -441,6 +441,10 @@ class SourceRepository
         if(!$pubPath) return false;
 
         $result = null;
+        if(Storage::exists($pubPath))
+        {
+            Storage::delete($pubPath);
+        }
 
         $result = Storage::copy($procPath, $pubPath);
 

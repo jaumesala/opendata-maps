@@ -1,5 +1,6 @@
 <form method="POST" action="{{ route('admin.layer.update', $layer->id) }}">
     <input name="_method" type="hidden" value="PUT">
+    {{ csrf_field() }}
 
     <div class="box box-default box-solid">
         <div class="box-header with-border">
@@ -18,7 +19,7 @@
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Layer's name" value="{{ $layer->name }}">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Layer's name" value="{{ $layer->name }}">
                     </div>
                 </div>
                 <div class="col-sm-7">
@@ -55,10 +56,10 @@
 
             <div class="form-group">
                 <label for="source">Source</label>
-                {!! Form::select('source',
+                {!! Form::select('source_id',
                     $sources->lists('name', 'id'),
-                    old('source', $layer->source->id),
-                    [   'id' => 'source',
+                    old('source_id', $layer->source->id),
+                    [   'id' => 'source_id',
                         'class' => 'form-control select2',
                         'data-options' => '{ }' ]
                         ) !!}

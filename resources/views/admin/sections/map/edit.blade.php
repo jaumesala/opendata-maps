@@ -199,12 +199,22 @@
 
                             <div id="layers">
 
+                                {{-- Edit layers --}}
                                 @foreach ($map->layers as $layer)
                                     <?php
                                         $data = compact('sources', 'layer', 'map')
                                     ?>
-                                    @include('admin.sections.map.partials.layer', $data)
+                                    @include('admin.sections.map.layer.edit', $data)
                                 @endforeach
+                                {{-- /Edit layers --}}
+
+                            </div>
+
+                            <div id="new-layer">
+                                <?php
+                                    $data = compact('sources', 'map')
+                                ?>
+                                @include('admin.sections.map.layer.create', $data)
 
                             </div>
 

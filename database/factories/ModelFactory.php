@@ -11,8 +11,9 @@
 |
 */
 
-use App\Models\user;
-
+use App\Models\User;
+use App\Models\Source;
+use App\Models\Map;
 
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     return [
@@ -78,6 +79,7 @@ $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
     ];
 });
 
+
 $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
 
     return [
@@ -85,4 +87,24 @@ $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
     ];
 });
 
+
+$factory->define(App\Models\Layer::class, function (Faker\Generator $faker) {
+
+    $sources  = Source::lists('id')->toArray();
+    $maps  = Map::lists('id')->toArray();
+
+    return [
+        'name' => $faker->word,
+        'map_id' => $faker->randomElement($maps),
+        'source_id' => $faker->randomElement($sources),
+        'visible' => $faker->boolean(90),
+        'opacity' => $faker->randomElement([10, 80, 50, 20, 0 ]),
+        'type' => $faker->randomElement(['fill', 'line', 'circle' ]),
+        'minzoom' => 0,
+        'maxzoom' => 22,
+        'interactive' => $faker->boolean(75),
+        'filter' => '',
+        'paint' => '',
+    ];
+});
 

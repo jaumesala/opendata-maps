@@ -28,4 +28,9 @@ class Source extends Model
     {
         return $this->hasMany(Record::class);
     }
+
+    public function layers()
+    {
+        return $this->hasMany(Layer::class);
+    }
 }

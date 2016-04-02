@@ -87,6 +87,8 @@ Route::group(['middleware' => ['web']], function () {
     /* Maps */
         Route::resource('map', 'Admin\MapsController');
 
+    /* Layers */
+        Route::resource('layer', 'Admin\LayersController');
     });
 
 });

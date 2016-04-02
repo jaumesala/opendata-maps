@@ -81,7 +81,6 @@ class MapRepository
         $map = Map::findOrFail($id);
 
         $values = $request->except('_token', '_method', '_section', 'tags');
-// dd($values);
         $map->fill($values);
 
         if( $request->has('tags') && is_array($request->tags) )
@@ -96,4 +95,12 @@ class MapRepository
         return $map->save();
     }
 
+    public function destroyMap($id)
+    {
+        $map = Map::findOrFail($id);
+
+        $result = Map::destroy($id);
+
+        return $result;
+    }
 }

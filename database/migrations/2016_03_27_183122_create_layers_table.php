@@ -27,8 +27,8 @@ class CreateLayersTable extends Migration
             $table->text('paint');
             $table->timestamps();
 
-            $table->foreign('map_id')->references('id')->on('maps');
-            $table->foreign('source_id')->references('id')->on('sources');
+            $table->foreign('map_id')->references('id')->on('maps')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
         });
     }
 

@@ -124,7 +124,7 @@
                                         @endpermission
                                         @permission('destroy-map')
                                         <li class="divider"></li>
-                                        <li><a href="#"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $map->id }}" data-action="{{ route('admin.map.destroy', $map->id) }}"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
                                         @endpermission
                                     </ul>
                                 </div>

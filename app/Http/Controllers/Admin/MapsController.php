@@ -10,7 +10,7 @@ use App\Repositories\MapRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\SourceRepository;
 use App\Http\Requests\Admin\CreateMapRequest;
-// use App\Http\Requests\Admin\DestroySourceRequest;
+use App\Http\Requests\Admin\DestroyMapRequest;
 use App\Http\Requests\Admin\UpdateMapRequest;
 
 class MapsController extends Controller
@@ -189,16 +189,12 @@ class MapsController extends Controller
      */
     public function destroy($id, DestroyMapRequest $request)
     {
-        // $result = $this->user->destroyUser($id);
+        $result = $this->map->destroyMap($id);
 
-        // if($result < 0){
-        //     return redirect()->back()->with('status', 'destroy-refused');
-        // }
+        if($result == 0){
+            return redirect()->back()->with('status', 'destroy-error');
+        }
 
-        // if($result == 0){
-        //     return redirect()->back()->with('status', 'destroy-error');
-        // }
-
-        // return redirect()->route('admin.user.index')->with('status', 'destroy-success');
+        return redirect()->route('admin.map.index')->with('status', 'destroy-success');
     }
 }

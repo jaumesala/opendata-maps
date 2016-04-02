@@ -70,14 +70,14 @@ trait UserTrait
             // Return the value of $requireAll;
             return $requireAll;
         } elseif(is_string($permission)) {
-            foreach ($this->roles() as $role) {
+            foreach ($this->roles as $role) {
                 // Validate against the Permission table
                 // foreach ($role->cachedPermissions() as $perm) {
                 //     if (str_is( $permission, $perm->name) ) {
                 //         return true;
                 //     }
                 // }
-                return $role->permissions->contains('name', $role);
+                return $role->permissions->contains('name', $permission);
             }
         }
 

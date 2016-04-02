@@ -18,7 +18,7 @@ class MapRepository
 
     public function getById($id)
     {
-        $map = Map::with('user', 'tags')->findOrFail($id);
+        $map = Map::with('user', 'tags', 'layers.source')->findOrFail($id);
 
         return $map;
     }
@@ -73,6 +73,27 @@ class MapRepository
         }
 
         return $map;
+    }
+
+    public function updateMap($request)
+    {
+        $id = $request->route('map');
+        $map = Map::findOrFail($id);
+
+        $values = $request->except('_token', '_method', '_section', 'tags');
+// dd($values);
+        $map->fill($values);
+
+        if( $request->has('tags') && is_array($request->tags) )
+        {
+            $tagList = Tag::lists('id')->toArray();
+
+            $cleanTags = array_intersect($request->tags, $tagList);
+
+            $map->tags()->sync($cleanTags);
+        }
+
+        return $map->save();
     }
 
 }

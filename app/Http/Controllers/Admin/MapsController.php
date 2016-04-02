@@ -8,9 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\MapRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\SourceRepository;
 use App\Http\Requests\Admin\CreateMapRequest;
 // use App\Http\Requests\Admin\DestroySourceRequest;
-// use App\Http\Requests\Admin\UpdateSourceRequest;
+use App\Http\Requests\Admin\UpdateMapRequest;
 
 class MapsController extends Controller
 {
@@ -139,23 +140,25 @@ class MapsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TagRepository $tag, $id)
+    public function edit(TagRepository $tag, SourceRepository $source, $id)
     {
         $routeName = 'map';
         $routeMethod = 'edit';
 
         $map = $this->map->getById($id);
         $tags = $tag->getAllOrderedBy('name');
+        $sources = $source->getAllOrderedBy('name');
 
         $environment = collect([
-                'settings' => \Cache::get('settings')
+                'settings' => \Cache::get('settings'),
+                // 'sources' => $sources
             ]);
 
         $environment = $environment->toJSON();
 
-        $data = compact('routeName', 'routeMethod', 'map', 'tags', 'environment');
+        $data = compact('routeName', 'routeMethod', 'map', 'tags', 'sources', 'environment');
 
-        \Clockwork::info($map);
+        \Clockwork::info($data);
 
         return view('admin.sections.map.edit', $data);
     }
@@ -169,13 +172,13 @@ class MapsController extends Controller
      */
     public function update(UpdateMapRequest $request, $id)
     {
-        // $result = $this->user->updateUser($request);
+        $result = $this->map->updateMap($request);
 
-        // if(!$result){
-        //     return redirect()->back()->with('status', 'update-error');
-        // }
+        if(!$result){
+            return redirect()->back()->with('status', 'update-error');
+        }
 
-        // return redirect()->back()->with('status', 'update-success');
+        return redirect()->back()->with('status', 'update-success');
     }
 
     /**

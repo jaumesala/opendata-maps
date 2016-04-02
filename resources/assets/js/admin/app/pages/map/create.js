@@ -21,12 +21,12 @@ SITE.map.create = function(){
         $controlsView.height($window.height() - 175);
     });
 
-    mapView.init();
+    mvCreator.init();
 
 }
 
 
-mapView = {
+mvCreator = {
 
     elem: null,
     styles: {},
@@ -34,9 +34,9 @@ mapView = {
 
     init: function(elem){
         // this.elem = elem;
-        $.when( mapView.getStyles() ).then(function(){
-            mapView.initStylesSelector();
-            mapView.initMap();
+        $.when( mvCreator.getStyles() ).then(function(){
+            mvCreator.initStylesSelector();
+            mvCreator.initMap();
         });
     },
 
@@ -45,7 +45,7 @@ mapView = {
         return $.get(  env.settings.mapbox.stylesApiUrl +
                     env.settings.mapbox.username +
                     '?access_token=' + env.settings.mapbox.accessToken, function(data){
-                        mapView.styles = data;
+                        mvCreator.styles = data;
                         env.settings.maps.defaultStyle = data[0]['id'];
                     });
 
@@ -53,10 +53,10 @@ mapView = {
 
     initStylesSelector: function (){
         console.log("initStylesSelector");
-        for (var key in mapView.styles) {
+        for (var key in mvCreator.styles) {
             // skip loop if the property is from prototype
-            if (!mapView.styles.hasOwnProperty(key)) continue;
-            var obj = mapView.styles[key];
+            if (!mvCreator.styles.hasOwnProperty(key)) continue;
+            var obj = mvCreator.styles[key];
             $('<option/>').val(obj.id).text(obj.name).data('obj', obj).appendTo($('#style'));
         }
 
@@ -67,7 +67,7 @@ mapView = {
         console.log("initMap");
         mapboxgl.accessToken = env.settings.mapbox.accessToken;
 
-        mapView.map = new mapboxgl.Map({
+        mvCreator.map = new mapboxgl.Map({
             container: 'map-view', // container id
             style: 'mapbox://styles/'+env.settings.mapbox.username+'/' + env.settings.maps.defaultStyle, //stylesheet location
             center: [env.settings.maps.defaultLongitude, env.settings.maps.defaultLatitude], // starting position
@@ -77,31 +77,31 @@ mapView = {
             attributionControl: false,
         });
 
-        mapView.map.addControl(new mapboxgl.Navigation());
+        mvCreator.map.addControl(new mapboxgl.Navigation());
 
-        mapView.bindControls();
+        mvCreator.bindControls();
     },
 
 
     bindControls: function(){
         $('#style').on("change", function(){
             // var style = $(this).find(":selected").data('obj');
-            mapView.map.setStyle('mapbox://styles/'+env.settings.mapbox.username+'/' + $(this).val());
+            mvCreator.map.setStyle('mapbox://styles/'+env.settings.mapbox.username+'/' + $(this).val());
         });
 
-        mapView.map.on('move', function(){
-            var latLng = mapView.map.getCenter();
+        mvCreator.map.on('move', function(){
+            var latLng = mvCreator.map.getCenter();
             $('#latitude, #latitudeDisabled').val(latLng.lat);
             $('#longitude, #longitudeDisabled').val(latLng.lng);
         });
 
-        mapView.map.on('zoom', function(){
-            var zoom = mapView.map.getZoom();
+        mvCreator.map.on('zoom', function(){
+            var zoom = mvCreator.map.getZoom();
             $('#zoom, #zoomDisabled').val(Math.round(zoom));
         });
 
-        mapView.map.on('rotate', function(){
-            var bearing = mapView.map.getBearing();
+        mvCreator.map.on('rotate', function(){
+            var bearing = mvCreator.map.getBearing();
             $('#bearing, #bearingDisabled').val(Math.round(bearing));
         });
 

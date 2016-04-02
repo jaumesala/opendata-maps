@@ -25,4 +25,9 @@ class Map extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function layers()
+    {
+        return $this->hasMany(Layer::class);
+    }
 }

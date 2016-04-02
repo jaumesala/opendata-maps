@@ -7,7 +7,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="img-circle" alt="User Image" width="45" height="45">
+                @if(File::isFile('img/admin/users/'.Auth::user()->id.'-avatar.png'))
+                    <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="img-circle" alt="{{ Auth::user()->name }}" width="45" height="45">
+                @else
+                    <img src="{{ asset('img/admin/users/default.jpg') }}" class="img-circle" alt="{{ Auth::user()->name }}" width="45" height="45">
+                @endif
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>

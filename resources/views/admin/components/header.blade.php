@@ -25,14 +25,22 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="user-image" alt="User Image">
+                        @if(File::isFile('img/admin/users/'.Auth::user()->id.'-avatar.png'))
+                            <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="user-image" alt="{{ Auth::user()->name }}">
+                        @else
+                            <img src="{{ asset('img/admin/users/default.jpg') }}" class="user-image" alt="{{ Auth::user()->name }}">
+                        @endif
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="img-circle" alt="User Image">
+                            @if(File::isFile('img/admin/users/'.Auth::user()->id.'-avatar.png'))
+                                <img src="{{ asset('img/admin/users/'.Auth::user()->id.'-avatar.png') }}" class="img-circle" alt="{{ Auth::user()->name }}">
+                            @else
+                                <img src="{{ asset('img/admin/users/default.jpg') }}" class="img-circle" alt="{{ Auth::user()->name }}">
+                            @endif
 
                             <p>
                                 {{ Auth::user()->name }} - Admin

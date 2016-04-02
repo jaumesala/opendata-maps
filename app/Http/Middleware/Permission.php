@@ -34,7 +34,7 @@ class Permission
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('login');
+                return redirect()->route('admin.dashboard.index');
             }
         }
 

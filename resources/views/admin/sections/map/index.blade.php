@@ -71,7 +71,7 @@
                     $url .= "800x200";
                     $url .= "?access_token=" . setting_value('mapbox', 'accessToken');
                 ?>
-                <!-- https://api.mapbox.com/styles/v1/mapbox/streets-v8/static/0,20,3,20/800x200?access_token=pk.eyJ1IjoiamF1bWVzYWxhIiwiYSI6ImNpanZ4dmlndDAwNWl2Mm00d3RpY2VweTkifQ.fh0cb8ZJhawwDnZUlZx47Q -->
+                {{-- https://api.mapbox.com/styles/v1/mapbox/streets-v8/static/0,20,3,20/800x200?access_token=pk.eyJ1IjoiamF1bWVzYWxhIiwiYSI6ImNpanZ4dmlndDAwNWl2Mm00d3RpY2VweTkifQ.fh0cb8ZJhawwDnZUlZx47Q --}}
                 <div class="widget-user-header bg-black" style="background: url({{ $url }}) center center;">
                     <h3 class="widget-user-username">{{ $map->name }}</h3>
                     <?php

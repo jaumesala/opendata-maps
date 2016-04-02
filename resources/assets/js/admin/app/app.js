@@ -39,6 +39,18 @@ SITE = {
         }
     },
 
+    role: {
+        init: function() {
+            console.log('role');
+        }
+    },
+
+    permission: {
+        init: function() {
+            console.log('permission');
+        }
+    },
+
     map: {
         init: function() {
             console.log('map');

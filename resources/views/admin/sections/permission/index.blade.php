@@ -30,9 +30,11 @@
                 <div class="box-header">
                     <h3 class="box-title">System permissions</h3>
                     <div class="box-tools">
+                        @permission('create-permission')
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <a class="btn btn-success pull-right" href="{{ route('admin.permission.create') }}"><i class="fa fa-fw fa-plus"></i> Add permission</a>
                         </div>
+                        @endpermission
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -53,10 +55,12 @@
                                 <td>{{ $permission->name }}</td>
                                 <td>{{ $permission->label }}</td>
                                 <td class="text-right">
-                                    <!-- <div class="btn-group"> -->
-                                        <a href="{{ route('admin.permission.edit', $permission->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $permission->id }}" data-action="{{ route('admin.permission.destroy', $permission->id) }}"><i class="fa fa-trash"></i> Delete</button>
-                                    <!-- </div> -->
+                                    @permission('edit-permission')
+                                    <a href="{{ route('admin.permission.edit', $permission->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                                    @endpermission
+                                    @permission('destroy-permission')
+                                    <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $permission->id }}" data-action="{{ route('admin.permission.destroy', $permission->id) }}"><i class="fa fa-trash"></i> Delete</button>
+                                    @endpermission
                                 </td>
                             </tr>
                             @endforeach

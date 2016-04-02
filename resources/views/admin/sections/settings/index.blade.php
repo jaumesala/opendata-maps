@@ -80,6 +80,8 @@
         </div>
         <!-- /.col -->
         <div class="col-md-5">
+
+            @permission('create-setting')
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Add new setting</h3>
@@ -136,7 +138,9 @@
                 </form>
             </div>
             <!-- /.box -->
+            @endpermission
 
+            @permission('destroy-setting')
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Delete a setting</h3>
@@ -196,6 +200,7 @@
                 </form>
             </div>
             <!-- /.box -->
+            @endpermission
 
         </div>
         <!-- /.col -->

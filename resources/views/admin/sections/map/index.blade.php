@@ -48,8 +48,9 @@
                             </div>
                         </div>
                     </form>
-
+                    @permission('create-map')
                     <a href="{{ route('admin.map.create') }}" class="btn btn-success pull-right">New Map</a>
+                    @endpermission
                 </div>
             </div>
         </div>
@@ -102,19 +103,29 @@
 
                         <div class="col-sm-8">
                             <div class="description-block">
+                                @permission('show-map')
                                 <a href="{{ route('admin.map.show', $map->id) }}" class="btn btn-default pull-left"><i class="fa fa-fw fa-eye"></i></a>
+                                @endpermission
                                 <div class="btn-group pull-right">
+                                    @permission('edit-map')
                                     <a href="{{ route('admin.map.edit', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                                    @endpermission
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
+                                        @permission('edit-map')
                                         <li><a href="#"><i class="fa fa-fw fa-ban"></i> Disable</a></li>
+                                        @endpermission
                                         <li><a href="#"><i class="fa fa-fw fa-share-alt"></i> Share</a></li>
+                                        @permission('create-map')
                                         <li><a href="#"><i class="fa fa-fw fa-files-o"></i> Duplicate</a></li>
+                                        @endpermission
+                                        @permission('destroy-map')
                                         <li class="divider"></li>
                                         <li><a href="#"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
+                                        @endpermission
                                     </ul>
                                 </div>
                             </div>

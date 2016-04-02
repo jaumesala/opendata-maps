@@ -29,9 +29,11 @@
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Edit source information</h3>
+                    @permission('sync-source')
                     <div class="box-tools">
                         <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-sm btn-info"><i class="fa fa-refresh"></i> Sync</a>
                     </div>
+                    @endpermission
                 </div>
                 <!-- /.box-header -->
 
@@ -118,9 +120,12 @@
 
                 <div class="box-footer">
                     <!-- form start -->
+                    @permission('destroy-source')
                     <button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $source->id }}" data-action="{{ route('admin.source.destroy', $source->id) }}">Delete</button>
+                    @endpermission
+                    @permission('edit-source')
                     <a href="{{ route('admin.source.edit', $source->id) }}" class="btn btn-primary pull-right">Edit</a>
-
+                    @endpermission
                 </div>
                 <!-- /.box-footer -->
             </div>

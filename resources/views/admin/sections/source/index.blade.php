@@ -61,7 +61,9 @@
                             </div>
                         </div>
                     </form>
+                    @permission('create-source')
                     <a href="{{ route('admin.source.create') }}" class="btn btn-success pull-right">New Source</a>
+                    @endpermission
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -138,15 +140,17 @@
                                 <td>{{ $date }}</td>
 
                                 <td class="text-right">
-                                    <!-- <div class="btn-group"> -->
                                         @if($source->origin_type != 'file')
-                                        <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-xs btn-info"><i class="fa fa-refresh"></i> Sync</a>
+                                            @permission('sync-source')
+                                            <a href="{{ route('admin.source.sync', $source->id) }}" class="btn btn-xs btn-info"><i class="fa fa-refresh"></i> Sync</a>
+                                            @endpermission
                                         @endif
+                                        @permission('show-source')
                                         <a href="{{ route('admin.source.show', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Show</a>
+                                        @endpermission
                                         {{--
                                         <a href="{{ route('admin.source.edit', $source->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
                                         <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $source->id }}" data-action="{{ route('admin.source.destroy', $source->id) }}"><i class="fa fa-trash"></i> Delete</button>--}}
-                                    <!-- </div> -->
                                 </td>
                             </tr>
                             @empty

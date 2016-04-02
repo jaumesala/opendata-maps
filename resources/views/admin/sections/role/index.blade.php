@@ -30,9 +30,11 @@
                 <div class="box-header">
                     <h3 class="box-title">System roles</h3>
                     <div class="box-tools">
+                        @permission('create-role')
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <a class="btn btn-success pull-right" href="{{ route('admin.role.create') }}"><i class="fa fa-fw fa-plus"></i> Add role</a>
                         </div>
+                        @endpermission
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -59,10 +61,12 @@
                                     @endforeach
                                 </td>
                                 <td class="text-right">
-                                    <!-- <div class="btn-group"> -->
-                                        <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $role->id }}" data-action="{{ route('admin.role.destroy', $role->id) }}"><i class="fa fa-trash"></i> Delete</button>
-                                    <!-- </div> -->
+                                    @permission('edit-role')
+                                    <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                                    @endpermission
+                                    @permission('destroy-role')
+                                    <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $role->id }}" data-action="{{ route('admin.role.destroy', $role->id) }}"><i class="fa fa-trash"></i> Delete</button>
+                                    @endpermission
                                 </td>
                             </tr>
                             @endforeach

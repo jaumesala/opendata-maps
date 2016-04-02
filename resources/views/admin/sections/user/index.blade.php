@@ -30,9 +30,11 @@
                 <div class="box-header">
                     <h3 class="box-title">System users</h3>
                     <div class="box-tools">
+                        @permission('create-user')
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <a class="btn btn-success pull-right" href="{{ route('admin.user.create') }}"><i class="fa fa-fw fa-user-plus"></i> Add user</a>
                         </div>
+                        @endpermission
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -59,12 +61,14 @@
                                     <a href="#" class="label label-primary">{{ Str::title($role->name) }}</a>
                                     @endforeach
                                 </td>
-                                <td class="text-right"><a href="#">23</a></td>
+                                <td class="text-right">{{ $user->maps->count() }}</td>
                                 <td class="text-right">
-                                    <!-- <div class="btn-group"> -->
-                                        <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $user->id }}" data-action="{{ route('admin.user.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</button>
-                                    <!-- </div> -->
+                                    @permission('edit-user')
+                                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                                    @endpermission
+                                    @permission('destroy-user')
+                                    <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $user->id }}" data-action="{{ route('admin.user.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</button>
+                                    @endpermission
                                 </td>
                             </tr>
                             @endforeach

@@ -31,6 +31,12 @@ class SettingsController extends Controller
     public function __construct(SettingRepository $setting)
     {
         $this->setting = $setting;
+
+        $this->middleware('permission:list-settings', ['only' => [ 'index' ]]);
+        $this->middleware('permission:create-setting', ['only' => [ 'create', 'store' ]]);
+        $this->middleware('permission:show-setting', ['only' => [ 'show' ]]);
+        $this->middleware('permission:edit-setting', ['only' => [ 'edit', 'update', 'updateGroup' ]]);
+        $this->middleware('permission:destroy-setting', ['only' => [ 'destroy' ]]);
     }
 
     /**

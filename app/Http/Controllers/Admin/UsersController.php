@@ -38,6 +38,12 @@ class UsersController extends Controller
     {
         $this->user = $user;
         $this->role = $role;
+
+        $this->middleware('permission:list-users', ['only' => [ 'index' ]]);
+        $this->middleware('permission:create-user', ['only' => [ 'create', 'store' ]]);
+        $this->middleware('permission:show-user', ['only' => [ 'show' ]]);
+        $this->middleware('permission:edit-user', ['only' => [ 'edit', 'update' ]]);
+        $this->middleware('permission:destroy-user', ['only' => [ 'destroy' ]]);
     }
 
     /**

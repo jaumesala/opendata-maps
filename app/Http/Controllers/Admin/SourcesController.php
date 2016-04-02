@@ -32,6 +32,13 @@ class SourcesController extends Controller
     public function __construct(SourceRepository $source)
     {
         $this->source = $source;
+
+        $this->middleware('permission:list-sources', ['only' => [ 'index' ]]);
+        $this->middleware('permission:create-source', ['only' => [ 'create', 'store', 'checkUrl' ]]);
+        $this->middleware('permission:show-source', ['only' => [ 'show' ]]);
+        $this->middleware('permission:edit-source', ['only' => [ 'edit', 'update' ]]);
+        $this->middleware('permission:destroy-source', ['only' => [ 'destroy' ]]);
+        $this->middleware('permission:sync-sources', ['only' => [ 'sync' ]]);
     }
 
     /**

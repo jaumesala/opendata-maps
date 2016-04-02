@@ -90,6 +90,32 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
 
+            [   'name'  => 'list-settings',
+                'label' => 'List the settings',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+            [   'name'  => 'create-setting',
+                'label' => 'Create a setting',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+            [   'name'  => 'show-setting',
+                'label' => 'Show a setting',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+            [   'name'  => 'edit-setting',
+                'label' => 'Edit a setting',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+            [   'name'  => 'destroy-setting',
+                'label' => 'Delete a setting',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+
             [   'name'  => 'list-sources',
                 'label' => 'List the sources',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -112,6 +138,11 @@ class PermissionsTableSeeder extends Seeder
                 ],
             [   'name'  => 'destroy-source',
                 'label' => 'Delete a source',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
+            [   'name'  => 'sync-source',
+                'label' => 'Sync a source',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],

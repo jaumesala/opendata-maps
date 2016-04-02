@@ -28,6 +28,14 @@ class UsersTableSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
+            [   'name'  => 'editor',
+                'email' => 'editor@schiedam.xyz',
+                'password'  => Hash::make('editor'),
+                'api_token' => str_random(60),
+                'remember_token' => str_random(10),
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                ],
         );
 
         // Uncomment the below to run the seeder

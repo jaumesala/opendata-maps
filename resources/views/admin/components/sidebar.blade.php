@@ -50,31 +50,42 @@
                     <i class="fa fa-cog"></i> <span>Administration</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
+                    @permission('list-settings')
                     <li @if(Request::is('admin/settings*')) class="active" @endif>
                         <a href="{{ route('admin.settings.index') }}"><i class="fa fa-circle-o"></i> Settings</a>
                     </li>
+                    @endpermission
+                    @permission('list-users')
                     <li @if(Request::is('admin/user*')) class="active" @endif>
                         <a href="{{ route('admin.user.index') }}"><i class="fa fa-circle-o"></i> Users</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-circle-o"></i> Roles</a>
+                    @endpermission
+                    @permission('list-roles')
+                    <li @if(Request::is('admin/role*')) class="active" @endif>
+                        <a href="{{ route('admin.role.index') }}"><i class="fa fa-circle-o"></i> Roles</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-circle-o"></i> Permissions</a>
+                    @endpermission
+                    @permission('list-permissions')
+                    <li @if(Request::is('admin/permission*')) class="active" @endif>
+                        <a href="{{ route('admin.permission.index') }}"><i class="fa fa-circle-o"></i> Permissions</a>
                     </li>
+                    @endpermission
                 </ul>
             </li>
+            @permission('list-sources')
             <li @if(Request::is('admin/source*')) class="active" @endif>
                 <a href="{{ route('admin.source.index') }}">
                     <i class="fa fa-database"></i> <span>Sources</span>
                 </a>
             </li>
+            @endpermission
+            @permission('list-maps')
             <li @if(Request::is('admin/map*')) class="active" @endif>
                 <a href="{{ route('admin.map.index') }}">
                     <i class="fa fa-map"></i> <span>Maps</span>
                 </a>
             </li>
-
+            @endpermission
             {{--
             <li class="treeview">
                 <a href="#">

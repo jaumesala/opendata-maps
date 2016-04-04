@@ -10,12 +10,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or '' }}  {{ trans('includes/page_head.title_'.Route::currentRouteName()) }}
+        @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or 'SchiedamMaps' }}
     </title>
     <meta name="description" content="{{ trans('includes/page_head.description_'.Route::currentRouteName()) }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <meta id="token" name="token" value="{{ csrf_token() }}">
+    <meta id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
     <meta name="author" content="Jaume Sala">
     <link type="text/plain" rel="author" href="{{ url('humans.txt') }}" />

@@ -51,6 +51,7 @@ var components = [
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/plugins/select2/select2.full.js',
     bowerRelative + 'AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js',
+    bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
     // nodeRelative + 'vue/dist/vue.js',
     // nodeRelative + 'vue-resource/dist/vue-resource.js',
@@ -59,6 +60,13 @@ var components = [
     // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
     // bowerRelative + 'jquery.easing/js/jquery.easing.js',
     // bowerRelative + 'slick.js/slick/slick.js',
+];
+
+var componentsPublic = [
+
+    bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
+    bowerRelative + 'underscore/underscore.js',
+    bowerRelative + 'chroma-js/chroma.js',
 ];
 
 
@@ -74,6 +82,12 @@ var copyToPublic = [
         publicPath + '/' + elixir.config.js.outputFolder +'/vendor/jquery.js'],
     [   bowerPath + 'jquery/jquery.min.js',
         publicPath + '/' + elixir.config.js.outputFolder +'/vendor/jquery.min.js'],
+
+    // JQuery UI
+    [   bowerPath + 'jquery-ui/jquery-ui.js',
+        publicPath + '/' + elixir.config.js.outputFolder +'/vendor/jquery-ui.js'],
+    [   bowerPath + 'jquery-ui/jquery-ui.min.js',
+        publicPath + '/' + elixir.config.js.outputFolder +'/vendor/jquery-ui.min.js'],
 
     // Modernizr
     [   elixir.config.assetsPath + '/vendor/modernizr/modernizr-2.8.3.min.js',
@@ -107,6 +121,8 @@ var copyToPublic = [
 elixir(function(mix) {
     mix
 
+        /* Admin */
+
         // admin/app.scss
         .sass('admin/app.scss', publicPath + '/' + elixir.config.css.outputFolder + '/admin/app' + min + '.css')
 
@@ -120,6 +136,24 @@ elixir(function(mix) {
         .scripts(
             components,
             publicPath + '/' + elixir.config.js.outputFolder + '/admin/plugins' + min + '.js',
+            elixir.config.assetsPath + '/js'
+        )
+
+        /* public */
+
+        // main.scss
+        .sass('public/main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/main' + min + '.css')
+
+        // public/app/app.js
+        .scriptsIn(
+            elixir.config.assetsPath + '/js/public',
+            publicPath + '/' + elixir.config.js.outputFolder + '/main' + min + '.js'
+        )
+
+        //plugins.js
+        .scripts(
+            componentsPublic,
+            publicPath + '/' + elixir.config.js.outputFolder + '/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         )
 

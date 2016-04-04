@@ -11,11 +11,11 @@
 |
 */
 
-// Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
-// Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
-// Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
-// Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
-// Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
+Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
+Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
+Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
+Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
+Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +30,12 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', [
-            'uses' => function(){
-                return "hello!";
-            },
-            'as' => 'admin.dashboard.index'
-            ]);
+    // Route::get('/', [
+    //         'uses' => function(){
+    //             return "hello!";
+    //         },
+    //         'as' => 'admin.dashboard.index'
+    //         ]);
 
     Route::auth();
 
@@ -74,7 +74,6 @@ Route::group(['middleware' => ['web']], function () {
             'uses' => 'Admin\SourcesController@checkUrl',
             'as' => 'admin.source.url.check'
             ]);
-        /* File methods */
 
         /* Common methods */
         Route::get('source/{source}/sync', [
@@ -88,6 +87,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('map', 'Admin\MapsController');
 
     /* Layers */
+        Route::post('layer/sort', [
+            'uses' => 'Admin\LayersController@sort',
+            'as' => 'admin.layer.sort'
+            ]);
+
         Route::resource('layer', 'Admin\LayersController');
     });
 

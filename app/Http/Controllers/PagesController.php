@@ -21,7 +21,7 @@ class PagesController extends Controller
 
 
         $data = compact('routeName', 'routeMethod');
-        return response()->view('pages.home.index', $data);
+        return response()->view('public.pages.home.index', $data);
     }
 
    /**
@@ -36,7 +36,7 @@ class PagesController extends Controller
 
 
         $data = compact('routeName', 'routeMethod');
-        return response()->view('pages.neighborhoods.index', $data);
+        return response()->view('public.pages.neighborhoods.index', $data);
     }
 
     /**
@@ -51,7 +51,7 @@ class PagesController extends Controller
 
 
         $data = compact('routeName', 'routeMethod');
-        return response()->view('pages.complains.index', $data);
+        return response()->view('public.pages.complains.index', $data);
     }
 
     /**
@@ -66,7 +66,7 @@ class PagesController extends Controller
 
 
         $data = compact('routeName', 'routeMethod');
-        return response()->view('pages.choropleth.index', $data);
+        return response()->view('public.pages.choropleth.index', $data);
     }
 
     /**
@@ -81,6 +81,6 @@ class PagesController extends Controller
 
 
         $data = compact('routeName', 'routeMethod');
-        return response()->view('pages.heatmap.index', $data);
+        return response()->view('public.pages.heatmap.index', $data);
     }
 }

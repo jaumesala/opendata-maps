@@ -16,6 +16,7 @@
     "underscore": "^1.8.3",
     "chroma-js": "^1.1.1",
     "AdminLTE": "admin-lte#^2.3.2",
-    "font-awesome": "^4.5.0"
+    "font-awesome": "^4.5.0",
+    "jquery-ui": "^1.11.4"
   }
 }

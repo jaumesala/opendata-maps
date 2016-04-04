@@ -37,7 +37,15 @@ $factory->define(App\Models\Map::class, function (Faker\Generator $faker) {
 
     $users = User::lists('id')->toArray();
 
+    $hash = "";
+    do {
+        $hash = str_random(4);
+    } while (Map::where("hash", "=", $hash)->first() instanceof Map);
+
     return [
+
+        'hash' => $hash,
+
         'user_id' => $faker->randomElement($users),
 
         'status' => $faker->randomElement(['public','public','public','private','private','disabled']),
@@ -96,6 +104,7 @@ $factory->define(App\Models\Layer::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
         'map_id' => $faker->randomElement($maps),
+        'order' => $faker->numberBetween(0,100),
         'source_id' => $faker->randomElement($sources),
         'visible' => $faker->boolean(90),
         'opacity' => $faker->randomElement([10, 80, 50, 20, 0 ]),

@@ -197,34 +197,29 @@
 
                         <div class="tab-pane active" id="tab-layers">
 
-                            <div id="layers">
+                            <div class="tab-wrapper">
 
-                                {{-- Edit layers --}}
-                                @foreach ($map->layers as $layer)
+                                <div id="layers" class="box-wrapper" data-sort-url="{{ route('admin.layer.sort') }}">
+
+                                    {{-- Edit layers --}}
+                                    @foreach ($map->layers as $layer)
+                                        <?php
+                                            $data = compact('layer', 'sources', 'map')
+                                        ?>
+                                        @include('admin.sections.map.layer.edit', $data)
+                                    @endforeach
+                                    {{-- /Edit layers --}}
+
+                                </div>
+
+                                <div id="new-layer" class="box-wrapper">
                                     <?php
-                                        $data = compact('sources', 'layer', 'map')
+                                        $data = compact('sources', 'map')
                                     ?>
-                                    @include('admin.sections.map.layer.edit', $data)
-                                @endforeach
-                                {{-- /Edit layers --}}
+                                    @include('admin.sections.map.layer.create', $data)
 
-                            </div>
+                                </div>
 
-                            <div id="new-layer">
-                                <?php
-                                    $data = compact('sources', 'map')
-                                ?>
-                                @include('admin.sections.map.layer.create', $data)
-
-                            </div>
-
-                            <div class="form-group">
-                                <button type="button" class="btn btn-info btn-block">Add a new layer</button>
-                            </div>
-
-                            <div class="form-group">
-                                <hr>
-                                <button type="submit" class="btn btn-block btn-success">save</button>
                             </div>
 
                         </div>
@@ -256,11 +251,8 @@
 
 @stop
 
-
 @push('postAppScripts')
     <script>
         var map = {!! json_encode($map) !!}
     </script>
-    <script src="{{ asset('js/admin/editor.js') }}"></script>
 @endpush
-

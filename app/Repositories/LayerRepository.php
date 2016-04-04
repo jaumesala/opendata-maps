@@ -31,6 +31,14 @@ class LayerRepository
         $layer->visible = $request->visible;
         $layer->opacity = $request->opacity;
 
+        $layer->type = $request->type;
+        $layer->interactive = $request->interactive;
+        $layer->minzoom = $request->minzoom;
+        $layer->maxzoom = $request->maxzoom;
+        $layer->paint = $request->paint;
+        $layer->filter = $request->filter;
+
+
         $map = Map::findOrFail($request->map_id);
         $layer->map()->associate($map);
 
@@ -44,30 +52,34 @@ class LayerRepository
 
     public function updateLayer($request)
     {
-        // $id = $request->route('map');
-        // $layer = Layer::findOrFail($id);
+        $id = $request->route('layer');
+        $layer = Layer::findOrFail($id);
 
-        // $values = $request->except('_token', '_method', '_section', 'tags');
-        // $layer->fill($values);
+        $values = $request->except('_token', '_method');
+        $layer->fill($values);
 
-        // if( $request->has('tags') && is_array($request->tags) )
-        // {
-        //     $tagList = Tag::lists('id')->toArray();
-
-        //     $cleanTags = array_intersect($request->tags, $tagList);
-
-        //     $layer->tags()->sync($cleanTags);
-        // }
-
-        // return $layer->save();
+        return $layer->save();
     }
 
     public function destroyLayer($id)
     {
-        // $layer = Layer::findOrFail($id);
+        $layer = Layer::findOrFail($id);
 
-        // $result = Layer::destroy($id);
+        $result = Layer::destroy($id);
 
-        // return $result;
+        return $result;
+    }
+
+    public function sortLayers($request)
+    {
+        $layers = $request->input('layer');
+
+        foreach($layers as $order => $id) {
+            $layer = Layer::findOrFail($id);
+            $layer->order = $order;
+            $layer->save();
+        }
+
+        return true;
     }
 }

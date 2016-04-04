@@ -4,11 +4,33 @@
         margin-bottom: 0;
     }
 
+    #controls-view{
+        #tab-layers{
+            margin-right: -10px;
+        }
+
+        .tab-pane{
+            height: 100%;
+        }
+
+        .box-wrapper{
+            margin-right:10px;
+        }
+    }
+
+    #layers{
+        .sort-highlight{
+            margin-bottom: 20px;
+        }
+    }
+
 
     #map-view{
         min-height: 600px;
         height: 100%;
         background-color: lighten($gray-lighter, 5%);
     }
+
+
 
 }

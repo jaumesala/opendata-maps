@@ -12,6 +12,7 @@ use App\Repositories\SourceRepository;
 use App\Http\Requests\Admin\CreateMapRequest;
 use App\Http\Requests\Admin\DestroyMapRequest;
 use App\Http\Requests\Admin\UpdateMapRequest;
+use Storage;
 
 class MapsController extends Controller
 {
@@ -103,12 +104,14 @@ class MapsController extends Controller
      */
     public function store(CreateMapRequest $request)
     {
-        // dd($request->input());
         $result = $this->map->storeMap($request);
 
         if(!$result){
             return redirect()->back()->with('status', 'create-error');
         }
+
+        //create public folder
+        Storage::disk('public')->makeDirectory("maps/$result->hash");
 
         return redirect()->route('admin.map.edit', $result->id)->with('status', 'create-success');
     }

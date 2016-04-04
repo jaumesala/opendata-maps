@@ -16,6 +16,7 @@ class CreateLayersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('map_id')->unsigned();
+            $table->integer('order')->default(100);
             $table->integer('source_id')->unsigned();
             $table->boolean('visible')->default(true);
             $table->integer('opacity')->default(10);

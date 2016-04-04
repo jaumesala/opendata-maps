@@ -49,6 +49,15 @@ class MapRepository
     {
         $map = new Map();
 
+        //create public hash
+        $hash = "";
+        do
+        {
+            $hash = str_random(4);
+        }
+        while (Map::where("hash", "=", $hash)->first() instanceof Map);
+        $map->hash = $hash;
+
         $map->name = $request->name;
         $map->status = $request->status;
         $map->description = $request->description;
@@ -58,6 +67,8 @@ class MapRepository
         $map->zoom = $request->zoom;
         $map->pitch = $request->pitch;
         $map->bearing = $request->bearing;
+
+
 
         $map->user()->associate(Auth::user());
 

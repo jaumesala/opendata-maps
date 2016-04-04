@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class CreateLayerRequest extends Request
+class UpdateLayerRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,11 @@ class CreateLayerRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'          => 'required|max:255',
             'map_id'        => 'required|integer|exists:maps,id',
             'source_id'     => 'required|integer|exists:sources,id',
-            'visible'       => 'required|boolean',
+            'visible'       => 'required|integer',
             'opacity'       => 'required|integer',
             'type'          => 'required|in:fill,circle,line',
             'interactive'   => 'required|boolean',
@@ -36,5 +36,25 @@ class CreateLayerRequest extends Request
             'paint'         => '',
             'filter'        => ''
         ];
+
+        switch($this->type)
+        {
+            case 'line':
+                $typeRules = [];
+                break;
+
+            case 'circle':
+                $typeRules = [];
+                break;
+
+            case 'fill':
+                $typeRules = [];
+                break;
+
+            default:
+                $typeRules = [];
+        }
+
+        return array_merge($rules, $typeRules);
     }
 }

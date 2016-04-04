@@ -14,9 +14,53 @@ SITE.map.edit = function(){
     $mapView.height($window.height() - 195);
     $controlsView.height($window.height() - 175);
 
+    $controlsView.find('.tab-content').height($window.height() - 175 - 64);
+
     $window.resize(function() {
         $mapView.height($window.height() - 195);
         $controlsView.height($window.height() - 175);
+    });
+
+    $('#tab-layers > .tab-wrapper').slimScroll({
+        height: 'auto',
+        distance: '2px',
+    });
+
+    $('#confirmDelete').on('show.bs.modal', function (event) {
+        var button  = $(event.relatedTarget) // Button that triggered the modal
+        var action  = button.data('action') // Extract info from data-* attributes
+        var id      = button.data('id') // Extract info from data-* attributes
+
+        var modal = $(this)
+        modal.find('form').attr('action', action);
+        modal.find('input[name=id]').attr('value', id);
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#layers').sortable({
+        axis: 'y',
+        cursor: 'move',
+        placeholder: "sort-highlight",
+        handle: ".box-header",
+        forcePlaceholderSize: true,
+        zIndex: 999999,
+        update: function (event, ui) {
+            var data = $(this).sortable('serialize');
+
+            // POST to server using $.post or $.ajax
+            $.ajax({
+                data: data,
+                type: 'POST',
+                url: $(this).data('sort-url')
+            });
+        }
+
+
     });
 
     mvEditor.init();
@@ -75,9 +119,18 @@ mvEditor = {
             attributionControl: false,
         });
 
-        mvEditor.map.addControl(new mapboxgl.Navigation());
+        mvEditor.map.on('style.load', function () {
+            console.log("map Styles loaded!");
 
-        mvEditor.bindControls();
+            mvEditor.map.addControl(new mapboxgl.Navigation());
+
+            mvEditor.bindControls();
+
+            mvEditor.addMapSources();
+            mvEditor.addMapLayers();
+
+        });
+
     },
 
     bindControls: function(){
@@ -101,6 +154,37 @@ mvEditor = {
             var bearing = mvEditor.map.getBearing();
             $('#bearing, #bearingDisabled').val(Math.round(bearing));
         });
+    },
+
+    addMapSources: function(){
+
+        // get all layer sources
+        sources = [];
+
+        _.each(map.layers, function(layer){
+            var source = layer.source;
+            source['layer_id'] = layer.id;
+            sources.push(source);
+        });
+
+        console.log(sources);
+        //remove duplicate
+        sources = _.uniq(sources, _.property('id'))
+
+        //save into map object
+        map.sources = sources;
+
+        _.each(map.sources, function(source){
+            // console.log('source-'+source.id);
+            // mvEditor.addSource('source-'+source.id, {
+            //     'type': 'geojson',
+            //     'data': 'http://schiedam-map.app/datasets/neighbourhoods.geojson'
+            // });
+        });
+
+    },
+
+    addMapLayers: function(){
 
     }
 

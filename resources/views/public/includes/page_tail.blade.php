@@ -18,15 +18,7 @@
             <script src="{{ asset('js/plugins.min.js') }}"></script>
             <script src="{{ asset('js/main.min.js') }}"></script>
         @endif
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+
         @if (App::environment() == 'production')
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

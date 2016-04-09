@@ -38,12 +38,12 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="visible">Visible</label>
+                                <label for="visible-0">Visible</label>
                                 {!! Form::select('visible',
                                     [   '1' => 'Yes',
                                         '0' => 'No' ],
                                     old('visible'),
-                                    [   'id' => 'visible',
+                                    [   'id' => 'visible-0',
                                         'class' => 'form-control select2',
                                         'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                         ) !!}
@@ -51,11 +51,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="opacity">Opacity</label>
+                                <label for="opacity-0">Opacity</label>
                                 {!! Form::selectRange('opacity',
                                     10,0,
                                     old('opacity'),
-                                    [   'id' => 'opacity',
+                                    [   'id' => 'opacity-0',
                                         'class' => 'form-control select2',
                                         'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                         ) !!}
@@ -69,11 +69,11 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <label for="source">Source</label>
+                        <label for="source_id-0">Source</label>
                         {!! Form::select('source_id',
                             $sources->lists('name', 'id'),
                             old('source_id'),
-                            [   'id' => 'source_id',
+                            [   'id' => 'source_id-0',
                                 'class' => 'form-control select2',
                                 'data-options' => '{ }' ]
                                 ) !!}
@@ -81,13 +81,13 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="visible">Type</label>
+                        <label for="type-0">Type</label>
                         {!! Form::select('type',
                             [   'fill' => 'Fill',
                                 'circle' => 'Circle',
                                 'line' => 'Line' ],
                             old('type'),
-                            [   'id' => 'type',
+                            [   'id' => 'type-0',
                                 'class' => 'form-control select2 layerType',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -98,12 +98,12 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="interactive">Interactive</label>
+                        <label for="interactive-0">Interactive</label>
                         {!! Form::select('interactive',
                             [   '1' => 'Yes',
                                 '0' => 'No' ],
                             old('interactive'),
-                            [   'id' => 'interactive',
+                            [   'id' => 'interactive-0',
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -111,11 +111,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="minzoom">Min Zoom</label>
+                        <label for="minzoom-0">Min Zoom</label>
                         {!! Form::selectRange('minzoom',
                             0,22,
                             old('minzoom'),
-                            [   'id' => 'minzoom',
+                            [   'id' => 'minzoom-0',
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -123,11 +123,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="maxzoom">Max Zoom</label>
+                        <label for="maxzoom-0">Max Zoom</label>
                         {!! Form::selectRange('maxzoom',
                             0,22,
                             old('maxzoom'),
-                            [   'id' => 'maxzoom',
+                            [   'id' => 'maxzoom-0',
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}

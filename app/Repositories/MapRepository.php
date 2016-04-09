@@ -68,8 +68,6 @@ class MapRepository
         $map->pitch = $request->pitch;
         $map->bearing = $request->bearing;
 
-
-
         $map->user()->associate(Auth::user());
 
         $map->save();

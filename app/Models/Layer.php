@@ -12,7 +12,7 @@ class Layer extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'map_id', 'source_id', 'visible', 'opacity', 'type', 'minzoom', 'maxzoom', 'interactive', 'filter', 'paint'
+        'name', 'map_id', 'source_id', 'visible', 'opacity', 'type', 'minzoom', 'maxzoom', 'interactive', 'color', 'outline-color', 'width', 'gap-width', 'dasharray', 'radius', 'blur'
     ];
 
     public function map()

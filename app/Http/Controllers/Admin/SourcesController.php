@@ -38,7 +38,7 @@ class SourcesController extends Controller
         $this->middleware('permission:show-source', ['only' => [ 'show' ]]);
         $this->middleware('permission:edit-source', ['only' => [ 'edit', 'update' ]]);
         $this->middleware('permission:destroy-source', ['only' => [ 'destroy' ]]);
-        $this->middleware('permission:sync-sources', ['only' => [ 'sync' ]]);
+        $this->middleware('permission:sync-source', ['only' => [ 'sync' ]]);
     }
 
     /**

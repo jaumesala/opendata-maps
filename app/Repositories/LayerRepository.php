@@ -35,9 +35,6 @@ class LayerRepository
         $layer->interactive = $request->interactive;
         $layer->minzoom = $request->minzoom;
         $layer->maxzoom = $request->maxzoom;
-        $layer->paint = $request->paint;
-        $layer->filter = $request->filter;
-
 
         $map = Map::findOrFail($request->map_id);
         $layer->map()->associate($map);

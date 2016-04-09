@@ -110,9 +110,6 @@ class MapsController extends Controller
             return redirect()->back()->with('status', 'create-error');
         }
 
-        //create public folder
-        Storage::disk('public')->makeDirectory("maps/$result->hash");
-
         return redirect()->route('admin.map.edit', $result->id)->with('status', 'create-success');
     }
 

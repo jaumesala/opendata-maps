@@ -202,9 +202,9 @@
                                 <div id="layers" class="box-wrapper" data-sort-url="{{ route('admin.layer.sort') }}">
 
                                     {{-- Edit layers --}}
-                                    @foreach ($map->layers as $layer)
+                                    @foreach ($map->layers as $index => $layer)
                                         <?php
-                                            $data = compact('layer', 'sources', 'map')
+                                            $data = compact('index', 'layer', 'sources', 'map');
                                         ?>
                                         @include('admin.sections.map.layer.edit', $data)
                                     @endforeach

@@ -31,6 +31,42 @@
         background-color: lighten($gray-lighter, 5%);
     }
 
+    .sublist-wrapper{
+        border: 1px solid #ccc;
+        height: 80px;
+        overflow: hidden;
 
+        .form-group{
+            margin-bottom: 0;
+            padding: 5px 5px 5px 5px;
+
+            .control-label{
+                font-size: 11px;
+                // padding: 2px 0;
+                margin-bottom: 0;
+                color: #555;
+            }
+
+            .form-control{
+                &.colorpicker{
+                    min-width: auto;
+                }
+            }
+
+            & + .form-group{
+                border-top: 1px solid #eee;
+            }
+        }
+    }
+
+    .input-xs,
+    .input-group-xs .form-control,
+    .input-group-xs > .input-group-addon,
+    .input-group-xs > .input-group-btn > .btn{
+        height: 20px;
+        padding: 2px 4px;
+        font-size: 11px;
+        line-height: 1.2;
+    }
 
 }

@@ -23,7 +23,7 @@
     </div>
     <!-- /.box-header -->
 
-    <form method="POST" action="{{ route('admin.layer.update', $layer->id) }}">
+    <form method="POST" action="{{ route('admin.layer.update', $layer->id) }}" class="layerForm">
         <input name="_method" type="hidden" value="PUT">
         {{ csrf_field() }}
 
@@ -35,20 +35,20 @@
             <div class="row">
                 <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Layer's name" value="{{ $layer->name }}">
+                        <label for="name-{{ $layer->id }}">Name</label>
+                        <input type="text" class="form-control" id="name-{{ $layer->id }}" name="name" placeholder="Layer's name" value="{{ $layer->name }}">
                     </div>
                 </div>
                 <div class="col-sm-7">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="visible">Visible</label>
+                                <label for="visible-{{ $layer->id }}">Visible</label>
                                 {!! Form::select('visible',
                                     [   '1' => 'Yes',
                                         '0' => 'No' ],
                                     old('visible', $layer->visible),
-                                    [   'id' => 'visible',
+                                    [   'id' => 'visible-'.$layer->id,
                                         'class' => 'form-control select2',
                                         'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                         ) !!}
@@ -56,11 +56,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="opacity">Opacity</label>
+                                <label for="opacity-{{ $layer->id }}">Opacity</label>
                                 {!! Form::selectRange('opacity',
                                     10,0,
                                     old('opacity', $layer->opacity),
-                                    [   'id' => 'opacity',
+                                    [   'id' => 'opacity-'.$layer->id,
                                         'class' => 'form-control select2',
                                         'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                         ) !!}
@@ -74,11 +74,11 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <label for="source">Source</label>
+                        <label for="source_id-{{ $layer->id }}">Source</label>
                         {!! Form::select('source_id',
                             $sources->lists('name', 'id'),
                             old('source_id', $layer->source->id),
-                            [   'id' => 'source_id',
+                            [   'id' => 'source_id-'.$layer->id,
                                 'class' => 'form-control select2',
                                 'data-options' => '{ }' ]
                                 ) !!}
@@ -86,14 +86,14 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="visible">Type</label>
+                        <label for="type-{{ $layer->id }}">Type</label>
                         {!! Form::select('type',
                             [   'fill' => 'Fill',
                                 'circle' => 'Circle',
                                 'line' => 'Line' ],
                             old('type', $layer->type),
-                            [   'id' => 'type',
-                                'class' => 'form-control select2',
+                            [   'id' => 'type-'.$layer->id,
+                                'class' => 'form-control select2 layerType',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
                     </div>
@@ -103,12 +103,12 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="interactive">Interactive</label>
+                        <label for="interactive-{{ $layer->id }}">Interactive</label>
                         {!! Form::select('interactive',
                             [   '1' => 'Yes',
                                 '0' => 'No' ],
                             old('interactive', $layer->interactive),
-                            [   'id' => 'interactive',
+                            [   'id' => 'interactive-'.$layer->id,
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -116,11 +116,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="minzoom">Min Zoom</label>
+                        <label for="minzoom-{{ $layer->id }}">Min Zoom</label>
                         {!! Form::selectRange('minzoom',
                             0,22,
                             old('minzoom', $layer->minzoom),
-                            [   'id' => 'minzoom',
+                            [   'id' => 'minzoom-'.$layer->id,
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -128,11 +128,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="maxzoom">Max Zoom</label>
+                        <label for="maxzoom-{{ $layer->id }}">Max Zoom</label>
                         {!! Form::selectRange('maxzoom',
                             0,22,
                             old('maxzoom', $layer->maxzoom),
-                            [   'id' => 'maxzoom',
+                            [   'id' => 'maxzoom-'.$layer->id,
                                 'class' => 'form-control select2',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
@@ -143,14 +143,82 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="paint">Paint values</label>
-                        <textarea class="form-control" rows="3" name="paint" id="paint">{{ old('paint', $layer->paint) }}</textarea>
+                        <label for="paint-{{ $layer->id }}">Paint values</label>
+
+                        <div class="sublist-wrapper paintRules">
+
+                            <?php
+
+                                $paintOptions = [
+                                    [   'name' => 'color',
+                                        'label' => 'Color',
+                                        'filter' => [ 'fill', 'line', 'circle' ],
+                                        'class' => 'colorpicker',
+                                        'placeholder' => '#000000',
+                                    ],
+                                    [   'name' => 'outline-color',
+                                        'label' => 'Outline Color',
+                                        'filter' => [ 'fill' ],
+                                        'class' => 'colorpicker',
+                                        'placeholder' => '#000000',
+                                    ],
+                                    [   'name' => 'width',
+                                        'label' => 'width',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '2',
+                                    ],
+                                    [   'name' => 'gap-width',
+                                        'label' => 'Gap width',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '3',
+                                    ],
+                                    [   'name' => 'dasharray',
+                                        'label' => 'Dash array',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '2,3',
+                                    ],
+                                    [   'name' => 'radius',
+                                        'label' => 'Radius',
+                                        'filter' => [ 'circle' ],
+                                        'class' => '',
+                                        'placeholder' => '10',
+                                    ],
+                                    [   'name' => 'blur',
+                                        'label' => 'Blur',
+                                        'filter' => [ 'circle' ],
+                                        'class' => '',
+                                        'placeholder' => '3',
+                                    ],
+
+                                ];
+
+                            ?>
+
+                            @foreach($paintOptions as $option)
+                            <div class="form-group input-group-xs clearfix" data-filter="{{ implode(" ", $option['filter']) }}">
+                                <div class="col-xs-7">
+                                    <div class="row">
+                                        <label for="{{ $option['name']."-".$layer->id }}" class="control-label">{{ $option['label'] }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="row">
+                                        <input type="text" class="form-control {{ $option['class'] }}" id="{{ $option['name']."-".$layer->id }}" name="{{ $option['name'] }}" placeholder="{{ $option['placeholder'] }}" value="{{ $layer->{$option['name']} }}">
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="filter">Filter values</label>
-                        <textarea class="form-control" rows="3" name="filter" id="filter">{{ old('filter', $layer->filter) }}</textarea>
+                        <label for="filter">Layout values</label>
+                        <!-- <textarea class="form-control" rows="3" id="filter">{{ old('filter', $layer->layout) }}</textarea> -->
                     </div>
                 </div>
             </div>

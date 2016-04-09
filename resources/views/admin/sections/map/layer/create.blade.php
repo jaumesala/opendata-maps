@@ -88,7 +88,7 @@
                                 'line' => 'Line' ],
                             old('type'),
                             [   'id' => 'type',
-                                'class' => 'form-control select2',
+                                'class' => 'form-control select2 layerType',
                                 'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                 ) !!}
                     </div>
@@ -138,14 +138,83 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="paint">Paint values</label>
-                        <textarea class="form-control" rows="3" name="paint" id="paint">{{ old('paint') }}</textarea>
+                        <label for="paint-0">Paint values</label>
+
+                        <div class="sublist-wrapper paintRules">
+
+                            <?php
+
+                                $paintOptions = [
+                                    [   'name' => 'color',
+                                        'label' => 'Color',
+                                        'filter' => [ 'fill', 'line', 'circle' ],
+                                        'class' => 'colorpicker',
+                                        'placeholder' => '#000000',
+                                    ],
+                                    [   'name' => 'outline-color',
+                                        'label' => 'Outline Color',
+                                        'filter' => [ 'fill' ],
+                                        'class' => 'colorpicker',
+                                        'placeholder' => '#000000',
+                                    ],
+                                    [   'name' => 'width',
+                                        'label' => 'width',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '2',
+                                    ],
+                                    [   'name' => 'gap-width',
+                                        'label' => 'Gap width',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '3',
+                                    ],
+                                    [   'name' => 'dasharray',
+                                        'label' => 'Dash array',
+                                        'filter' => [ 'line' ],
+                                        'class' => '',
+                                        'placeholder' => '2,3',
+                                    ],
+                                    [   'name' => 'radius',
+                                        'label' => 'Radius',
+                                        'filter' => [ 'circle' ],
+                                        'class' => '',
+                                        'placeholder' => '10',
+                                    ],
+                                    [   'name' => 'blur',
+                                        'label' => 'Blur',
+                                        'filter' => [ 'circle' ],
+                                        'class' => '',
+                                        'placeholder' => '3',
+                                    ],
+
+                                ];
+
+                            ?>
+
+                            @foreach($paintOptions as $option)
+                            <div class="form-group input-group-xs clearfix" data-filter="{{ implode(" ", $option['filter']) }}">
+                                <div class="col-xs-7">
+                                    <div class="row">
+                                        <label for="{{ $option['name']."-0" }}" class="control-label">{{ $option['label'] }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="row">
+                                        <input type="text" class="form-control {{ $option['class'] }}" id="{{ $option['name']."-0" }}" name="{{ $option['name'] }}" placeholder="{{ $option['placeholder'] }}">
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="filter">Filter values</label>
-                        <textarea class="form-control" rows="3" name="filter" id="filter">{{ old('filter') }}</textarea>
+                        <label for="filter">Layout values</label>
+
                     </div>
                 </div>
             </div>

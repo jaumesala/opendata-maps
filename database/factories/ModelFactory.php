@@ -68,7 +68,14 @@ $factory->define(App\Models\Map::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\Source::class, function (Faker\Generator $faker) {
 
+    $hash = "";
+    do {
+        $hash = str_random(4);
+    } while (Source::where("hash", "=", $hash)->first() instanceof Source);
+
+
     return [
+        'hash' => $hash,
         'origin_type' => $faker->randomElement(['url', 'url', 'url', 'url', 'file', 'dropbox', 'gdrive']),
         'origin_url' => $faker->randomElement([null, $faker->url]),
         'origin_file' => $faker->randomElement([null, 'whatever.csv']),
@@ -102,18 +109,18 @@ $factory->define(App\Models\Layer::class, function (Faker\Generator $faker) {
     $maps  = Map::lists('id')->toArray();
 
     return [
+        'order' => $faker->numberBetween(0,100),
         'name' => $faker->word,
         'map_id' => $faker->randomElement($maps),
-        'order' => $faker->numberBetween(0,100),
         'source_id' => $faker->randomElement($sources),
-        'visible' => $faker->boolean(90),
-        'opacity' => $faker->randomElement([10, 80, 50, 20, 0 ]),
-        'type' => $faker->randomElement(['fill', 'line', 'circle' ]),
         'minzoom' => 0,
         'maxzoom' => 22,
         'interactive' => $faker->boolean(75),
-        'filter' => '',
-        'paint' => '',
+
+        'type' => $faker->randomElement(['fill', 'line', 'circle' ]),
+
+        'visible' => $faker->boolean(90),
+        'opacity' => $faker->randomElement([1, 8, 5, 2, 0 ]),
     ];
 });
 

@@ -13,7 +13,8 @@ class SourcesTableSeeder extends Seeder
     {
 
         $sources = array(
-            [   'origin_type' => 'url',
+            [   'hash' => 'AAAA',
+                'origin_type' => 'url',
                 'origin_url' => 'http://www.dataplatform.nl/dataset/6f219433-15c4-468b-91b4-8610710a987e/resource/0cb2d09a-b4b9-412a-bd98-c5934291107e/download/wijken-en-buurten-schiedam.geojson',
                 'origin_format' => null,
                 'origin_size' => null,
@@ -26,7 +27,8 @@ class SourcesTableSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
-            [   'origin_type' => 'url',
+            [   'BBBB',
+                'origin_type' => 'url',
                 'origin_url' => 'http://civity.ckan.nl/dataset/a7bc454e-4551-4b11-a329-a58aeb79a583/resource/1bad33c0-1b8e-4bec-8b19-58b8c7e9b6dc/download/woningkartotheek.csv',
                 'origin_format' => null,
                 'origin_size' => null,

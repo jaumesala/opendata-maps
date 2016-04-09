@@ -14,18 +14,26 @@ class CreateLayersTable extends Migration
     {
         Schema::create('layers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order')->default(100);
             $table->string('name');
             $table->integer('map_id')->unsigned();
-            $table->integer('order')->default(100);
             $table->integer('source_id')->unsigned();
-            $table->boolean('visible')->default(true);
-            $table->integer('opacity')->default(10);
-            $table->string('type');
             $table->integer('minzoom')->default(1);
             $table->integer('maxzoom')->default(22);
             $table->boolean('interactive')->default(false);
-            $table->text('filter');
-            $table->text('paint');
+
+            $table->string('type');
+
+            $table->boolean('visible')->default(true);
+            $table->integer('opacity')->default(10);
+            $table->string('color');
+            $table->string('outline-color');
+            $table->integer('width');
+            $table->integer('gap-width');
+            $table->string('dasharray');
+            $table->integer('radius');
+            $table->integer('blur');
+
             $table->timestamps();
 
             $table->foreign('map_id')->references('id')->on('maps')->onDelete('cascade');

@@ -14,6 +14,7 @@ class CreateSourcesTable extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('hash',4)->unique();
             $table->string('origin_type', 20);
             $table->text('origin_url')->nullable();
             $table->string('origin_file')->nullable();

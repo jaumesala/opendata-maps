@@ -122,19 +122,29 @@ class SourceRepository
 
     public function storeSource($request)
     {
-        $source = Source::firstOrNew([
-            'origin_type' => $request->origin_type,
-            'origin_url' => $request->origin_url,
-            'origin_file' => null,
-            'origin_format' => null,
-            'origin_size' => null,
-            'name' => $request->name,
-            'description' => $request->description ? $request->description : '',
-            'web' => $request->web ? $request->web : '',
-            'sync_status' => 'queued',
-            'sync_interval' => $request->sync_interval ? $request->sync_interval : 'never',
-            'synced_at' => null
-        ]);
+        $source = new Source();
+
+        //create public hash
+        $hash = "";
+        do
+        {
+            $hash = str_random(4);
+        }
+        while (Source::where("hash", "=", $hash)->first() instanceof Source);
+        $source->hash = $hash;
+
+        $source->hash = $hash;
+        $source->origin_type = $request->origin_type;
+        $source->origin_url = $request->origin_url;
+        $source->origin_file = null;
+        $source->origin_format = null;
+        $source->origin_size = null;
+        $source->name = $request->name;
+        $source->description = $request->description ? $request->description : '';
+        $source->web = $request->web ? $request->web : '';
+        $source->sync_status = 'queued';
+        $source->sync_interval = $request->sync_interval ? $request->sync_interval : 'never';
+        $source->synced_at = null;
 
         $source->save();
 
@@ -441,12 +451,12 @@ class SourceRepository
         if(!$pubPath) return false;
 
         $result = null;
-        if(Storage::exists($pubPath))
+        if(Storage::disk('base')->exists($pubPath))
         {
-            Storage::delete($pubPath);
+            Storage::disk('base')->delete($pubPath);
         }
 
-        $result = Storage::copy($procPath, $pubPath);
+        $result = Storage::disk('base')->copy($procPath, $pubPath);
 
         return $result;
     }

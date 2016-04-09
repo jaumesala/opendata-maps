@@ -42,11 +42,12 @@ class PublishSource extends Job implements ShouldQueue
         $this->source->save();
 
         $id = $this->source->id;
-        $procFilePath = 'sources/'.$id.'/p/file.processed';
-        $pubFilePath = 'sources/'.$id.'/file.geojson';
+        $hash = $this->source->hash;
+        $procFilePath = 'storage/app/sources/'.$id.'/p/file.processed';
+        $pubFilePath = 'public/sources/'.$hash.'.geojson';
 
         // File exists in storage/app/sources/p/file.processed ?
-        if( ! Storage::exists($procFilePath) )
+        if( ! Storage::disk('base')->exists($procFilePath) )
         {
             // update sync_status
             $this->source->sync_status = "error";

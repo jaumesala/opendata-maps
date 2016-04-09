@@ -83,19 +83,6 @@ class LayersController extends Controller
             return redirect()->back()->with('status', 'create-error');
         }
 
-        //publish layer's source
-        $mapHash = $layer->map->hash;
-        $sourceId = $layer->source->id;
-
-        $fromPath = "storage/app/sources/$sourceId/file.geojson";
-        $toPath = "public/maps/$mapHash/$layer->id.geojson";
-
-        if(Storage::disk('base')->exists($toPath))
-        {
-            Storage::disk('base')->delete($toPath);
-        }
-        Storage::disk('base')->copy($fromPath, $toPath);
-
         return redirect()->route('admin.map.edit', $layer->map_id)->with('status', 'create-success')->with('activeLayer', $layer->id);
     }
 
@@ -137,19 +124,6 @@ class LayersController extends Controller
         if(!$result){
             return redirect()->back()->with('status', 'update-error');
         }
-
-        //publish layer's source
-        $mapHash = $layer->map->hash;
-        $sourceId = $layer->source->id;
-
-        $fromPath = "storage/app/sources/$sourceId/file.geojson";
-        $toPath = "public/maps/$mapHash/$layer->id.geojson";
-
-        if(Storage::disk('base')->exists($toPath))
-        {
-            Storage::disk('base')->delete($toPath);
-        }
-        Storage::disk('base')->copy($fromPath, $toPath);
 
         return redirect()->back()->with('status', 'update-success')->with('activeLayer', $id);
     }

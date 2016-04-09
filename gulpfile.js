@@ -52,6 +52,7 @@ var components = [
     bowerRelative + 'AdminLTE/plugins/select2/select2.full.js',
     bowerRelative + 'AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js',
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
+    bowerRelative + 'AdminLTE/plugins/colorpicker/bootstrap-colorpicker.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
     // nodeRelative + 'vue/dist/vue.js',
     // nodeRelative + 'vue-resource/dist/vue-resource.js',
@@ -109,7 +110,11 @@ var copyToPublic = [
     [   bowerPath + 'AdminLTE/plugins/iCheck/square/blue.png',
         elixir.config.publicPath + '/img/admin/plugins/iCheck/blue.png'],
     [   bowerPath + 'AdminLTE/plugins/iCheck/square/blue@2x.png',
-        elixir.config.publicPath + '/img/admin/plugins/iCheck/blue@2x.png']
+        elixir.config.publicPath + '/img/admin/plugins/iCheck/blue@2x.png'],
+
+    // Plugin colorpicker
+    [   bowerPath + 'AdminLTE/plugins/colorpicker/img',
+        elixir.config.publicPath + '/img/admin/plugins/colorpicker']
 
 ];
 

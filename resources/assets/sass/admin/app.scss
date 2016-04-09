@@ -28,6 +28,7 @@
 @import "vendor/bower_components/AdminLTE/plugins/iCheck/square/blue";
 @import "vendor/bower_components/AdminLTE/plugins/select2/select2";
 @import "vendor/bower_components/AdminLTE/plugins/bootstrap-slider/slider";
+@import "vendor/bower_components/AdminLTE/plugins/colorpicker/bootstrap-colorpicker";
 
 @import "vendor/bower_components/AdminLTE/dist/css/AdminLTE.min";
 
@@ -35,6 +36,7 @@
     Plugins Override styles
 ========================================================================== */
 
+@import "plugins/colorpicker";
 @import "plugins/iCheck";
 @import "plugins/select2";
 

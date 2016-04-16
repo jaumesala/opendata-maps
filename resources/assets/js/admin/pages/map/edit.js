@@ -72,13 +72,18 @@ SITE.map.edit = function(){
         }
     });
 
+    // init color and layout properties filter
     $('.layerType').change(function(){
         var value = $(this).val();
         var paintRules = $(this).closest('.box-body').find('.paintRules .form-group');
+        var layoutRules = $(this).closest('.box-body').find('.layoutRules .form-group');
         filterValues(value, paintRules);
+        filterValues(value, layoutRules);
     });
+
     $('.layerType').trigger('change');
 
+    // init color pickers
     $(".colorpicker").colorpicker({
         format: 'hex',
         colorSelectors: {
@@ -92,6 +97,7 @@ SITE.map.edit = function(){
         }
     });
 
+    // filter properties
     function filterValues(value, list){
         list.each(function(){
             var filter = $(this).data('filter');
@@ -106,7 +112,11 @@ SITE.map.edit = function(){
     mvEditor.init();
 }
 
-
+/*
+|--------------------------------------------------------------------------
+| Map View Editor Object
+|--------------------------------------------------------------------------
+*/
 
 mvEditor = {
 
@@ -129,7 +139,6 @@ mvEditor = {
                         mvEditor.styles = data;
                         env.settings.maps.defaultStyle = map.style;
                     });
-
     },
 
     initStylesSelector: function (){
@@ -167,7 +176,6 @@ mvEditor = {
             mvEditor.addMapLayers();
 
         });
-
     },
 
     bindControls: function(){
@@ -201,6 +209,7 @@ mvEditor = {
         _.each(map.layers, function(layer){
             sources.push(layer.source);
         });
+        // console.log(sources);
 
         // remove duplicates (multiple layers can use the same source)
         sources = _.uniq(sources, _.property('id'))
@@ -214,88 +223,235 @@ mvEditor = {
                 'type': 'geojson',
                 'data': '/sources/'+source.hash+'.geojson'
             });
-            console.log('Source: '+source.id+' added');
+            // console.log('Source: '+source.id+' added');
         });
+    },
+
+    addChoroplethSource: function(jsonSource, layer){
+        mvEditor.map.addSource('choropleth-layer-'+layer.id, {
+            'type': 'geojson',
+            'data': jsonSource
+        });
+    },
+
+    getPaintRules: function(layer, rules){
+        var paintRules = {};
+
+        if(_.contains(rules, 'dasharray')){
+
+            if(layer['dasharray'].length){
+                //convert string to array
+                var values = layer['dasharray'].split(',');
+                var valuesInt = _.map(values, function(v){ return parseInt(v) });
+                paintRules[layer.type+'-dasharray'] = valuesInt;
+            }
+
+            //remove property from array
+            var index = rules.indexOf('dasharray');
+            rules.splice(index, 1);
+        }
+
+        //rest of properties
+        _.each(rules, function(rule){
+
+            if(rule == 'opacity'){
+                paintRules[layer.type+'-opacity'] =  layer.opacity/10;
+                return; //continue loop
+            }
+
+            if(layer[rule]){
+                paintRules[layer.type+'-'+rule] = layer[rule];
+            }
+
+        });
+
+        // console.log("Paint rules:", paintRules);
+
+        return paintRules;
+    },
+
+    getChoroplethLayers: function(layer, polygonData){
+        var numClasses = layer['choropleth-classes'];
+        var colorSchema = (layer['choropleth-color']) ? layer['choropleth-color'] : 'YlOrRd';
+
+        // Color scale using chroma.js
+        var scale = chroma.scale(colorSchema).colors(numClasses);
+
+        // Check if we need to reverse the color schema
+        if(layer['choropleth-reverse']){
+            scale.reverse();
+        }
+
+        var breaks = turf.jenks(polygonData, "pt_count", numClasses-1).reverse();
+        // console.log(breaks);
+        return _.zip(scale, breaks);
+    },
+
+    addLayer: function(layer, paintRules, layoutRules){
+        mvEditor.map.addLayer({
+            'id': 'layer-'+layer.id,
+            'type': layer.type,
+            'source': 'source-'+layer.source.id,
+            'interactive': layer.interactive ? true : false,
+            'paint': paintRules,
+            'layout': layoutRules,
+            'minzoom': layer.minzoom,
+            'maxzoom': layer.maxzoom
+        });
+        console.log('Layer: layer-'+layer.id+' added');
+    },
+
+    addChoroplethLayers: function(colorLayers, layoutRules, layer, beforeLayer){
+
+        var bl = undefined;
+        if(typeof beforeLayer !== 'undefined') {
+            bl = 'layer-'+beforeLayer.id;
+        }
+
+        _.each(colorLayers, function(colorLayer, i) {
+            mvEditor.map.addLayer({
+                'id': 'layer-' + layer.id + '-choropleth-' + i,
+                // 'interactive': true,
+                'type': 'fill',
+                'source': 'choropleth-layer-'+layer.id,
+                // 'source-layer': 'water',
+                'paint': {
+                    'fill-color': colorLayer[0], // this layer will be painted according to the color in the palet
+                    'fill-opacity': layer.opacity/10
+                },
+                'layout': layoutRules,
+                'minzoom': layer.minzoom,
+                'maxzoom': layer.maxzoom
+            }, bl );
+            console.log('Layer: layer-' + layer.id + '-choropleth-' + i +' added');
+        });
+    },
+
+    filterChoroplethLayers: function(colorLayers, layer){
+        _.each(colorLayers, function(colorLayer, i) {
+            // filter all the areas "where pt_count is >= current layer value"
+            var filters = [
+                'all',
+                ['>=', 'pt_count', colorLayer[1]] //this is the breakpoint value
+            ];
+
+            // as we go down in the palet we have to add a "and < previous layer value"
+            if (i !== 0) filters.push(['<', 'pt_count', colorLayers[i - 1][1]]);
+            // console.log(filters);
+
+            //finally, we add the filter to the layer
+            mvEditor.map.setFilter('layer-' + layer.id + '-choropleth-' + i, filters);
+        });
+    },
+
+    addHeatmapSource: function(){
+
+    },
+
+    getHeatmapLayers: function(){
+
+    },
+
+    addHeatmapLayers: function(){
+
+    },
+
+    filterHeatmapLayers: function(){
 
     },
 
     addMapLayers: function(){
         // Reverse the order so the first one is the one on the top (as in the editor view)
         layers = map.layers.reverse();
-
+        console.log(layers);
         // Add each layer synchronously
-        _.each(layers, function(layer){
+        _.each(layers, function(layer, layerIndex){
 
             var paintRules = {};
+            var layoutRules = {};
+            var layerType = layer.type;
 
-            switch(layer.type){
+            switch(layerType){
                 case 'fill':
-                    paintRules['fill-opacity'] =  layer.opacity/10;
+                    paintRules = mvEditor.getPaintRules(layer, ['opacity', 'color', 'outline-color']);
 
-                    if(layer['color'])
-                        paintRules['fill-color'] = layer['color'];
+                    layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
 
-                    if(layer['outline-color'])
-                        paintRules['fill-outline-color'] = layer['outline-color'];
+                    mvEditor.addLayer(layer, paintRules, layoutRules);
 
                     break;
                 case 'line':
-                    paintRules['line-opacity'] = layer.opacity/10;
+                    paintRules = mvEditor.getPaintRules(layer, ['opacity', 'color', 'width', 'gap-width', 'blur', 'dasharray']);
 
-                    if(layer['color'])
-                        paintRules['line-color'] = layer['color'];
+                    layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
 
-                    if(layer['wwidth'])
-                        paintRules['line-widht'] = layer['widht'];
-
-                    if(layer['gap-width'])
-                        paintRules['line-gap-width'] = layer['gap-width'];
-
-                    if(layer['blur'])
-                        paintRules['line-blur'] = layer['blur'];
-
-                    if(layer['dasharray']){
-                        var values = layer['dasharray'].split(',');
-                        paintRules['line-dasharray'] = [ parseInt(values[0]), parseInt(values[1]) ];
-                    }
+                    mvEditor.addLayer(layer, paintRules, layoutRules);
 
                     break;
                 case 'circle':
-                    paintRules['circle-opacity'] = layer.opacity/10;
+                    paintRules = mvEditor.getPaintRules(layer, ['opacity', 'color', 'radius', 'blur']);
 
-                    if(layer['color'])
-                        paintRules['circle-color'] = layer['color'];
+                    layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
 
-                    if(layer['radius'])
-                        paintRules['circle-radius'] = layer['radius'];
+                    mvEditor.addLayer(layer, paintRules, layoutRules);
+                    break;
+                case 'choropleth':
+                    layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
 
-                    if(layer['blur'])
-                        paintRules['circle-blur'] = layer['blur'];
+                    //get points source
+                    var points = $.getJSON( '/sources/'+layer.source.hash+'.geojson' );
+                    // console.log(layer.source);
+                    // console.log('/sources/'+layer.source.hash+'.geojson');
+
+                    //get polygons source
+                    var polygons = $.getJSON( '/sources/'+layer['choropleth-source']+'.geojson');
+
+                    $.when( points, polygons ).done(function( jsonPoints, jsonPolygons ) {
+
+                        // calculates the number of points that fall within each polygon
+                        var jsonPolygonsCount = turf.count(jsonPolygons[0], jsonPoints[0], 'pt_count');
+
+                        // choropleth = polygons + count(points within polygon)
+                        mvEditor.addChoroplethSource(jsonPolygonsCount, layer);
+
+                        // obtain the color schema and breakpoints of each one.
+                        var colorLayers = mvEditor.getChoroplethLayers(layer, jsonPolygonsCount);
+                        // console.log(colorLayers);
+
+                        // for each color in the color schema, create a layer
+                        // with all the polygons painted with this color.
+                        var beforeLayer = layers[layerIndex+1];
+                        mvEditor.addChoroplethLayers(colorLayers, layoutRules, layer, beforeLayer);
+
+                        // Once we have the layers we have to filter each layer according to the palet value
+                        mvEditor.filterChoroplethLayers(colorLayers, layer);
+
+                    });
+
+                    break;
+
+                case 'heatmap':
+                    layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
+
+                    // add the source with or without clustering
+                    mvEditor.addHeatmapSource(layer);
+
+                    // obtain the color schema and breakpoints of each one.
+                    // var colorLayers = mvEditor.getHeatmapLayers(layer, jsonPolygonsCount);
+
+                    // for each color in the color schema, create a layer
+                    // with all the circles painted with this color.
+                    var beforeLayer = layers[layerIndex+1];
+                    mvEditor.addHeatmapLayers(colorLayers, layoutRules, layer, beforeLayer);
+
+                    // Once we have the layers we have to filter each layer according to the palet value
+                    mvEditor.filterHeatmapLayers(colorLayers, layer);
+
 
                     break;
             }
-            //opacity
-            paintRules[layer.type+'-opacity'] = layer.opacity/10;
 
-            console.log(paintRules);
-
-            layoutRules = new Object();
-            layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
-
-            console.log(layoutRules);
-
-
-            mvEditor.map.addLayer({
-                'id': 'layer-'+layer.id,
-                'type': layer.type,
-                'source': 'source-'+layer.source.id,
-                'interactive': layer.interactive ? true : false,
-                'paint': paintRules,
-                'layout': layoutRules
-            });
-            console.log('Layer: '+layer.id+' added');
         });
-
     }
 
 }

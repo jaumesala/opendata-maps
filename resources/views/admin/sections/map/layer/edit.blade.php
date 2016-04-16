@@ -90,7 +90,9 @@
                         {!! Form::select('type',
                             [   'fill' => 'Fill',
                                 'circle' => 'Circle',
-                                'line' => 'Line' ],
+                                'line' => 'Line',
+                                'choropleth' => 'Choropleth',
+                                'heatmap' => 'Heatmap' ],
                             old('type', $layer->type),
                             [   'id' => 'type-'.$layer->id,
                                 'class' => 'form-control select2 layerType',
@@ -150,47 +152,69 @@
                             <?php
 
                                 $paintOptions = [
-                                    [   'name' => 'color',
+                                    [   'type' => 'input',
+                                        'name' => 'color',
                                         'label' => 'Color',
                                         'filter' => [ 'fill', 'line', 'circle' ],
                                         'class' => 'colorpicker',
                                         'placeholder' => '#000000',
                                     ],
-                                    [   'name' => 'outline-color',
+                                    [   'type' => 'input',
+                                        'name' => 'outline-color',
                                         'label' => 'Outline Color',
                                         'filter' => [ 'fill' ],
                                         'class' => 'colorpicker',
                                         'placeholder' => '#000000',
                                     ],
-                                    [   'name' => 'width',
+                                    [   'type' => 'input',
+                                        'name' => 'width',
                                         'label' => 'width',
                                         'filter' => [ 'line' ],
                                         'class' => '',
                                         'placeholder' => '2',
                                     ],
-                                    [   'name' => 'gap-width',
+                                    [   'type' => 'input',
+                                        'name' => 'gap-width',
                                         'label' => 'Gap width',
                                         'filter' => [ 'line' ],
                                         'class' => '',
                                         'placeholder' => '3',
                                     ],
-                                    [   'name' => 'dasharray',
+                                    [   'type' => 'input',
+                                        'name' => 'dasharray',
                                         'label' => 'Dash array',
                                         'filter' => [ 'line' ],
                                         'class' => '',
                                         'placeholder' => '2,3',
                                     ],
-                                    [   'name' => 'radius',
+                                    [   'type' => 'input',
+                                        'name' => 'radius',
                                         'label' => 'Radius',
                                         'filter' => [ 'circle' ],
                                         'class' => '',
                                         'placeholder' => '10',
                                     ],
-                                    [   'name' => 'blur',
+                                    [   'type' => 'input',
+                                        'name' => 'blur',
                                         'label' => 'Blur',
-                                        'filter' => [ 'circle' ],
+                                        'filter' => [ 'line', 'circle' ],
                                         'class' => '',
                                         'placeholder' => '3',
+                                    ],
+                                    [   'type' => 'input',
+                                        'name' => 'choropleth-color',
+                                        'label' => 'Color schema',
+                                        'filter' => [ 'choropleth' ],
+                                        'class' => '',
+                                        'placeholder' => 'RdYlBu',
+                                    ],
+                                    [   'type' => 'select',
+                                        'name' => 'choropleth-reverse',
+                                        'label' => 'Reverse colors',
+                                        'filter' => [ 'choropleth' ],
+                                        'list' => [0 => 'No', 1 => 'Yes'],
+                                        'class' => '',
+                                        'placeholder' => 'Reverse colors',
                                     ],
 
                                 ];
@@ -198,27 +222,48 @@
                             ?>
 
                             @foreach($paintOptions as $option)
-                            <div class="form-group input-group-xs clearfix" data-filter="{{ implode(" ", $option['filter']) }}">
-                                <div class="col-xs-7">
-                                    <div class="row">
-                                        <label for="{{ $option['name']."-".$layer->id }}" class="control-label">{{ $option['label'] }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-xs-5">
-                                    <div class="row">
-                                        <input type="text" class="form-control {{ $option['class'] }}" id="{{ $option['name']."-".$layer->id }}" name="{{ $option['name'] }}" placeholder="{{ $option['placeholder'] }}" value="{{ $layer->{$option['name']} }}">
-                                    </div>
-                                </div>
-                            </div>
+                                @include('admin.sections.map.layer.option.show', $option)
                             @endforeach
 
-                        </div>
+                        </div> <!-- /.sublist-wrapper -->
+
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="filter">Layout values</label>
-                        <!-- <textarea class="form-control" rows="3" id="filter">{{ old('filter', $layer->layout) }}</textarea> -->
+
+                        <div class="sublist-wrapper layoutRules">
+
+                            <?php
+
+                                $layoutOptions = [
+                                    [   'type' => 'sources',
+                                        'name' => 'choropleth-source',
+                                        'label' => 'Group by',
+                                        'filter' => [ 'choropleth' ],
+                                        'list' => $sources->lists('name', 'hash'),
+                                        'class' => '',
+                                        'placeholder' => 'Choose a source',
+                                    ],
+                                    [   'type' => 'select',
+                                        'name' => 'choropleth-classes',
+                                        'label' => 'Num. of groups',
+                                        'filter' => [ 'choropleth' ],
+                                        'list' => [3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9],
+                                        'class' => '',
+                                        'placeholder' => 'How many divisions',
+                                    ],
+                                ];
+
+                            ?>
+
+                            @foreach($layoutOptions as $option)
+                                @include('admin.sections.map.layer.option.show', $option)
+                            @endforeach
+
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -67,6 +67,64 @@
         padding: 2px 4px;
         font-size: 11px;
         line-height: 1.2;
+
+
+
     }
+
+    .input-group-xs{
+
+        .select2-container-xs{
+            padding: 2px 4px;
+            height: 20px;
+            font-size: 11px;
+
+            .select2-selection__rendered{
+                line-height: 20px;
+            }
+
+            .select2-selection__arrow{
+                height: 20px;
+                right: 0;
+                width: 14px;
+            }
+
+            .select2-selection__arrow b{
+                margin-top: -3px;
+                border-width: 4px 3px 0 3px;
+            }
+
+        }
+
+        .select2-container--open{
+            .select2-selection__arrow b{
+                border-width: 0 3px 4px 3px;
+            }
+
+            .select2-dropdown--below{
+                font-size: 11px;
+            }
+        }
+    }
+
+    .select2-dropdown-xs{
+        font-size: 11px;
+        .select2-results__option{
+            padding: 3px 4px;
+        }
+
+        .select2-search--dropdown {
+            padding: 2px;
+            .select2-search__field{
+                padding: 2px;
+            }
+        }
+    }
+
+
+
+
+
+
 
 }

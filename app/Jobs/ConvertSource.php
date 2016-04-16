@@ -56,7 +56,7 @@ class ConvertSource extends Job implements ShouldQueue
 
             $sourceRepo->addRecord($this->source, "Raw file in $rawFilePath does not exists!", "error");
         }
-        elseif( Storage::mimeType($rawFilePath) != 'text/plain' )
+        elseif( Storage::mimeType($rawFilePath) != 'text/plain' && Storage::mimeType($rawFilePath) != 'application/octet-stream')
         {
             // update sync_status
             $this->source->sync_status = "error";

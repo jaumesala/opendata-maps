@@ -62,7 +62,7 @@ class DownloadUrlSource extends Job implements ShouldQueue
         elseif($response->getStatusCode() == 200)
         {
             // update origin_format
-            $this->source->origin_format = $sourceRepo->guessResponseType($response);
+            $this->source->origin_format = $sourceRepo->guessResponseType($response, $url);
 
             // update origin_size
             $this->source->origin_size = $sourceRepo->guessResponseLength($response);
@@ -72,6 +72,8 @@ class DownloadUrlSource extends Job implements ShouldQueue
 
             // update sync_status
             $this->source->sync_status = "downloaded";
+
+            $this->source->save();
 
             // Queue the source to be converted
             $this->dispatch(new ConvertSource($this->source));

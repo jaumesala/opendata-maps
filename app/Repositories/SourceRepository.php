@@ -62,14 +62,14 @@ class SourceRepository
 
             $result['size'] =  $this->guessResponseLength($response);
 
-            $result['type'] = $this->guessResponseType($response);
+            $result['type'] = $this->guessResponseType($response, $url);
 
         }
 
         return $result;
     }
 
-    public function guessResponseType($response)
+    public function guessResponseType($response, $url)
     {
         $mimes = [
             'csv'       => 'text/csv',
@@ -82,6 +82,7 @@ class SourceRepository
             'gpx'       => 'application/gpx+xml'
         ];
 
+        // try to find the content type of the response
         if(!$response->hasHeader('content-type')){
             return 'unknown';
         }
@@ -92,9 +93,17 @@ class SourceRepository
             $contentType = $response->getHeader('content-type');
         }
 
+        // find content type in accepted mimes array
         $mimeType = array_search($contentType, $mimes);
 
+        // if not in list, try to guess from file extension
         if(!$mimeType){
+            $arrUrl = explode(".",$url);
+            $extension = end($arrUrl);
+
+            if(array_key_exists($extension, $mimes)) {
+                return $extension;
+            }
             return 'unsupported';
         } else {
             return $mimeType;

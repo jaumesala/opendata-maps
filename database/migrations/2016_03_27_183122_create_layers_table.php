@@ -34,6 +34,11 @@ class CreateLayersTable extends Migration
             $table->integer('radius');
             $table->integer('blur');
 
+            $table->string('choropleth-source');
+            $table->integer('choropleth-classes');
+            $table->string('choropleth-color');
+            $table->boolean('choropleth-reverse')->default(false);
+
             $table->timestamps();
 
             $table->foreign('map_id')->references('id')->on('maps')->onDelete('cascade');

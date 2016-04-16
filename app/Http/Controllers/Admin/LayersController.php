@@ -118,7 +118,6 @@ class LayersController extends Controller
      */
     public function update(UpdateLayerRequest $request, $id)
     {
-        $layer = $this->layer->getById($id);
         $result = $this->layer->updateLayer($request);
 
         if(!$result){

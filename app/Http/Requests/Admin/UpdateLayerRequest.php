@@ -29,7 +29,7 @@ class UpdateLayerRequest extends Request
             'source_id'     => 'required|integer|exists:sources,id',
             'visible'       => 'required|integer',
             'opacity'       => 'required|integer',
-            'type'          => 'required|in:fill,circle,line',
+            'type'          => 'required|in:fill,circle,line,choropleth,heatmap',
             'interactive'   => 'required|boolean',
             'minzoom'       => 'required|numeric|min:0|max:22',
             'maxzoom'       => 'required|numeric|min:0|max:22',
@@ -50,6 +50,15 @@ class UpdateLayerRequest extends Request
             case 'fill':
                 $typeRules = [];
                 break;
+
+            case 'choropleth':
+                $typeRules = [];
+                break;
+
+            case 'heatmap':
+                $typeRules = [];
+                break;
+
 
             default:
                 $typeRules = [];

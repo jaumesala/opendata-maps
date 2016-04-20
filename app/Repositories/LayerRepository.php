@@ -27,14 +27,8 @@ class LayerRepository
     {
         $layer = new Layer();
 
-        $layer->name = $request->name;
-        $layer->visible = $request->visible;
-        $layer->opacity = $request->opacity;
-
-        $layer->type = $request->type;
-        $layer->interactive = $request->interactive;
-        $layer->minzoom = $request->minzoom;
-        $layer->maxzoom = $request->maxzoom;
+        $values = $request->except('_token', '_method', 'map_id', 'source_id');
+        $layer->fill($values);
 
         $map = Map::findOrFail($request->map_id);
         $layer->map()->associate($map);

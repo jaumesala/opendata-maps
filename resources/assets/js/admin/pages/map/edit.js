@@ -379,6 +379,22 @@ mvEditor = {
             bl = 'layer-'+beforeLayer.id;
         }
 
+        mvEditor.map.addLayer({
+            'id': 'layer-' + layer.id + '-cluster-no',
+            'type': 'circle',
+            'source': 'heatmap-layer-'+layer.id,
+            'paint': {
+                'circle-color': colorLayers[0][0],
+                'circle-radius': layer.radius,
+                'circle-blur': layer.blur
+            },
+            'layout': layoutRules,
+            'minzoom': layer.minzoom,
+            'maxzoom': layer.maxzoom,
+            'filter': ['!=', 'cluster', true]
+        }, 'waterway-label');
+        console.log('Layer: layer-' + layer.id + '-cluster-no added');
+
         colorLayers.forEach(function (colorLayer, i) {
 
             var filter = i === colorLayers.length - 1 ?
@@ -390,18 +406,6 @@ mvEditor = {
             // console.log(filter);
 
             mvEditor.map.addLayer({
-                'id': 'layer-' + layer.id + '-cluster-no',
-                'type': 'circle',
-                'source': 'heatmap-layer-'+layer.id,
-                'paint': {
-                    'circle-color': colorLayers[0][0],
-                    'circle-radius': layer.radius,
-                    'circle-blur': layer.blur
-                },
-                'filter': ['!=', 'cluster', true]
-            }, 'waterway-label');
-
-            mvEditor.map.addLayer({
                 'id': 'layer-' + layer.id + '-cluster-' + i,
                 'type': 'circle',
                 'source': 'heatmap-layer-'+layer.id,
@@ -410,10 +414,13 @@ mvEditor = {
                     'circle-radius': layer.radius,
                     'circle-blur': layer.blur // blur the circles to get a heatmap look
                 },
+                'layout': layoutRules,
+                'minzoom': layer.minzoom,
+                'maxzoom': layer.maxzoom,
                 'filter':  filter
             }, 'waterway-label');
 
-
+            console.log('Layer: layer-' + layer.id + '-cluster-' + i +' added');
 
         });
 
@@ -514,7 +521,7 @@ mvEditor = {
 
                         // obtain the color schema and breakpoints of each one.
                         var colorClusters = mvEditor.getHeatmapClusters(layer, squareGridCount);
-                        console.log(colorClusters);
+                        // console.log(colorClusters);
 
                         // for each color in the color schema create a layer:
                         // one for each cluster category, and one for non-clustered points

@@ -270,19 +270,19 @@ mvEditor = {
         return paintRules;
     },
 
-    getChoroplethLayers: function(layer, polygonData){
-        var numClasses = layer['choropleth-classes'];
-        var colorSchema = (layer['choropleth-color']) ? layer['choropleth-color'] : 'YlOrRd';
+    getChoroplethClusters: function(layer, polygonData){
+        var clusters = layer['clusters'];
+        var schema = (layer['schema-color']) ? layer['schema-color'] : 'YlOrRd';
 
         // Color scale using chroma.js
-        var scale = chroma.scale(colorSchema).colors(numClasses);
+        var scale = chroma.scale(schema).colors(clusters);
 
         // Check if we need to reverse the color schema
-        if(layer['choropleth-reverse']){
+        if(layer['schema-reverse']){
             scale.reverse();
         }
 
-        var breaks = turf.jenks(polygonData, "pt_count", numClasses-1).reverse();
+        var breaks = turf.jenks(polygonData, "pt_count", clusters-1).reverse();
         // console.log(breaks);
         return _.zip(scale, breaks);
     },
@@ -344,15 +344,78 @@ mvEditor = {
         });
     },
 
-    addHeatmapSource: function(){
+    addHeatmapSource: function(jsonSource, layer){
+
+        mvEditor.map.addSource('heatmap-layer-'+layer.id, {
+            'type': 'geojson',
+            'data': jsonSource,
+            'cluster': true,
+            'clusterMaxZoom': 15, // Max zoom to cluster points on
+            'clusterRadius': 20 // Use small cluster radius for the heatmap look
+        });
+    },
+
+    getHeatmapClusters: function(layer, polygonData){
+        var clusters = layer['clusters'];
+        var schema = (layer['schema-color']) ? layer['schema-color'] : 'YlOrRd';
+
+        // Color scale using chroma.js
+        var scale = chroma.scale(schema).colors(clusters);
+
+        // Check if we need to reverse the color schema
+        if(layer['schema-reverse']){
+            scale.reverse();
+        }
+
+        var breaks = turf.jenks(polygonData, "pt_count", clusters-1); //.reverse();
+        // console.log(breaks);
+        return _.zip(scale, breaks);
 
     },
 
-    getHeatmapLayers: function(){
+    addHeatmapLayers: function(colorLayers, layoutRules, layer, beforeLayer){
+        var bl = undefined;
+        if(typeof beforeLayer !== 'undefined') {
+            bl = 'layer-'+beforeLayer.id;
+        }
 
-    },
+        colorLayers.forEach(function (colorLayer, i) {
 
-    addHeatmapLayers: function(){
+            var filter = i === colorLayers.length - 1 ?
+                ['>=', 'point_count', colorLayer[1]] :
+                ['all',
+                    ['>=', 'point_count', colorLayer[1]],
+                    ['<', 'point_count', colorLayers[i + 1][1]]];
+
+            // console.log(filter);
+
+            mvEditor.map.addLayer({
+                'id': 'layer-' + layer.id + '-cluster-no',
+                'type': 'circle',
+                'source': 'heatmap-layer-'+layer.id,
+                'paint': {
+                    'circle-color': colorLayers[0][0],
+                    'circle-radius': layer.radius,
+                    'circle-blur': layer.blur
+                },
+                'filter': ['!=', 'cluster', true]
+            }, 'waterway-label');
+
+            mvEditor.map.addLayer({
+                'id': 'layer-' + layer.id + '-cluster-' + i,
+                'type': 'circle',
+                'source': 'heatmap-layer-'+layer.id,
+                'paint': {
+                    'circle-color': colorLayer[0],
+                    'circle-radius': layer.radius,
+                    'circle-blur': layer.blur // blur the circles to get a heatmap look
+                },
+                'filter':  filter
+            }, 'waterway-label');
+
+
+
+        });
 
     },
 
@@ -363,7 +426,7 @@ mvEditor = {
     addMapLayers: function(){
         // Reverse the order so the first one is the one on the top (as in the editor view)
         layers = map.layers.reverse();
-        console.log(layers);
+        // console.log(layers);
         // Add each layer synchronously
         _.each(layers, function(layer, layerIndex){
 
@@ -401,7 +464,6 @@ mvEditor = {
                     //get points source
                     var points = $.getJSON( '/sources/'+layer.source.hash+'.geojson' );
                     // console.log(layer.source);
-                    // console.log('/sources/'+layer.source.hash+'.geojson');
 
                     //get polygons source
                     var polygons = $.getJSON( '/sources/'+layer['choropleth-source']+'.geojson');
@@ -415,16 +477,16 @@ mvEditor = {
                         mvEditor.addChoroplethSource(jsonPolygonsCount, layer);
 
                         // obtain the color schema and breakpoints of each one.
-                        var colorLayers = mvEditor.getChoroplethLayers(layer, jsonPolygonsCount);
-                        // console.log(colorLayers);
+                        var colorClusters = mvEditor.getChoroplethClusters(layer, jsonPolygonsCount);
+                        // console.log(colorClusters);
 
                         // for each color in the color schema, create a layer
                         // with all the polygons painted with this color.
                         var beforeLayer = layers[layerIndex+1];
-                        mvEditor.addChoroplethLayers(colorLayers, layoutRules, layer, beforeLayer);
+                        mvEditor.addChoroplethLayers(colorClusters, layoutRules, layer, beforeLayer);
 
                         // Once we have the layers we have to filter each layer according to the palet value
-                        mvEditor.filterChoroplethLayers(colorLayers, layer);
+                        mvEditor.filterChoroplethLayers(colorClusters, layer);
 
                     });
 
@@ -433,19 +495,37 @@ mvEditor = {
                 case 'heatmap':
                     layoutRules['visibility'] = layer.visible ? 'visible' : 'none';
 
-                    // add the source with or without clustering
-                    mvEditor.addHeatmapSource(layer);
+                    //get points source
+                    var points = $.getJSON( '/sources/'+layer.source.hash+'.geojson' );
 
-                    // obtain the color schema and breakpoints of each one.
-                    // var colorLayers = mvEditor.getHeatmapLayers(layer, jsonPolygonsCount);
+                    $.when( points ).done(function( jsonPoints ) {
 
-                    // for each color in the color schema, create a layer
-                    // with all the circles painted with this color.
-                    var beforeLayer = layers[layerIndex+1];
-                    mvEditor.addHeatmapLayers(colorLayers, layoutRules, layer, beforeLayer);
+                        // Takes a bounding box and a cell depth and returns a set of square polygons in a grid.
+                        var extent = turf.extent(jsonPoints);
+                        var cellWidth = 0.2;
+                        var units = 'kilometers';
+                        var squareGrid = turf.squareGrid(extent, cellWidth, units);
 
-                    // Once we have the layers we have to filter each layer according to the palet value
-                    mvEditor.filterHeatmapLayers(colorLayers, layer);
+                        // calculates the number of points (complains) that fall within each cell of the grid
+                        var squareGridCount = turf.count(squareGrid, jsonPoints, 'pt_count');
+
+                        // add the source with clustering
+                        mvEditor.addHeatmapSource(jsonPoints, layer);
+
+                        // obtain the color schema and breakpoints of each one.
+                        var colorClusters = mvEditor.getHeatmapClusters(layer, squareGridCount);
+                        console.log(colorClusters);
+
+                        // for each color in the color schema create a layer:
+                        // one for each cluster category, and one for non-clustered points
+                        var beforeLayer = layers[layerIndex+1];
+                        mvEditor.addHeatmapLayers(colorClusters, layoutRules, layer, beforeLayer);
+
+                        // // Once we have the layers we have to filter each layer according to the palet value
+                        // // mvEditor.filterHeatmapLayers(colorClusters, layer);
+
+                    });
+
 
 
                     break;

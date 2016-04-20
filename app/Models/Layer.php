@@ -12,7 +12,7 @@ class Layer extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'map_id', 'source_id', 'visible', 'opacity', 'type', 'minzoom', 'maxzoom', 'interactive', 'color', 'outline-color', 'width', 'gap-width', 'dasharray', 'radius', 'blur', 'choropleth-source', 'choropleth-classes', 'choropleth-color', 'choropleth-reverse'
+        'name', 'map_id', 'source_id', 'visible', 'opacity', 'type', 'minzoom', 'maxzoom', 'interactive', 'color', 'outline-color', 'width', 'gap-width', 'dasharray', 'radius', 'blur', 'choropleth-source', 'clusters', 'schema-color', 'schema-reverse', 'cluster-maxzoom', 'cluster-radius'
     ];
 
     public function map()

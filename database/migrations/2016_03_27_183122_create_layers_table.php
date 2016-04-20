@@ -35,9 +35,11 @@ class CreateLayersTable extends Migration
             $table->integer('blur');
 
             $table->string('choropleth-source');
-            $table->integer('choropleth-classes');
-            $table->string('choropleth-color');
-            $table->boolean('choropleth-reverse')->default(false);
+            $table->integer('clusters');
+            $table->string('schema-color');
+            $table->boolean('schema-reverse')->default(false);
+            $table->integer('cluster-maxzoom')->default(15);
+            $table->integer('cluster-radius')->default(20);
 
             $table->timestamps();
 

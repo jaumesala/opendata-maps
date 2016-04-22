@@ -18,7 +18,7 @@ class MapRepository
 
     public function getById($id)
     {
-        $map = Map::with('user', 'tags', 'layers.source')->findOrFail($id);
+        $map = Map::with('user', 'tags', 'layers.source')->find($id);
 
         return $map;
     }
@@ -58,15 +58,8 @@ class MapRepository
         while (Map::where("hash", "=", $hash)->first() instanceof Map);
         $map->hash = $hash;
 
-        $map->name = $request->name;
-        $map->status = $request->status;
-        $map->description = $request->description;
-        $map->style = $request->style;
-        $map->longitude = $request->longitude;
-        $map->latitude = $request->latitude;
-        $map->zoom = $request->zoom;
-        $map->pitch = $request->pitch;
-        $map->bearing = $request->bearing;
+        $values = $request->except('_token', '_method', '_section', 'tags');
+        $map->fill($values);
 
         $map->user()->associate(Auth::user());
 

@@ -25,7 +25,8 @@ class CreateMapRequest extends Request
     {
         return [
             'name'          => 'required|max:255',
-            'status'        => 'required|in:public,private,disabled',
+            'active'        => 'required|boolean',
+            'visibility'    => 'required|in:private,shared,public',
             'description'   => 'sometimes|string',
             'tags'          => 'required',
             'style'         => 'required|string',

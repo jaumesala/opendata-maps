@@ -13,7 +13,7 @@ class Map extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'status', 'style', 'zoom', 'latitude', 'longitude', 'pitch', 'bearing'
+        'name', 'description', 'active', 'visibility', 'style', 'zoom', 'latitude', 'longitude', 'pitch', 'bearing'
     ];
 
     public function user()

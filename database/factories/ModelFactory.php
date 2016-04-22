@@ -48,7 +48,8 @@ $factory->define(App\Models\Map::class, function (Faker\Generator $faker) {
 
         'user_id' => $faker->randomElement($users),
 
-        'status' => $faker->randomElement(['public','public','public','private','private','disabled']),
+        'active' => $faker->boolean(75),
+        'visibility' => $faker->randomElement(['public','public','public','shared','shared','private']),
         'name' => $faker->sentence(6),
         'description' => $faker->paragraph(2),
 

@@ -17,7 +17,8 @@ class CreateMapsTable extends Migration
             $table->string('hash',4)->unique();
             $table->integer('user_id')->unsigned();
 
-            $table->string('status', 20);
+            $table->boolean('active')->default(true);
+            $table->string('visibility', 20);
             $table->string('name');
             $table->text('description');
 

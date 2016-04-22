@@ -54,13 +54,25 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="status">Status</label>
-                                {!! Form::select('status',
-                                    [   'public' => 'Public',
-                                        'private' => 'Private',
-                                        'disabled' => 'Disabled' ],
-                                    old('status', null),
-                                    [   'id' => 'status',
+                                <label for="active">Active</label>
+                                {!! Form::select('active',
+                                    [   true => 'Yes',
+                                        false => 'No' ],
+                                    old('active', 'true'),
+                                    [   'id' => 'active',
+                                        'class' => 'form-control select2',
+                                        'data-options' => '{ "minimumResultsForSearch": -1 }' ]
+                                        ) !!}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="visibility">Visibility</label>
+                                {!! Form::select('visibility',
+                                    [   'private' => 'Private',
+                                        'shared' => 'Shared',
+                                        'public' => 'Public' ],
+                                    old('visibility', null),
+                                    [   'id' => 'visibility',
                                         'class' => 'form-control select2',
                                         'data-options' => '{ "minimumResultsForSearch": -1 }' ]
                                         ) !!}

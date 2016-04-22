@@ -84,6 +84,17 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('source', 'Admin\SourcesController');
 
     /* Maps */
+        /* disable */
+        Route::get('map/{source}/disable', [
+            'uses' => 'Admin\MapsController@disable',
+            'as' => 'admin.map.disable'
+            ]);
+        /* enable */
+        Route::get('map/{source}/enable', [
+            'uses' => 'Admin\MapsController@enable',
+            'as' => 'admin.map.enable'
+            ]);
+
         Route::resource('map', 'Admin\MapsController');
 
     /* Layers */

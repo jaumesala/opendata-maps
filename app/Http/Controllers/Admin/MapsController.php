@@ -181,6 +181,55 @@ class MapsController extends Controller
         return redirect()->back()->with('status', 'update-success');
     }
 
+
+    /**
+     * Disable the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function disable($id)
+    {
+        $map = $this->map->getById($id);
+
+        if(!$map){
+            return redirect()->route('admin.map.index');
+        }
+
+        $result = $this->map->disableMap($map->id);
+
+        if(!$result){
+            return redirect()->back()->with('status', 'update-error');
+        }
+
+        return redirect()->back()->with('status', 'update-success');
+    }
+
+
+    /**
+     * Enable the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enable($id)
+    {
+        $map = $this->map->getById($id);
+
+        if(!$map){
+            return redirect()->route('admin.map.index');
+        }
+
+        $result = $this->map->enableMap($map->id);
+
+        if(!$result){
+            return redirect()->back()->with('status', 'update-error');
+        }
+
+        return redirect()->back()->with('status', 'update-success');
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *

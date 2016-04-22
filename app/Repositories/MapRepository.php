@@ -104,6 +104,24 @@ class MapRepository
         return $map->save();
     }
 
+    public function disableMap($id)
+    {
+        $map = Map::find($id);
+
+        $map->fill(['active' => false]);
+
+        return $map->save();
+    }
+
+    public function enableMap($id)
+    {
+        $map = Map::find($id);
+
+        $map->fill(['active' => true]);
+
+        return $map->save();
+    }
+
     public function destroyMap($id)
     {
         $map = Map::findOrFail($id);

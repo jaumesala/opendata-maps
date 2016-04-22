@@ -126,6 +126,10 @@ class MapsController extends Controller
 
         $map = $this->map->getById($id);
 
+        if(!$map){
+            return redirect()->route('admin.map.index');
+        }
+
         $data = compact('routeName', 'routeMethod', 'map');
 
         \Clockwork::info($map);

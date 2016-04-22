@@ -79,12 +79,8 @@
                         $date       = Carbon::createFromFormat('Y-m-d H:i:s', $createdAt);
                     ?>
                     <h6 class="widget-user-desc">
-                        @if($map->status == 'public')
+                        @if($map->active)
                             <i class="fa fa-circle text-success margin-r-5"></i>
-                        @elseif($map->status == 'private')
-                            <i class="fa fa-circle text-warning margin-r-5"></i>
-                        @elseif($map->status == 'disabled')
-                            <i class="fa fa-circle text-danger margin-r-5"></i>
                         @else
                             <i class="fa fa-circle text-danger margin-r-5"></i>
                         @endif
@@ -94,21 +90,37 @@
                 <div class="box-footer">
                     <div class="row">
 
-                        <div class="col-sm-4 border-right">
+                        <div class="col-sm-3 border-right">
                             <div class="description-block">
                                 <h5 class="description-header">{{ number_format($map->views, 0, ',', '.') }}</h5>
                                 <span class="description-text">Views</span>
                             </div>
                         </div>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-3 border-right">
                             <div class="description-block">
-                                @permission('show-map')
-                                <a href="{{ route('admin.map.show', $map->id) }}" class="btn btn-default pull-left"><i class="fa fa-fw fa-eye"></i></a>
-                                @endpermission
-                                <div class="btn-group pull-right">
+                                @if($map->visibility == 'private')
+                                    <h5 class="description-header"><i class="fa fa-user-secret"></i></h5>
+                                    <span class="description-text">Private</span>
+                                @elseif($map->visibility == 'shared')
+                                    <h5 class="description-header"><i class="fa fa-users"></i></h5>
+                                    <span class="description-text">Shared</span>
+                                @else
+                                    <h5 class="description-header"><i class="fa fa-globe"></i></h5>
+                                    <span class="description-text">Public</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="description-block">
+
+                                <div class="btn-group">
+                                    @permission('show-map')
+                                    <a href="{{ route('admin.map.show', $map->id) }}" class="btn btn-default pull-left"><i class="fa fa-fw fa-eye"></i></a>
+                                    @endpermission
                                     @permission('edit-map')
-                                    <a href="{{ route('admin.map.edit', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                                    <a href="{{ route('admin.map.edit', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-pencil"></i></a>
                                     @endpermission
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
@@ -116,15 +128,19 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         @permission('edit-map')
-                                        <li><a href="#"><i class="fa fa-fw fa-ban"></i> Disable</a></li>
+                                            @if($map->active)
+                                                <li><a href="{{ route('admin.map.disable', $map->id) }}"><i class="fa fa-fw fa-ban"></i> Disable</a></li>
+                                            @else
+                                                <li><a href="{{ route('admin.map.enable', $map->id) }}"><i class="fa fa-fw fa-check-circle-o"></i> Enable</a></li>
+                                            @endif
                                         @endpermission
                                         <li><a href="#"><i class="fa fa-fw fa-share-alt"></i> Share</a></li>
                                         @permission('create-map')
-                                        <li><a href="#"><i class="fa fa-fw fa-files-o"></i> Duplicate</a></li>
+                                            <li><a href="#"><i class="fa fa-fw fa-files-o"></i> Duplicate</a></li>
                                         @endpermission
                                         @permission('destroy-map')
-                                        <li class="divider"></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $map->id }}" data-action="{{ route('admin.map.destroy', $map->id) }}"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#confirmDelete" data-id="{{ $map->id }}" data-action="{{ route('admin.map.destroy', $map->id) }}"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
                                         @endpermission
                                     </ul>
                                 </div>

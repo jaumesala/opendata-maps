@@ -18,7 +18,26 @@ class MapRepository
 
     public function getById($id)
     {
-        $map = Map::with('user', 'tags', 'layers.source')->find($id);
+        //get allowed maps
+        $maps = Map::allowed()->with('user', 'tags', 'layers.source')->get();
+
+        // find out if id is allowed
+        $map = $maps->first(function ($key, $model) use ($id) {
+            return $model->id == $id;
+        });
+
+        return $map;
+    }
+
+    public function getByHash($hash)
+    {
+        //get allowed maps
+        $maps = Map::allowed()->with('user', 'tags', 'layers.source')->get();
+
+        // find out if hash is allowed
+        $map = $maps->first(function ($key, $model) use ($hash) {
+            return $model->hash == $hash;
+        });
 
         return $map;
     }
@@ -26,21 +45,21 @@ class MapRepository
 
     public function getAllOrderedBy($column = 'id', $order = 'asc')
     {
-        $maps = Map::with('user')->orderBy($column, $order)->get();
+        $maps = Map::allowed()->with('user')->orderBy($column, $order)->get();
 
         return $maps;
     }
 
     public function getPageOrderedBy($column = 'id', $order = 'asc')
     {
-        $maps = Map::with('user')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
+        $maps = Map::allowed()->with('user')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
 
         return $maps;
     }
 
     public function getQueryPageOrderedBy($query = '', $column = 'id', $order = 'asc')
     {
-        $maps = Map::with('user')->where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
+        $maps = Map::allowed()->with('user')->where('name', 'like', '%'.$query.'%')->orderBy($column, $order)->paginate(setting_value('maps', 'pageResults'));
 
         return $maps;
     }
@@ -123,4 +142,10 @@ class MapRepository
 
         return $result;
     }
+
+    public function countView($map){
+        $map->views = $map->views +1;
+        $map->save();
+    }
+
 }

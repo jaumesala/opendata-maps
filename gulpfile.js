@@ -66,6 +66,14 @@ var components = [
 var componentsPublic = [
 
     bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
+    'admin/components/mapView.js',
+    bowerRelative + 'underscore/underscore.js',
+    bowerRelative + 'chroma-js/chroma.js',
+];
+
+var componentsTest = [
+
+    bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
     bowerRelative + 'underscore/underscore.js',
     bowerRelative + 'chroma-js/chroma.js',
 ];
@@ -126,7 +134,11 @@ var copyToPublic = [
 elixir(function(mix) {
     mix
 
-        /* Admin */
+        /*
+         |--------------------------------------------------------------------------
+         | Admin files
+         |--------------------------------------------------------------------------
+         */
 
         // admin/app.scss
         .sass('admin/app.scss', publicPath + '/' + elixir.config.css.outputFolder + '/admin/app' + min + '.css')
@@ -144,23 +156,53 @@ elixir(function(mix) {
             elixir.config.assetsPath + '/js'
         )
 
-        /* public */
 
-        // main.scss
-        .sass('public/main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/main' + min + '.css')
+        /*
+         |--------------------------------------------------------------------------
+         | Public files
+         |--------------------------------------------------------------------------
+         */
+
+        // public/app.scss
+        .sass('public/app.scss', publicPath + '/' + elixir.config.css.outputFolder + '/public/app' + min + '.css')
 
         // public/app/app.js
         .scriptsIn(
             elixir.config.assetsPath + '/js/public',
-            publicPath + '/' + elixir.config.js.outputFolder + '/main' + min + '.js'
+            publicPath + '/' + elixir.config.js.outputFolder + '/public/app' + min + '.js'
         )
 
         //plugins.js
         .scripts(
             componentsPublic,
-            publicPath + '/' + elixir.config.js.outputFolder + '/plugins' + min + '.js',
+            publicPath + '/' + elixir.config.js.outputFolder + '/public/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         )
+
+
+        /*
+         |--------------------------------------------------------------------------
+         | Tests files
+         |--------------------------------------------------------------------------
+         */
+
+        // main.scss
+        .sass('tests/main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/tests/main' + min + '.css')
+
+        // tests/app/app.js
+        .scriptsIn(
+            elixir.config.assetsPath + '/js/tests',
+            publicPath + '/' + elixir.config.js.outputFolder + '/tests/main' + min + '.js'
+        )
+
+        //plugins.js
+        .scripts(
+            componentsTest,
+            publicPath + '/' + elixir.config.js.outputFolder + '/tests/plugins' + min + '.js',
+            elixir.config.assetsPath + '/js'
+        )
+
+
 
         // copy files
         for (var i = 0, len = copyToPublic.length; i < len; i++) {

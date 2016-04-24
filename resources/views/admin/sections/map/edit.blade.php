@@ -263,7 +263,7 @@
 
 @stop
 
-@push('postAppScripts')
+@push('preAppScripts')
     <script>
         var map = {!! json_encode($map) !!}
     </script>

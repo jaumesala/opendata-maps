@@ -28,8 +28,12 @@ class DashboardController extends Controller
     {
         $routeName = 'dashboard';
         $routeMethod = 'index';
-        $data = compact('routeName', 'routeMethod');
 
+        $users = \App\Models\User::count();
+        $sources = \App\Models\Source::count();
+        $maps = \App\Models\map::count();
+
+        $data = compact('routeName', 'routeMethod', 'users', 'sources', 'maps');
         return view('admin.sections.dashboard.index', $data);
     }
 }

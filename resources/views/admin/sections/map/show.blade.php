@@ -3,6 +3,8 @@
 
 @section('content')
 
+@include('admin.components.share-modal')
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -24,51 +26,69 @@
         <div class="col-sm-12 col-md-4 col-lg-3">
 
             <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-                <h3 class="widget-user-username">{{ $map->name }}</h3>
-            </div>
-            <div class="box-body">
-                <strong><i class="fa fa-info-circle margin-r-5"></i> Description</strong>
-                <p class="text-muted">
-                    {{ $map->description }}
-                </p>
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-yellow">
+                    <h3 class="widget-user-username">{{ $map->name }}</h3>
+                </div>
+                <div class="box-body">
+                    <strong><i class="fa fa-info-circle margin-r-5"></i> Description</strong>
+                    <p class="text-muted">
+                        {{ $map->description }}
+                    </p>
 
-                <hr>
+                    <hr>
 
-                <strong><i class="fa fa-user margin-r-5"></i> Creator</strong>
-                <?php
-                    $createdAt  = $map->created_at;
-                    $date       = Carbon::createFromFormat('Y-m-d H:i:s', $createdAt);
-                ?>
-                <p class="text-muted">By {{ $map->user->name }}, {{ $date->diffForHumans() }}</p>
+                    <strong><i class="fa fa-user margin-r-5"></i> Creator</strong>
+                    <?php
+                        $createdAt  = $map->created_at;
+                        $date       = Carbon::createFromFormat('Y-m-d H:i:s', $createdAt);
+                    ?>
+                    <p class="text-muted">By {{ $map->user->name }}, {{ $date->diffForHumans() }}</p>
 
-                <hr>
+                    <hr>
 
-                <strong><i class="fa fa-tags margin-r-5"></i> Tags</strong>
+                    <strong><i class="fa fa-tags margin-r-5"></i> Tags</strong>
 
-                <p>
-                    <span class="label label-default">Schiedam</span>
-                    <span class="label label-default">Neighbourhoods</span>
-                    <span class="label label-default">Districts</span>
-                    <span class="label label-default">Energy</span>
-                    <span class="label label-default">2015</span>
-                    <span class="label label-default">Lighting</span>
-                    <span class="label label-default">Smart Cities</span>
-                </p>
+                    <p>
+                        @foreach($map->tags as $tag)
+                            <span class="label label-default">{{ $tag->name }}</span>
+                        @endforeach
+                    </p>
 
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Tasks</a></li>
-                </ul>
-            </div>
-          </div>
+                    <hr>
 
+                    <strong><i class="fa fa-bars margin-r-5"></i> layers</strong>
 
+                    <ul class="list-unstyled layers-list">
+                        @foreach($map->layers as $layer)
+                        <li>
+                            {{ $layer->name }}
 
+                            <span class="label label-default pull-right">{{ $layer->type }}</span>
+                            {{--
+                            @if($layer->visible)
+                                <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-eye-slash"></i></a>
+                                <a href="#" class="btn btn-default btn-xs pull-right hidden"><i class="fa fa-eye"></i></a>
+                            @else
+                                <a href="#" class="btn btn-default btn-xs pull-right hidden"><i class="fa fa-eye-slash"></i></a>
+                                <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-eye"></i></a>
+                            @endif
+                            --}}
+                        </li>
+                        @endforeach
+                    </ul>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <div class="btn-group">
+                        <button class="btn btn-default" data-toggle="modal" data-target="#shareModal"><i class="fa fa-fw fa-share-alt"></i> Share</button>
+                        @permission('edit-map')
+                        <a href="{{ route('admin.map.edit', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                        @endpermission
+                    </div>
+                </div>
+            </div> <!-- /.box-widget -->
 
         </div>
         <div class="col-sm-12 col-md-8 col-lg-9">
@@ -92,3 +112,9 @@
 <!-- /.content -->
 
 @stop
+
+@push('preAppScripts')
+    <script>
+        var map = {!! json_encode($map) !!}
+    </script>
+@endpush

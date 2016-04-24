@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', ['uses' => 'PagesController@getHome', 'as' => 'home.index']);
-Route::get('/neighborhoods', ['uses' => 'PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
-Route::get('/complains', ['uses' => 'PagesController@getComplains', 'as' => 'complains.index']);
-Route::get('/choropleth', ['uses' => 'PagesController@getChoropleth', 'as' => 'choropleth.index']);
-Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap.index']);
+Route::get('/', ['uses' => 'Tests\PagesController@getHome', 'as' => 'home.index']);
+Route::get('/neighborhoods', ['uses' => 'Tests\PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
+Route::get('/complains', ['uses' => 'Tests\PagesController@getComplains', 'as' => 'complains.index']);
+Route::get('/choropleth', ['uses' => 'Tests\PagesController@getChoropleth', 'as' => 'choropleth.index']);
+Route::get('/heatmap', ['uses' => 'Tests\PagesController@getHeatmap', 'as' => 'heatmap.index']);
 
 /*
 |--------------------------------------------------------------------------
@@ -28,17 +28,27 @@ Route::get('/heatmap', ['uses' => 'PagesController@getHeatmap', 'as' => 'heatmap
 |
 */
 
+
+
 Route::group(['middleware' => ['web']], function () {
 
-    // Route::get('/', [
-    //         'uses' => function(){
-    //             return "hello!";
-    //         },
-    //         'as' => 'admin.dashboard.index'
-    //         ]);
-
+    /*
+    |--------------------------------------------------------------------------
+    | Public Routes
+    |--------------------------------------------------------------------------
+    */
     Route::auth();
 
+    Route::get('map/{map}', [
+        'uses' => 'Pub\MapsController@show',
+        'as' => 'public.map.show'
+        ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Routes
+    |--------------------------------------------------------------------------
+    */
     Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){
 
     /* Dashboard */
@@ -85,12 +95,12 @@ Route::group(['middleware' => ['web']], function () {
 
     /* Maps */
         /* disable */
-        Route::get('map/{source}/disable', [
+        Route::get('map/{map}/disable', [
             'uses' => 'Admin\MapsController@disable',
             'as' => 'admin.map.disable'
             ]);
         /* enable */
-        Route::get('map/{source}/enable', [
+        Route::get('map/{map}/enable', [
             'uses' => 'Admin\MapsController@enable',
             'as' => 'admin.map.enable'
             ]);

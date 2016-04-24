@@ -44,9 +44,9 @@
     <!-- <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' /> -->
 
     @if (App::environment() != 'production')
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/tests/main.css') }}">
     @else
-        <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/tests/main.min.css') }}">
     @endif
 
     <script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>

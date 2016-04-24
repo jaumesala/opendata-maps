@@ -12,11 +12,11 @@
         <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.js'></script> -->
 
         @if (App::environment() != 'production')
-            <script src="{{ asset('js/plugins.js') }}"></script>
-            <script src="{{ asset('js/main.js') }}"></script>
+            <script src="{{ asset('js/tests/plugins.js') }}"></script>
+            <script src="{{ asset('js/tests/main.js') }}"></script>
         @else
-            <script src="{{ asset('js/plugins.min.js') }}"></script>
-            <script src="{{ asset('js/main.min.js') }}"></script>
+            <script src="{{ asset('js/tests/plugins.min.js') }}"></script>
+            <script src="{{ asset('js/tests/main.min.js') }}"></script>
         @endif
 
         @if (App::environment() == 'production')

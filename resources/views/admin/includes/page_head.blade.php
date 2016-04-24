@@ -12,7 +12,7 @@
     <title>
         @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or 'SchiedamMaps' }}
     </title>
-    <meta name="description" content="{{ trans('includes/page_head.description_'.Route::currentRouteName()) }}">
+    <meta name="description" content="{{ $customDescription or 'Admin panel SchiedamMaps' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <meta id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
@@ -54,5 +54,5 @@
         data-controller="@yield('customBodyController', ''){{ $routeName or Route::currentRouteName() }}"
         data-action="@yield('customBodyMethod', ''){{ $routeMethod or '' }}">
     <!--[if lt IE 7]>
-    <p class="browsehappy">{{ trans('includes/page_head.chrome_frame') }}</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->

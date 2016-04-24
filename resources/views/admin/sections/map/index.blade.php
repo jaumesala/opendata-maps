@@ -117,7 +117,7 @@
 
                                 <div class="btn-group">
                                     @permission('show-map')
-                                    <a href="{{ route('admin.map.show', $map->id) }}" class="btn btn-default pull-left"><i class="fa fa-fw fa-eye"></i></a>
+                                    <a href="{{ route('admin.map.show', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-eye"></i></a>
                                     @endpermission
                                     @permission('edit-map')
                                     <a href="{{ route('admin.map.edit', $map->id) }}" class="btn btn-default"><i class="fa fa-fw fa-pencil"></i></a>
@@ -136,7 +136,7 @@
                                         @endpermission
                                         <li><a href="#"><i class="fa fa-fw fa-share-alt"></i> Share</a></li>
                                         @permission('create-map')
-                                            <li><a href="#"><i class="fa fa-fw fa-files-o"></i> Duplicate</a></li>
+                                            <!-- <li><a href="#"><i class="fa fa-fw fa-files-o"></i> Duplicate</a></li> -->
                                         @endpermission
                                         @permission('destroy-map')
                                             <li class="divider"></li>

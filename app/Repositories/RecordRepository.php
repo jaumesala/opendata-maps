@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Record;
 
-class RoleRepository
+class RecordRepository
 {
     public function getAll()
     {

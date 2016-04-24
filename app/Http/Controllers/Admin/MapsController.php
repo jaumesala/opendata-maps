@@ -130,7 +130,12 @@ class MapsController extends Controller
             return redirect()->route('admin.map.index');
         }
 
-        $data = compact('routeName', 'routeMethod', 'map');
+        $environment = collect([
+                'settings' => \Cache::get('settings'),
+                // 'sources' => $sources
+            ]);
+
+        $data = compact('routeName', 'routeMethod', 'map', 'environment');
 
         \Clockwork::info($map);
 
@@ -150,6 +155,11 @@ class MapsController extends Controller
         $routeMethod = 'edit';
 
         $map = $this->map->getById($id);
+
+        if(!$map){
+            return redirect()->route('admin.map.index');
+        }
+
         $tags = $tag->getAllOrderedBy('name');
         $sources = $source->getAllOrderedBy('name');
 

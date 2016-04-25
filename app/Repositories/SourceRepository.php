@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+
 use App\Models\Source;
 use App\Models\Record;
 // use GuzzleHttp\Client as GuzzleClient;
@@ -10,10 +11,16 @@ use App\Models\Record;
 use Log;
 use Symfony\Component\Process\Process;
 use Storage;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
+use App\Jobs\DownloadUrlSource;
+use App\Jobs\ConvertSource;
 
 
 class SourceRepository
 {
+    use DispatchesJobs;
+
     public function getAll()
     {
         $sources = Source::all();
@@ -469,5 +476,36 @@ class SourceRepository
 
         return $result;
     }
+
+
+    public function syncSource(Source $source){
+        //create directory structure (in case it doesn't exists)
+        Storage::makeDirectory('sources/'.$source->id.'/o');
+        Storage::makeDirectory('sources/'.$source->id.'/p');
+
+        $this->dispatch(new DownloadUrlSource($source));
+    }
+
+    public function uploadSource(Source $source, Request $request){
+        //create directory structure
+        Storage::makeDirectory('sources/'.$source->id.'/o');
+        Storage::makeDirectory('sources/'.$source->id.'/p');
+
+        //move temp file to raw path
+        if ($request->hasFile('origin_file'))
+        {
+            $source->origin_format = $request->file('origin_file')->getClientOriginalExtension();
+            $source->origin_size = $request->file('origin_file')->getClientSize();
+            $source->origin_file = $request->file('origin_file')->getClientOriginalName();
+            $source->save();
+
+            $request->file('origin_file')->move(storage_path('app/sources/'.$source->id.'/o'), 'file.raw');
+
+            // Queue the source to be converted
+            $this->dispatch(new ConvertSource($source));
+        }
+    }
+
+
 
 }

@@ -10,8 +10,6 @@ use App\Repositories\SourceRepository;
 use App\Http\Requests\Admin\CreateSourceRequest;
 use App\Http\Requests\Admin\DestroySourceRequest;
 use App\Http\Requests\Admin\UpdateSourceRequest;
-use App\Jobs\DownloadUrlSource;
-use App\Jobs\ConvertSource;
 use Storage;
 
 class SourcesController extends Controller
@@ -102,33 +100,17 @@ class SourcesController extends Controller
             return redirect()->back()->with('status', 'create-error');
         } else {
 
-            //create directory structure
-            Storage::makeDirectory('sources/'.$source->id.'/o');
-            Storage::makeDirectory('sources/'.$source->id.'/p');
-
             $type = $request->origin_type;
 
              switch($type)
             {
                 case 'url':
                     // Queue remote file download
-                    $this->dispatch(new DownloadUrlSource($source));
+                    $this->source->syncSource($source);
                     break;
 
                 case 'file':
-                    //move temp file to raw path
-                    if ($request->hasFile('origin_file'))
-                    {
-                        $source->origin_format = $request->file('origin_file')->getClientOriginalExtension();
-                        $source->origin_size = $request->file('origin_file')->getClientSize();
-                        $source->origin_file = $request->file('origin_file')->getClientOriginalName();
-                        $source->save();
-
-                        $request->file('origin_file')->move(storage_path('app/sources/'.$source->id.'/o'), 'file.raw');
-
-                        // Queue the source to be converted
-                        $this->dispatch(new ConvertSource($source));
-                    }
+                    $this->source->uploadSource($source, $request);
                     break;
 
                 default:
@@ -175,11 +157,7 @@ class SourcesController extends Controller
             return redirect()->back()->with('status', 'sync-error');
         }
 
-        //create directory structure (in case it doesn't exists)
-        Storage::makeDirectory('sources/'.$source->id.'/o');
-        Storage::makeDirectory('sources/'.$source->id.'/p');
-
-        $this->dispatch(new DownloadUrlSource($source));
+        $this->source->syncSource($source);
 
         return redirect()->route('admin.source.index')->with('status', 'sync-triggered');
     }

@@ -15,7 +15,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use App\Jobs\DownloadUrlSource;
 use App\Jobs\ConvertSource;
-
+use Carbon\Carbon;
 
 class SourceRepository
 {
@@ -506,6 +506,38 @@ class SourceRepository
         }
     }
 
+    public function syncAllSources(){
 
+        $isSynchronizable = ['url'];
+        $sourcesAll = collect();
+
+        // sync yearly sources
+        $aYearAgo = Carbon::now()->subYear();
+        $sourcesYearly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'yearly')->where('synced_at', '<', $aYearAgo)->get();
+        $sourcesAll = $sourcesAll->merge($sourcesYearly);
+
+        // sync monthly sources
+        $aMonthAgo = Carbon::now()->subMonth();
+        $sourcesMonthly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'monthly')->where('synced_at', '<', $aMonthAgo)->get();
+        $sourcesAll = $sourcesAll->merge($sourcesMonthly);
+        // sync weekly sources
+        $aWeekAgo = Carbon::now()->subWeek();
+        $sourcesWeekly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'weekly')->where('synced_at', '<', $aWeekAgo)->get();
+        $sourcesAll = $sourcesAll->merge($sourcesWeekly);
+
+        // sync daily sources
+        $aDayAgo = Carbon::now()->subDay();
+        $sourcesDayly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'daily')->where('synced_at', '<', $aDayAgo)->get();
+        $sourcesAll = $sourcesAll->merge($sourcesDayly);
+
+        // sync onchange sources
+        $sourcesOnchange = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'onchange')->get();
+        $sourcesAll = $sourcesAll->merge($sourcesOnchange);
+
+        foreach($sourcesAll as $source){
+            $this->syncSource($source);
+        }
+
+    }
 
 }

@@ -31,7 +31,7 @@ class DashboardController extends Controller
 
         $users = \App\Models\User::count();
         $sources = \App\Models\Source::count();
-        $maps = \App\Models\map::count();
+        $maps = \App\Models\Map::count();
 
         $data = compact('routeName', 'routeMethod', 'users', 'sources', 'maps');
         return view('admin.sections.dashboard.index', $data);

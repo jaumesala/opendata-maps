@@ -520,6 +520,7 @@ class SourceRepository
         $aMonthAgo = Carbon::now()->subMonth();
         $sourcesMonthly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'monthly')->where('synced_at', '<', $aMonthAgo)->get();
         $sourcesAll = $sourcesAll->merge($sourcesMonthly);
+
         // sync weekly sources
         $aWeekAgo = Carbon::now()->subWeek();
         $sourcesWeekly = Source::whereIn('origin_type', $isSynchronizable)->where('sync_interval', '=', 'weekly')->where('synced_at', '<', $aWeekAgo)->get();

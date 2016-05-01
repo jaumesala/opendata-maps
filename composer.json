@@ -10,7 +10,8 @@
         "laravelcollective/html": "5.2.*",
         "nesbot/carbon": "~1.18",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "pda/pheanstalk": "~3.0"
+        "pda/pheanstalk": "~3.0",
+        "itsgoingd/clockwork": "~1.9"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -18,7 +19,6 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
-        "itsgoingd/clockwork": "~1.9",
         "laracasts/generators": "~1.1"
     },
     "autoload": {

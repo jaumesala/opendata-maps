@@ -39,6 +39,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
+    Route::get('/', [
+        'uses' => 'Pub\PagesController@getHome',
+        'as' => 'public.home.index'
+        ]);
+
     Route::get('map/{map}', [
         'uses' => 'Pub\MapsController@show',
         'as' => 'public.map.show'

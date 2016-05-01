@@ -11980,4 +11980,22 @@ html {
   #map.show .layers-list li {
     line-height: 25px; }
 
+#home.index {
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden; }
+  #home.index #map-view {
+    min-height: 100vh;
+    background-color: #ecf0f5; }
+  #home.index .not-found {
+    width: 260px;
+    height: 100px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    left: 50%;
+    margin-left: -130px; }
+
 /*# sourceMappingURL=app.css.map */

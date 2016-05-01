@@ -4,6 +4,12 @@
     "gulp": "^3.8.8"
   },
   "dependencies": {
+    "csv2geojson": "^5.0.0",
+    "geojsonhint": "^1.2.0",
     "laravel-elixir": "^4.0.0",
+    "laravel-elixir-vueify": "^1.0.2",
+    "togeojson": "^0.13.0",
+    "vue": "^1.0.17",
+    "vue-resource": "^0.7.0"
   }
 }

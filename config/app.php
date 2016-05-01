@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Amsterdam',
 
     /*
     |--------------------------------------------------------------------------
@@ -156,6 +156,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * App Service Providers...
+         */
+        Collective\Html\HtmlServiceProvider::class,      //http://laravelcollective.com
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,      //https://github.com/itsgoingd/clockwork
+        // Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,      //https://github.com/mcamara/laravel-localization
+        // Greggilbert\Recaptcha\RecaptchaServiceProvider::class,      //https://github.com/greggilbert/recaptcha
     ],
 
     /*
@@ -198,10 +205,17 @@ return [
         'Schema'    => Illuminate\Support\Facades\Schema::class,
         'Session'   => Illuminate\Support\Facades\Session::class,
         'Storage'   => Illuminate\Support\Facades\Storage::class,
+        'Str'       => Illuminate\Support\Str::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Form'      => Collective\Html\FormFacade::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
+        // 'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Carbon'    => Carbon\Carbon::class,
+        // 'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
     ],
 
 ];

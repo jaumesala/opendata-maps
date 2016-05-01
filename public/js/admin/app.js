@@ -587,11 +587,6 @@ SITE.auth.reset = function(){
     console.log('reset');
 
 }
-SITE.dashboard.index = function(){
-
-    console.log('index');
-
-}
 SITE.map.create = function(){
 
     console.log('create');
@@ -764,6 +759,11 @@ SITE.map.show = function(){
     mapView.init();
 
 }
+SITE.dashboard.index = function(){
+
+    console.log('index');
+
+}
 SITE.permission.index = function(){
 
     console.log('index');
@@ -777,6 +777,11 @@ SITE.permission.index = function(){
         modal.find('form').attr('action', action);
         modal.find('input[name=id]').attr('value', id);
     });
+
+}
+SITE.settings.index = function(){
+
+    console.log('index');
 
 }
 SITE.role.create = function(){
@@ -810,11 +815,6 @@ SITE.role.index = function(){
         modal.find('form').attr('action', action);
         modal.find('input[name=id]').attr('value', id);
     });
-
-}
-SITE.settings.index = function(){
-
-    console.log('index');
 
 }
 SITE.source.create = function(){

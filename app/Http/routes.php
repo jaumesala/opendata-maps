@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/', ['uses' => 'Tests\PagesController@getHome', 'as' => 'home.index']);
-Route::get('/neighborhoods', ['uses' => 'Tests\PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
-Route::get('/complains', ['uses' => 'Tests\PagesController@getComplains', 'as' => 'complains.index']);
-Route::get('/choropleth', ['uses' => 'Tests\PagesController@getChoropleth', 'as' => 'choropleth.index']);
-Route::get('/heatmap', ['uses' => 'Tests\PagesController@getHeatmap', 'as' => 'heatmap.index']);
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +22,6 @@ Route::get('/heatmap', ['uses' => 'Tests\PagesController@getHeatmap', 'as' => 'h
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
-
-
 Route::group(['middleware' => ['web']], function () {
 
     /*
@@ -37,6 +29,14 @@ Route::group(['middleware' => ['web']], function () {
     | Public Routes
     |--------------------------------------------------------------------------
     */
+    Route::group(['prefix' => 'test'], function(){
+        Route::get('/', ['uses' => 'Tests\PagesController@getHome', 'as' => 'home.index']);
+        Route::get('/neighborhoods', ['uses' => 'Tests\PagesController@getNeighborhoods', 'as' => 'neighborhoods.index']);
+        Route::get('/complains', ['uses' => 'Tests\PagesController@getComplains', 'as' => 'complains.index']);
+        Route::get('/choropleth', ['uses' => 'Tests\PagesController@getChoropleth', 'as' => 'choropleth.index']);
+        Route::get('/heatmap', ['uses' => 'Tests\PagesController@getHeatmap', 'as' => 'heatmap.index']);
+    });
+
     Route::auth();
 
     Route::get('map/{map}', [

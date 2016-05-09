@@ -155,7 +155,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5">
+                                <td colspan="7">
                                 <div class="alert alert-warning">
                                     <h4><i class="icon fa fa-warning"></i> Nothing found!</h4>
                                     Your search <strong>{{ Request::input('query','') }}</strong> did not match any source.

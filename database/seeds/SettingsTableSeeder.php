@@ -81,6 +81,12 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'pageResults',
                 'value'  => 20,
                 ],
+
+            [   'group'  => 'application',
+                'key' => 'name',
+                'value'  => '<b>Schiedam</b>Maps',
+                ],
+
         );
 
         // Uncomment the below to run the seeder

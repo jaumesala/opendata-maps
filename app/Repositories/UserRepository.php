@@ -33,11 +33,20 @@ class UserRepository
 
     public function storeUser($request)
     {
-        $user = User::firstOrNew([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        $user = new User();
+
+        //find a new api_token
+        $token = "";
+        do
+        {
+            $token = str_random(60);
+        }
+        while (User::where("api_token", "=", $token)->first() instanceof User);
+        $user->api_token = $token;
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
 
         $result = $user->save();
 

@@ -42,7 +42,7 @@ if (! function_exists('setting_value')) {
      */
     function setting_value($group, $key)
     {
-        if( ! \Cache::has('settings') ) return null;
+        if( ! \Cache::has('settings') ) return "no cache settings";
         $cache = \Cache::get('settings');
         if( ! $cache->has($group) ) return null;
         $groupCache = $cache[$group];

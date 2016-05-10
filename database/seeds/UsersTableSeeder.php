@@ -12,27 +12,27 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = array(
-            [   'name'  => 'Jaume Sala',
-                'email' => 'jaumesala@gmail.com',
-                'password'  => '$2y$10$WTvUKIIZcUxSE3NjcMoQg.pOIprPrrvNMqS4S2YtuvQDzjrMBkT6e',
+            [   'name'  => 'Super Admin',
+                'email' => 'superadmin@opendata-maps.app',
+                'password'  => Hash::make('superadmin'),
                 'api_token' => str_random(60),
-                'remember_token' => str_random(10),
+                'remember_token' => '',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
-            [   'name'  => 'schideam',
-                'email' => 'maps@schiedam.xyz',
-                'password'  => Hash::make('schiedam'),
+            [   'name'  => 'admin',
+                'email' => 'admin@opendata-maps.app',
+                'password'  => Hash::make('admin'),
                 'api_token' => str_random(60),
-                'remember_token' => str_random(10),
+                'remember_token' => '',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],
             [   'name'  => 'editor',
-                'email' => 'editor@schiedam.xyz',
+                'email' => 'editor@opendata-maps.app',
                 'password'  => Hash::make('editor'),
                 'api_token' => str_random(60),
-                'remember_token' => str_random(10),
+                'remember_token' => '',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ],

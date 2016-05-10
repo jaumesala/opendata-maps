@@ -6,7 +6,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>S</b>M</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Schiedam</b>Maps</span>
+        <span class="logo-lg">{!! setting_value('application', 'name') !!}</span>
     </a>
 
     <!-- Header Navbar -->

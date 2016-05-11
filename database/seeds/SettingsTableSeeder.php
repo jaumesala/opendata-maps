@@ -83,8 +83,12 @@ class SettingsTableSeeder extends Seeder
                 ],
 
             [   'group'  => 'application',
+                'key' => 'title',
+                'value'  => 'Opendata Maps',
+                ],
+            [   'group'  => 'application',
                 'key' => 'name',
-                'value'  => '<b>OpenData</b>Maps',
+                'value'  => '<b>Opendata</b>Maps',
                 ],
             [   'group'  => 'application',
                 'key' => 'mini-name',

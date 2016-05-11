@@ -7,7 +7,7 @@
 
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ route('admin.dashboard.index') }}"><b>Schiedam</b>Maps</a>
+        <a href="{{ route('admin.dashboard.index') }}">{!! setting_value('application', 'name') !!}</a>
     </div>
 
     <div class="register-box-body">

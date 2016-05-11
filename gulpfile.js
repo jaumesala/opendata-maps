@@ -71,13 +71,6 @@ var componentsPublic = [
     bowerRelative + 'chroma-js/chroma.js',
 ];
 
-var componentsTest = [
-
-    bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
-    bowerRelative + 'underscore/underscore.js',
-    bowerRelative + 'chroma-js/chroma.js',
-];
-
 
 /*
  |--------------------------------------------------------------------------
@@ -178,30 +171,6 @@ elixir(function(mix) {
             publicPath + '/' + elixir.config.js.outputFolder + '/public/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         )
-
-
-        /*
-         |--------------------------------------------------------------------------
-         | Tests files
-         |--------------------------------------------------------------------------
-         */
-
-        // main.scss
-        .sass('tests/main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/tests/main' + min + '.css')
-
-        // tests/app/app.js
-        .scriptsIn(
-            elixir.config.assetsPath + '/js/tests',
-            publicPath + '/' + elixir.config.js.outputFolder + '/tests/main' + min + '.js'
-        )
-
-        //plugins.js
-        .scripts(
-            componentsTest,
-            publicPath + '/' + elixir.config.js.outputFolder + '/tests/plugins' + min + '.js',
-            elixir.config.assetsPath + '/js'
-        )
-
 
 
         // copy files

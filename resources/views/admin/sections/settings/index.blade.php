@@ -131,7 +131,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <a href="http://schiedam-map.app/admin/settings" class="btn btn-default">Cancel</a>
+                        <a href="{{ route('admin.settings.index') }}" class="btn btn-default">Cancel</a>
                         <button type="submit" class="btn btn-success pull-right">Add</button>
                     </div>
                     <!-- /.box-footer -->
@@ -193,7 +193,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <a href="http://schiedam-map.app/admin/settings" class="btn btn-default">Cancel</a>
+                        <a href="{{ route('admin.settings.index') }}" class="btn btn-default">Cancel</a>
                         <button type="submit" class="btn btn-danger pull-right">Delete</button>
                     </div>
                     <!-- /.box-footer -->

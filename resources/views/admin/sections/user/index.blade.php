@@ -55,7 +55,7 @@
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td><a href="mailto:{{ $user->email }}?subject=%5BSchiedamMaps%5D%20">{{ $user->email }}</a></td>
+                                <td><a href="mailto:{{ $user->email }}?subject=%5BOpendataMaps%5D%20">{{ $user->email }}</a></td>
                                 <td>
                                     @foreach($user->roles as $role)
                                     <a href="#" class="label label-primary">{{ Str::title($role->name) }}</a>

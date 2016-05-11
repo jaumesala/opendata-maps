@@ -54,13 +54,6 @@ var components = [
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/plugins/colorpicker/bootstrap-colorpicker.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
-    // nodeRelative + 'vue/dist/vue.js',
-    // nodeRelative + 'vue-resource/dist/vue-resource.js',
-    // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
-    // bowerRelative + 'jquery-form/jquery.form.js',
-    // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
-    // bowerRelative + 'jquery.easing/js/jquery.easing.js',
-    // bowerRelative + 'slick.js/slick/slick.js',
 ];
 
 var componentsPublic = [

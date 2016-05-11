@@ -12,9 +12,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = array(
-            [   'name'  => 'Super Admin',
-                'email' => 'superadmin@opendata-maps.app',
-                'password'  => Hash::make('superadmin'),
+            [   'name'  => env('SUPERADMIN_NAME', 'Super Admin'),
+                'email' => env('SUPERADMIN_EMAIL', 'superadmin@opendata-maps.app'),
+                'password'  => Hash::make(env('SUPERADMIN_PASSWORD', 'superadmin')),
                 'api_token' => str_random(60),
                 'remember_token' => '',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

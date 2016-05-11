@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-    $locale = config('app.locale') //LaravelLocalization::getCurrentLocale();
+    $locale = config('app.locale')
 ?>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ $locale }}"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="{{ $locale }}"> <![endif]-->
@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or 'SchiedamMaps' }}
+        @if (App::environment() != 'production') {{ App::environment() }} | @endif {{ $customTitle or setting_value('application', 'title') }}
     </title>
-    <meta name="description" content="{{ $customDescription or 'Admin panel SchiedamMaps' }}">
+    <meta name="description" content="{{ $customDescription or 'Admin panel '.setting_value('application', 'title') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <meta id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
@@ -23,16 +23,6 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon-precomposed.png') }}">
 
-    {{--
-    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-        @if ( $locale != $localeCode )
-            <link rel="alternate" hreflang="{{ $localeCode }}" href="{{ $urlLocale[$localeCode] or LaravelLocalization::getLocalizedURL($localeCode) }}" />
-        @endif
-    @endforeach
-    --}}
-
-    <!-- Font Awesome -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 

@@ -8,8 +8,6 @@
     "geojsonhint": "^1.2.0",
     "laravel-elixir": "^4.0.0",
     "laravel-elixir-vueify": "^1.0.2",
-    "togeojson": "^0.13.0",
-    "vue": "^1.0.17",
-    "vue-resource": "^0.7.0"
+    "togeojson": "^0.13.0"
   }
 }

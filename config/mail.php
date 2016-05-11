@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'noreply@schiedam-map.dev'), 'name' => env('MAIL_FROM_NAME', 'Schiedam Maps')],
+    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'noreply@opendata-maps.com'), 'name' => env('MAIL_FROM_NAME', 'Opendata Maps')],
 
     /*
     |--------------------------------------------------------------------------

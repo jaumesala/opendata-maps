@@ -14,11 +14,11 @@ class SettingsTableSeeder extends Seeder
         $settings = array(
             [   'group'  => 'mapbox',
                 'key' => 'accessToken',
-                'value'  => 'pk.eyJ1IjoiamF1bWVzYWxhIiwiYSI6ImNpanZ4dmlndDAwNWl2Mm00d3RpY2VweTkifQ.fh0cb8ZJhawwDnZUlZx47Q',
+                'value'  => env('MAPBOX_TOKEN', 'mapbox-api-token'),
                 ],
             [   'group'  => 'mapbox',
                 'key' => 'username',
-                'value'  => 'jaumesala',
+                'value'  => env('MAPBOX_USERNAME', 'mapbox-username'),
                 ],
             [   'group'  => 'mapbox',
                 'key' => 'glStyle',
@@ -83,8 +83,16 @@ class SettingsTableSeeder extends Seeder
                 ],
 
             [   'group'  => 'application',
+                'key' => 'title',
+                'value'  => 'Opendata Maps',
+                ],
+            [   'group'  => 'application',
                 'key' => 'name',
-                'value'  => '<b>Schiedam</b>Maps',
+                'value'  => '<b>Opendata</b>Maps',
+                ],
+            [   'group'  => 'application',
+                'key' => 'mini-name',
+                'value'  => '<b>O</b>M',
                 ],
 
         );

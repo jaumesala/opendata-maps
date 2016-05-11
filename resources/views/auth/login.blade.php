@@ -7,7 +7,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ route('admin.dashboard.index') }}"><b>Schiedam</b>Maps</a>
+        <a href="{{ route('admin.dashboard.index') }}">{!! setting_value('application', 'name') !!}</a>
     </div>
     <!-- /.login-logo -->
 

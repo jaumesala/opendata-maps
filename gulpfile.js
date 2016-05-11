@@ -54,26 +54,12 @@ var components = [
     bowerRelative + 'AdminLTE/plugins/slimScroll/jquery.slimscroll.js',
     bowerRelative + 'AdminLTE/plugins/colorpicker/bootstrap-colorpicker.js',
     bowerRelative + 'AdminLTE/dist/js/app.js',
-    // nodeRelative + 'vue/dist/vue.js',
-    // nodeRelative + 'vue-resource/dist/vue-resource.js',
-    // bowerRelative + 'imagesloaded/imagesloaded.pkgd.js',
-    // bowerRelative + 'jquery-form/jquery.form.js',
-    // bowerRelative + 'jquery-validation/dist/jquery.validate.js',
-    // bowerRelative + 'jquery.easing/js/jquery.easing.js',
-    // bowerRelative + 'slick.js/slick/slick.js',
 ];
 
 var componentsPublic = [
 
     bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
     'admin/components/mapView.js',
-    bowerRelative + 'underscore/underscore.js',
-    bowerRelative + 'chroma-js/chroma.js',
-];
-
-var componentsTest = [
-
-    bowerRelative + 'bootstrap-sass/assets/javascripts/bootstrap.js',
     bowerRelative + 'underscore/underscore.js',
     bowerRelative + 'chroma-js/chroma.js',
 ];
@@ -178,30 +164,6 @@ elixir(function(mix) {
             publicPath + '/' + elixir.config.js.outputFolder + '/public/plugins' + min + '.js',
             elixir.config.assetsPath + '/js'
         )
-
-
-        /*
-         |--------------------------------------------------------------------------
-         | Tests files
-         |--------------------------------------------------------------------------
-         */
-
-        // main.scss
-        .sass('tests/main.scss', publicPath + '/' + elixir.config.css.outputFolder + '/tests/main' + min + '.css')
-
-        // tests/app/app.js
-        .scriptsIn(
-            elixir.config.assetsPath + '/js/tests',
-            publicPath + '/' + elixir.config.js.outputFolder + '/tests/main' + min + '.js'
-        )
-
-        //plugins.js
-        .scripts(
-            componentsTest,
-            publicPath + '/' + elixir.config.js.outputFolder + '/tests/plugins' + min + '.js',
-            elixir.config.assetsPath + '/js'
-        )
-
 
 
         // copy files

@@ -7,6 +7,8 @@ The reason for this project is to explore new ways to share information with the
 
 The application allows you to connect different sources of information, usually open data in the public domain, and generate layers that are subsequently added over vector maps.
 
+![A map being edited in opendata-maps app](readme-odm.png?raw=true "Map editor interface")
+
 ## Requirements
 
 ### Server

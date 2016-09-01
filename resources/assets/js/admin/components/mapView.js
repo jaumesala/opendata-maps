@@ -33,7 +33,7 @@ mapView = {
         // console.log("getStyles");
         return $.get(  env.settings.mapbox.stylesApiUrl +
                     env.settings.mapbox.username +
-                    '?access_token=' + env.settings.mapbox.accessToken, function(data){
+                    '?access_token=' + env.settings.mapbox.secretToken, function(data){
                         mapView.styles = data;
                         if(mapView.mode == 'editor'){
                             env.settings.maps.defaultStyle = map.style;

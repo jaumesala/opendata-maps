@@ -128,7 +128,7 @@ mapView = {
         // console.log("getStyles");
         return $.get(  env.settings.mapbox.stylesApiUrl +
                     env.settings.mapbox.username +
-                    '?access_token=' + env.settings.mapbox.accessToken, function(data){
+                    '?access_token=' + env.settings.mapbox.secretToken, function(data){
                         mapView.styles = data;
                         if(mapView.mode == 'editor'){
                             env.settings.maps.defaultStyle = map.style;
@@ -812,11 +812,6 @@ SITE.role.index = function(){
     });
 
 }
-SITE.settings.index = function(){
-
-    console.log('index');
-
-}
 SITE.source.create = function(){
 
     console.log('create');
@@ -919,6 +914,11 @@ SITE.source.show = function(){
         modal.find('form').attr('action', action);
         modal.find('input[name=id]').attr('value', id);
     });
+
+}
+SITE.settings.index = function(){
+
+    console.log('index');
 
 }
 SITE.user.create = function(){
